@@ -10,7 +10,6 @@ import {
   Lock,
   Medal,
   Search,
-  ShieldCheck,
   Sparkles,
   Swords,
   TableProperties,
@@ -18,7 +17,6 @@ import {
   TrendingUp,
   Trophy,
   Unlock,
-  Upload,
   Users,
 } from 'lucide-react'
 import { AUTH_SESSION_KEY, SHARED_PASSWORD } from './config/auth'
@@ -29,7 +27,7 @@ import {
   buildPlayerStats,
 } from './utils/stats'
 
-const tabs = ['Dashboard', 'Events', 'Players', 'Achievements', 'Admin']
+const tabs = ['Dashboard', 'Events', 'Players', 'Achievements']
 
 function cx(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -119,7 +117,6 @@ function PasswordGate({ isUnlocked, unlockError, onUnlock, onLock }) {
       )}
 
       {unlockError && <p className="error-text">{unlockError}</p>}
-      <p className="muted tiny">Demo password: game-night</p>
     </article>
   )
 }
@@ -639,73 +636,6 @@ function App() {
           </motion.section>
         )}
 
-        {activeTab === 'Admin' && (
-          <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="admin-grid">
-              <article className="glass-card">
-                <div className="row gap-12">
-                  <div className="admin-icon bg-dark">
-                    <Upload size={18} />
-                  </div>
-                  <div>
-                    <h2 className="section-title">Add a session</h2>
-                    <p className="muted small">
-                      Prototype form for logging games, notes, and memorable moments.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="admin-form-grid">
-                  <input placeholder="Event title" />
-                  <input type="date" />
-                  <input placeholder="Games played" />
-                  <input placeholder="Winner / MVP" />
-                  <textarea
-                    placeholder="History, exciting moments, funny details, rule changes..."
-                    rows={5}
-                  />
-                </div>
-
-                <div className="dropzone">
-                  <Upload size={18} />
-                  <p>Drop event photos here or commit files under /public/photos/events.</p>
-                </div>
-
-                <button type="button">Save session</button>
-              </article>
-
-              <article className="glass-card">
-                <div className="row gap-12">
-                  <div className="admin-icon bg-green">
-                    <ShieldCheck size={18} />
-                  </div>
-                  <div>
-                    <h3>Build notes</h3>
-                    <p className="muted small">GitHub-only maintenance workflow.</p>
-                  </div>
-                </div>
-
-                <div className="note-stack">
-                  <p>
-                    <strong>Editing:</strong> Update JSON files in /public/data directly via
-                    GitHub web UI or VS Code.
-                  </p>
-                  <p>
-                    <strong>Photos:</strong> Add images under /public/photos/players or
-                    /public/photos/events and reference paths in JSON.
-                  </p>
-                  <p>
-                    <strong>Deploy:</strong> Push to main; GitHub Actions publishes to Pages.
-                  </p>
-                  <p>
-                    <strong>Security model:</strong> Shared-password gate hides details from
-                    casual visitors only.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </motion.section>
-        )}
       </main>
     </div>
   )
