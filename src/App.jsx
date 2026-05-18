@@ -526,8 +526,8 @@ function App() {
                         </ul>
                       </div>
 
-                      <div style={{ paddingTop: '1rem', fontSize: '0.7rem', color: '#888' }}>
-                        [DEBUG: eventGameResults={eventGameResults?.length || 'N/A'} | hasGames={Array.isArray(eventGameResults) && eventGameResults.length > 0}]
+                      <div style={{ paddingTop: '1rem', fontSize: '0.7rem', color: '#888', marginTop: '0.5rem' }}>
+                        [DEBUG: eventGameResults.length={eventGameResults?.length || 'UNDEFINED'} | type={typeof eventGameResults}]
                       </div>
                       {(() => {
                         const hasGames = Array.isArray(eventGameResults) && eventGameResults.length > 0;
