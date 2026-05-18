@@ -139,6 +139,18 @@ function App() {
     const playersById = Object.fromEntries(
       data.players.map((player) => [player.id, player]),
     )
+    const playerAliasMap = {}
+    data.players.forEach((player) => {
+      const firstName = player.name.split(' ')[0]
+      ;[player.id, player.nickname, player.name, firstName]
+        .map((value) => String(value || '').trim().toLowerCase())
+        .filter(Boolean)
+        .forEach((key) => {
+          if (!playerAliasMap[key]) {
+            playerAliasMap[key] = player
+          }
+        })
+    })
     const gameTypesById = Object.fromEntries(
       data.gameTypes.map((type) => [type.id, type]),
     )
@@ -162,6 +174,7 @@ function App() {
 
     return {
       playersById,
+      playerAliasMap,
       gameTypesById,
       statsByPlayer,
       leaderboard,
@@ -460,6 +473,7 @@ function App() {
             <div className="event-grid">
               {filteredEvents.map((event) => {
                 const eventGames = computed.gamesByEventId[event.id] || []
+                const eventGameResults = event.games || []
                 const eventDate = new Date(event.date)
 
                 return (
@@ -507,6 +521,54 @@ function App() {
                           ))}
                         </ul>
                       </div>
+
+                      {eventGameResults.length > 0 && (
+                        <div className="highlight-box">
+                          <p className="small-title">Results</p>
+                          <ul>
+                            {eventGameResults.map((game) => {
+                              const gameName =
+                                computed.gameTypesById[game.gameId]?.name || game.gameId
+                              const details = (game.results || []).map((result) => {
+                                const aliasKey = String(result.playerId || '')
+                                  .trim()
+                                  .toLowerCase()
+                                const name =
+                                  computed.playerAliasMap[aliasKey]?.name || result.playerId
+
+                                if (Number.isFinite(Number(result.position))) {
+                                  return `#${result.position} ${name}`
+                                }
+
+                                if (
+                                  Number.isFinite(Number(result.gamesWon)) ||
+                                  Number.isFinite(Number(result.seriesWon))
+                                ) {
+                                  const gamesWon = Number(result.gamesWon || 0)
+                                  const seriesWon = Number(result.seriesWon || 0)
+                                  return `${name}: ${gamesWon} games, ${seriesWon} series`
+                                }
+
+                                if (Number.isFinite(Number(result.points))) {
+                                  return `${name}: ${result.points} pts`
+                                }
+
+                                if (Number.isFinite(Number(result.winnings))) {
+                                  return `${name}: $${result.winnings}`
+                                }
+
+                                return name
+                              })
+
+                              return (
+                                <li key={`r-${event.id}-${game.gameId}`}>
+                                  {gameName}: {details.join(' | ')}
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </article>
                 )
