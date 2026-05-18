@@ -1,0 +1,122 @@
+[
+  {
+    "id": "g001",
+    "eventId": "e2025-01",
+    "gameType": "poker",
+    "players": ["p01", "p07", "p11", "p13", "p02"],
+    "winner": "p07",
+    "scores": {"p01": 42, "p07": 88, "p11": 60, "p13": 50, "p02": 35},
+    "notes": "No-limit hold'em, 90 minute cap",
+    "excitingMoment": "River straight for Gabe against Alex's two pair."
+  },
+  {
+    "id": "g002",
+    "eventId": "e2025-01",
+    "gameType": "blackjack",
+    "players": ["p02", "p11", "p03", "p14"],
+    "winner": "p02",
+    "scores": {"p02": 54, "p11": 47, "p03": 38, "p14": 29},
+    "notes": "4-deck shoe",
+    "excitingMoment": "Brooke doubled on 11 and hit 21 twice."
+  },
+  {
+    "id": "g003",
+    "eventId": "e2025-02",
+    "gameType": "hearts",
+    "players": ["p03", "p14", "p15", "p16"],
+    "winner": "p14",
+    "scores": {"p03": 72, "p14": 102, "p15": 88, "p16": 70},
+    "notes": "To 100, moon shooting enabled",
+    "excitingMoment": "Noah shot the moon in round 4."
+  },
+  {
+    "id": "g004",
+    "eventId": "e2025-02",
+    "gameType": "oh-heck",
+    "players": ["p04", "p10", "p12", "p08", "p16"],
+    "winner": "p04",
+    "scores": {"p04": 41, "p10": 33, "p12": 28, "p08": 24, "p16": 27},
+    "notes": "Bid exact scoring",
+    "excitingMoment": "Dana called exact 0 in final hand to win by 2."
+  },
+  {
+    "id": "g005",
+    "eventId": "e2025-03",
+    "gameType": "darts",
+    "players": ["p06", "p12", "p09", "p15"],
+    "winner": "p12",
+    "scores": {"p06": 380, "p12": 501, "p09": 245, "p15": 312},
+    "notes": "501 double-out",
+    "excitingMoment": "Leo checked out 112 on double 16."
+  },
+  {
+    "id": "g006",
+    "eventId": "e2025-03",
+    "gameType": "the-game",
+    "players": ["p10", "p08", "p01", "p05"],
+    "winner": "p10",
+    "scores": {"p10": 16, "p08": 14, "p01": 11, "p05": 9},
+    "notes": "Penalty each time someone says the phrase",
+    "excitingMoment": "Jules baited everyone into saying it in 30 seconds."
+  },
+  {
+    "id": "g007",
+    "eventId": "e2025-04",
+    "gameType": "ping-pong",
+    "players": ["p09", "p15", "p06", "p03"],
+    "winner": "p09",
+    "scores": {"p09": 33, "p15": 24, "p06": 18, "p03": 14},
+    "notes": "Best of 3 to 11",
+    "excitingMoment": "Ian served ace on match point in semifinal."
+  },
+  {
+    "id": "g008",
+    "eventId": "e2025-04",
+    "gameType": "poker",
+    "players": ["p11", "p04", "p01", "p07", "p13"],
+    "winner": "p11",
+    "scores": {"p11": 96, "p04": 62, "p01": 41, "p07": 35, "p13": 39},
+    "notes": "Freezeout format",
+    "excitingMoment": "Kira won 5-way all-in with set of queens."
+  },
+  {
+    "id": "g009",
+    "eventId": "e2025-05",
+    "gameType": "darts",
+    "players": ["p06", "p12", "p02", "p15"],
+    "winner": "p06",
+    "scores": {"p06": 501, "p12": 488, "p02": 302, "p15": 265},
+    "notes": "Round robin",
+    "excitingMoment": "Farah hit back-to-back bullseye finishes."
+  },
+  {
+    "id": "g010",
+    "eventId": "e2025-05",
+    "gameType": "hearts",
+    "players": ["p15", "p14", "p03", "p16"],
+    "winner": "p15",
+    "scores": {"p15": 105, "p14": 81, "p03": 64, "p16": 73},
+    "notes": "To 100 points",
+    "excitingMoment": "Olive won two moon-threat rounds in a row."
+  },
+  {
+    "id": "g011",
+    "eventId": "e2025-05",
+    "gameType": "canadian-salad",
+    "players": ["p05", "p16", "p08", "p13"],
+    "winner": "p16",
+    "scores": {"p05": 57, "p16": 76, "p08": 62, "p13": 44},
+    "notes": "House variation with bonus hand",
+    "excitingMoment": "Priya stole final bonus hand to pass Evan."
+  },
+  {
+    "id": "g012",
+    "eventId": "e2025-05",
+    "gameType": "poker",
+    "players": ["p01", "p02", "p07", "p11", "p13"],
+    "winner": "p01",
+    "scores": {"p01": 91, "p02": 28, "p07": 47, "p11": 50, "p13": 36},
+    "notes": "Turbo blinds",
+    "excitingMoment": "Alex held pocket queens in the final hand."
+  }
+]

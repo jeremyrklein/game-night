@@ -1,0 +1,68 @@
+[
+  {
+    "id": "poker",
+    "name": "Texas Hold'em Poker",
+    "rules": "No-limit Texas hold'em.",
+    "scoring": "Points by finish or chips won (house rules)."
+  },
+  {
+    "id": "hearts",
+    "name": "Hearts",
+    "rules": "Standard Hearts.",
+    "scoring": "Based on house scoring variant."
+  },
+  {
+    "id": "sequence",
+    "name": "Sequence",
+    "rules": "Standard Sequence rules.",
+    "scoring": "By match/round wins."
+  },
+  {
+    "id": "canadian-salad",
+    "name": "Canadian Salad",
+    "rules": "Progressive trick-taking rounds.",
+    "scoring": "Cumulative round points."
+  },
+  {
+    "id": "blackjack",
+    "name": "Blackjack",
+    "rules": "Standard blackjack with house rules.",
+    "scoring": "Net chips or wins by round."
+  },
+  {
+    "id": "the-game",
+    "name": "The Game",
+    "rules": "Co-op card game with ascending and descending stacks.",
+    "scoring": "Cards remaining or house variant."
+  },
+  {
+    "id": "settlers-of-catan",
+    "name": "Settlers of Catan",
+    "rules": "Standard Catan rules.",
+    "scoring": "First to 10 victory points."
+  },
+  {
+    "id": "ticket-to-ride",
+    "name": "Ticket to Ride",
+    "rules": "Standard Ticket to Ride rules.",
+    "scoring": "Route and destination ticket points."
+  },
+  {
+    "id": "oh-heck",
+    "name": "Oh Heck",
+    "rules": "Bid exact tricks each round.",
+    "scoring": "House scoring by bids/tricks."
+  },
+  {
+    "id": "ping-pong",
+    "name": "Ping Pong",
+    "rules": "Best-of games to 11, win by 2.",
+    "scoring": "By match wins."
+  },
+  {
+    "id": "darts",
+    "name": "Darts",
+    "rules": "Common format (e.g., 301/501), per house setup.",
+    "scoring": "By leg or match wins."
+  }
+]

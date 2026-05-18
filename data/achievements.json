@@ -1,0 +1,42 @@
+[
+  {
+    "id": "a001",
+    "name": "River King",
+    "holder": "p07",
+    "dateAwarded": "2025-01-11",
+    "tier": "gold",
+    "reason": "Pulled off the wildest river comeback in winter session."
+  },
+  {
+    "id": "a002",
+    "name": "Moonshot",
+    "holder": "p14",
+    "dateAwarded": "2025-02-22",
+    "tier": "silver",
+    "reason": "Shot the moon in Hearts under pressure."
+  },
+  {
+    "id": "a003",
+    "name": "Checkout Artist",
+    "holder": "p12",
+    "dateAwarded": "2025-03-15",
+    "tier": "gold",
+    "reason": "Closed 112 in one visit during darts final."
+  },
+  {
+    "id": "a004",
+    "name": "Bracket Breaker",
+    "holder": "p09",
+    "dateAwarded": "2025-04-19",
+    "tier": "silver",
+    "reason": "Dominated ping pong bracket with highest point spread."
+  },
+  {
+    "id": "a005",
+    "name": "Clutch Commander",
+    "holder": "p15",
+    "dateAwarded": "2025-05-17",
+    "tier": "gold",
+    "reason": "Back-to-back Hearts wins with comeback rounds."
+  }
+]

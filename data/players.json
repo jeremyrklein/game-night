@@ -1,0 +1,102 @@
+[
+  {
+    "id": "p01",
+    "name": "Jake Klein",
+    "nickname": "Jake",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p02",
+    "name": "Jeremy Klein",
+    "nickname": "Jeremy",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p03",
+    "name": "Clark Close",
+    "nickname": "Clark",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p04",
+    "name": "Mitch Stuard",
+    "nickname": "Mitch",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p05",
+    "name": "Jon Hicks",
+    "nickname": "Jon",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p06",
+    "name": "John Sargent",
+    "nickname": "John",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p07",
+    "name": "Aaron Grefsrud",
+    "nickname": "Aaron",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p08",
+    "name": "Jessica Grefsrud",
+    "nickname": "Jessica",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p09",
+    "name": "Ben Feely",
+    "nickname": "Ben",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p10",
+    "name": "Brandon Ford",
+    "nickname": "Brandon",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  }
+]
