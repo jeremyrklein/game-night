@@ -528,49 +528,99 @@ function App() {
 
                       {eventGameResults.length > 0 && (
                         <div className="highlight-box">
-                          <p className="small-title">Results</p>
-                          <ul>
+                          <p className="small-title">Complete Results</p>
+                          <div className="results-tables">
                             {eventGameResults.map((game) => {
                               const gameName =
                                 computed.gameTypesById[game.gameId]?.name || game.gameId
-                              const details = (game.results || []).map((result) => {
+                              const results = (game.results || []).map((result) => {
                                 const aliasKey = String(result.playerId || '')
                                   .trim()
                                   .toLowerCase()
-                                const name =
-                                  computed.playerAliasMap[aliasKey]?.name || result.playerId
-
-                                if (Number.isFinite(Number(result.position))) {
-                                  return `#${result.position} ${name}`
+                                const player = computed.playerAliasMap[aliasKey]
+                                return {
+                                  ...result,
+                                  playerName: player?.name || result.playerId,
                                 }
-
-                                if (
-                                  Number.isFinite(Number(result.gamesWon)) ||
-                                  Number.isFinite(Number(result.seriesWon))
-                                ) {
-                                  const gamesWon = Number(result.gamesWon || 0)
-                                  const seriesWon = Number(result.seriesWon || 0)
-                                  return `${name}: ${gamesWon} games, ${seriesWon} series`
-                                }
-
-                                if (Number.isFinite(Number(result.points))) {
-                                  return `${name}: ${result.points} pts`
-                                }
-
-                                if (Number.isFinite(Number(result.winnings))) {
-                                  return `${name}: $${result.winnings}`
-                                }
-
-                                return name
                               })
 
+                              const hasPosition = results.some((r) =>
+                                Number.isFinite(Number(r.position))
+                              )
+                              const hasGamesWon = results.some((r) =>
+                                Number.isFinite(Number(r.gamesWon))
+                              )
+                              const hasSeriesWon = results.some((r) =>
+                                Number.isFinite(Number(r.seriesWon))
+                              )
+                              const hasPoints = results.some((r) =>
+                                Number.isFinite(Number(r.points))
+                              )
+                              const hasWinnings = results.some((r) =>
+                                Number.isFinite(Number(r.winnings))
+                              )
+
                               return (
-                                <li key={`r-${event.id}-${game.gameId}`}>
-                                  {gameName}: {details.join(' | ')}
-                                </li>
+                                <div key={`table-${event.id}-${game.gameId}`} className="game-results-table">
+                                  <p className="muted tiny">{gameName}</p>
+                                  <table>
+                                    <thead>
+                                      <tr>
+                                        <th>Player</th>
+                                        {hasPosition && <th>Place</th>}
+                                        {hasGamesWon && <th>Games</th>}
+                                        {hasSeriesWon && <th>Series</th>}
+                                        {hasPoints && <th>Points</th>}
+                                        {hasWinnings && <th>Winnings</th>}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {results.map((result, idx) => (
+                                        <tr key={`${event.id}-${game.gameId}-${idx}`}>
+                                          <td>{result.playerName}</td>
+                                          {hasPosition && (
+                                            <td>
+                                              {Number.isFinite(Number(result.position))
+                                                ? `#${result.position}`
+                                                : '—'}
+                                            </td>
+                                          )}
+                                          {hasGamesWon && (
+                                            <td>
+                                              {Number.isFinite(Number(result.gamesWon))
+                                                ? result.gamesWon
+                                                : '—'}
+                                            </td>
+                                          )}
+                                          {hasSeriesWon && (
+                                            <td>
+                                              {Number.isFinite(Number(result.seriesWon))
+                                                ? result.seriesWon
+                                                : '—'}
+                                            </td>
+                                          )}
+                                          {hasPoints && (
+                                            <td>
+                                              {Number.isFinite(Number(result.points))
+                                                ? result.points
+                                                : '—'}
+                                            </td>
+                                          )}
+                                          {hasWinnings && (
+                                            <td>
+                                              {Number.isFinite(Number(result.winnings))
+                                                ? `$${result.winnings}`
+                                                : '—'}
+                                            </td>
+                                          )}
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
                               )
                             })}
-                          </ul>
+                          </div>
                         </div>
                       )}
                     </div>

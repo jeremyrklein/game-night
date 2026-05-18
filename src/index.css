@@ -660,3 +660,50 @@ select {
     align-items: stretch;
   }
 }
+
+.results-tables {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+.game-results-table {
+  overflow-x: auto;
+}
+
+.game-results-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.game-results-table thead {
+  background: #f1f5f9;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.game-results-table th {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  font-weight: 600;
+  color: #334155;
+}
+
+.game-results-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.game-results-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.game-results-table td {
+  padding: 0.55rem 0.8rem;
+  color: #475569;
+}
+
+.game-results-table .muted {
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
