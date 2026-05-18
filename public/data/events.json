@@ -68,5 +68,37 @@
       "Olive won back-to-back Hearts tables.",
       "Alex took final poker table with pocket queens."
     ]
+  },
+  {
+    "id": "e2023-09",
+    "title": "Game Night - Sep 23, 2023",
+    "date": "2023-09-23",
+    "location": "TBD",
+    "host": "TBD",
+    "photo": "",
+    "recap": "# Game Night - Sep 23, 2023\n\nA fun night of Sequence and Poker!",
+    "highlights": [
+      "Jeremy won 5 games and 3 series in Sequence.",
+      "Clark, Mitch, and Jake tied for 2nd place in Sequence with 4 games and 1 series each.",
+      "Jeremy won Poker, with Clark taking 2nd place."
+    ],
+    "games": [
+      {
+        "gameId": "sequence",
+        "results": [
+          { "playerId": "jeremy", "gamesWon": 5, "seriesWon": 3 },
+          { "playerId": "clark", "gamesWon": 4, "seriesWon": 1 },
+          { "playerId": "mitch", "gamesWon": 4, "seriesWon": 1 },
+          { "playerId": "jake", "gamesWon": 4, "seriesWon": 1 }
+        ]
+      },
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jeremy", "position": 1 },
+          { "playerId": "clark", "position": 2 }
+        ]
+      }
+    ]
   }
 ]
