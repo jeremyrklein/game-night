@@ -527,12 +527,12 @@ function App() {
                       </div>
 
                       {(() => {
-                        console.log('[DEBUG] eventGameResults:', eventGameResults);
-                        return eventGameResults.length > 0;
-                      })() && (
-                        <div className="highlight-box">
-                          <p className="small-title">Complete Results</p>
-                          <div className="results-tables">
+                        const hasGames = Array.isArray(eventGameResults) && eventGameResults.length > 0;
+                        if (hasGames) {
+                          return (
+                            <div className="highlight-box">
+                              <p className="small-title">Complete Results ({eventGameResults.length} games)</p>
+                              <div className="results-tables">
                             {eventGameResults.map((game) => {
                               const gameName =
                                 computed.gameTypesById[game.gameId]?.name || game.gameId
@@ -623,9 +623,12 @@ function App() {
                                 </div>
                               )
                             })}
-                          </div>
-                        </div>
-                      )}
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
                   </article>
                 )
