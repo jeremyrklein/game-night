@@ -241,5 +241,41 @@
         ]
       }
     ]
+  },
+  {
+    "id": "e2022-05",
+    "title": "Game Night - May 21, 2022",
+    "date": "2022-05-21",
+    "location": "TBD",
+    "host": "TBD",
+    "photo": "",
+    "recap": "# Game Night - May 21, 2022\n\nA night of Canadian Salad and Poker with dramatic moments!",
+    "highlights": [
+      "Jake won Canadian Salad by drawing an Ace of Hearts in a tie-breaker with Mitch.",
+      "Jake won Poker, knocking out John and winning $70.",
+      "Clark's game went downhill after a music change to 'You're the Best Around'."
+    ],
+    "games": [
+      {
+        "gameId": "canadian-salad",
+        "results": [
+          { "playerId": "jake", "position": 1 },
+          { "playerId": "mitch", "position": 2 },
+          { "playerId": "clark", "position": 3 }
+        ]
+      },
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jake", "position": 1, "winnings": 70 },
+          { "playerId": "john", "position": 2 },
+          { "playerId": "brandon", "position": 3 },
+          { "playerId": "clark", "position": 4 },
+          { "playerId": "mitch", "position": 5 },
+          { "playerId": "hicks", "position": 6 },
+          { "playerId": "jeremy", "position": 7 }
+        ]
+      }
+    ]
   }
 ]
