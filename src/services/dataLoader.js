@@ -14,12 +14,14 @@ function buildPlayerIdLookup(players) {
   players.forEach((player) => {
     const nameParts = String(player.name || '').trim().split(/\s+/)
     const firstName = nameParts[0] || ''
+    const lastName = nameParts[nameParts.length - 1] || ''
 
     const keys = [
       player.id,
       player.nickname,
       player.name,
       firstName,
+      lastName,
     ]
 
     keys.forEach((key) => {

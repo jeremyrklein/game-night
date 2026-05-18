@@ -474,7 +474,11 @@ function App() {
               {filteredEvents.map((event) => {
                 const eventGames = computed.gamesByEventId[event.id] || []
                 const eventGameResults = event.games || []
-                const eventDate = new Date(event.date)
+                const [year, month, day] = String(event.date)
+                  .split('-')
+                  .map((value) => Number(value))
+                const eventDate = new Date(year, (month || 1) - 1, day || 1)
+                const recapText = String(event.recap || '').replace(/^#\s*/gm, '').trim()
 
                 return (
                   <article key={event.id} className="glass-card event-card">
@@ -497,10 +501,10 @@ function App() {
                             year: 'numeric',
                           })}
                         </span>
-                        <span>{event.location}</span>
+                        <span>{event.location || ' '}</span>
                       </div>
                       <h3>{event.title}</h3>
-                      <p className="muted small">{event.recap}</p>
+                      <p className="muted small">{recapText}</p>
 
                       <div className="tag-row">
                         {eventGames.map((game) => (
