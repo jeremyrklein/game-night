@@ -526,9 +526,9 @@ function App() {
                         </ul>
                       </div>
 
-                      {eventGameResults.length > 0 && (
+                      {true && (
                         <div className="highlight-box">
-                          <p className="small-title">Complete Results</p>
+                          <p className="small-title">Complete Results ({eventGameResults.length} games)</p>
                           <div className="results-tables">
                             {eventGameResults.map((game) => {
                               const gameName =
