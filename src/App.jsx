@@ -391,9 +391,7 @@ function App() {
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{
-                            width: isUnlocked
-                              ? `${(entry.stats.wins / maxWins) * 100}%`
-                              : `${Math.max(18, 90 - index * 14)}%`,
+                            width: `${Math.max(8, (entry.stats.wins / maxWins) * 100)}%`,
                           }}
                           transition={{ duration: 0.8, delay: index * 0.05 }}
                           className={cx('bar-fill', !isUnlocked && 'bar-fill-blur')}
