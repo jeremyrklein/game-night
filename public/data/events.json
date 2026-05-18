@@ -169,5 +169,30 @@
         ]
       }
     ]
+  },
+  {
+    "id": "e2023-06",
+    "title": "Game Night - June 10, 2023",
+    "date": "2023-06-10",
+    "location": "TBD",
+    "host": "TBD",
+    "photo": "",
+    "recap": "# Game Night - June 10, 2023\n\nA competitive Sequence game with close results!",
+    "highlights": [
+      "Mitch took first place in Sequence.",
+      "Jake and Jeremy tied for second place.",
+      "Clark finished third."
+    ],
+    "games": [
+      {
+        "gameId": "sequence",
+        "results": [
+          { "playerId": "mitch", "position": 1 },
+          { "playerId": "jake", "position": 2 },
+          { "playerId": "jeremy", "position": 2 },
+          { "playerId": "clark", "position": 3 }
+        ]
+      }
+    ]
   }
 ]
