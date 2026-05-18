@@ -100,5 +100,74 @@
         ]
       }
     ]
+  },
+  {
+    "id": "e2026-05",
+    "title": "Game Night - May 2, 2026",
+    "date": "2026-05-02",
+    "location": "TBD",
+    "host": "TBD",
+    "photo": "",
+    "recap": "# Game Night - May 2, 2026\n\nAn exciting Poker game with a surprising comeback!",
+    "highlights": [
+      "Jake won the last three hands to secure victory.",
+      "Clark came in second place.",
+      "John finished third.",
+      "Aaron and Jeremy tied for fourth place."
+    ],
+    "games": [
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jake", "position": 1 },
+          { "playerId": "clark", "position": 2 },
+          { "playerId": "john", "position": 3 },
+          { "playerId": "aaron", "position": 4 },
+          { "playerId": "jeremy", "position": 4 },
+          { "playerId": "mitch", "position": 5 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e2024-07",
+    "title": "Game Night - Jul 20, 2024",
+    "date": "2024-07-20",
+    "location": "TBD",
+    "host": "TBD",
+    "photo": "",
+    "recap": "# Game Night - Jul 20, 2024\n\nA thrilling night of Poker and Canadian Salad!",
+    "highlights": [
+      "Aaron was out first in Poker but bought back in.",
+      "Brandon won three all-in hands in a row before losing to Jake.",
+      "Jake won Poker, with Ben coming in second and Mitch third.",
+      "Aaron dominated Canadian Salad, with Clark and Brandon following."
+    ],
+    "games": [
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jake", "position": 1 },
+          { "playerId": "ben", "position": 2 },
+          { "playerId": "mitch", "position": 3 },
+          { "playerId": "brandon", "position": 4 },
+          { "playerId": "jake", "position": 4 },
+          { "playerId": "clark", "position": 5 },
+          { "playerId": "aaron", "position": 5 }
+        ]
+      },
+      {
+        "gameId": "canadian-salad",
+        "results": [
+          { "playerId": "aaron", "position": 1 },
+          { "playerId": "clark", "position": 2 },
+          { "playerId": "brandon", "position": 3 },
+          { "playerId": "jeremy", "position": 4 },
+          { "playerId": "jake", "position": 5 },
+          { "playerId": "ben", "position": 6 },
+          { "playerId": "mitch", "position": 7 }
+        ]
+      }
+    ]
   }
 ]
