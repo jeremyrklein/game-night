@@ -88,15 +88,126 @@ export default function EventArchive({ data, playersById, gameTypesById }) {
                 ))}
               </ul>
 
-              <h3>Games Played</h3>
-              <ul className="compact-list">
-                {eventGames.map((game) => (
-                  <li key={game.id}>
-                    <strong>{gameTypesById[game.gameType]?.name || game.gameType}</strong> —
-                    Winner: {playersById[game.winner]?.name || game.winner}
-                  </li>
-                ))}
-              </ul>
+              <div className="stack">
+                {eventGames.map((game) => {
+                  const gameName = gameTypesById[game.gameType]?.name || game.gameType
+                  const results = (game.results || []).map((result) => ({
+                    ...result,
+                    playerName: playersById[result.playerId]?.name || result.playerName || result.playerId,
+                  }))
+
+                  const hasPosition = results.some((result) => Number.isFinite(Number(result.position)))
+                  const hasGamesWon = results.some((result) => Number.isFinite(Number(result.gamesWon)))
+                  const hasSeriesWon = results.some((result) => Number.isFinite(Number(result.seriesWon)))
+                  const hasPoints = results.some((result) => Number.isFinite(Number(result.points)))
+                  const hasWinnings = results.some((result) => Number.isFinite(Number(result.winnings)))
+
+                  const winner = [...results].sort((a, b) => {
+                    if (hasPosition) {
+                      const positionDiff = Number(a.position) - Number(b.position)
+                      if (positionDiff !== 0) {
+                        return positionDiff
+                      }
+                    }
+
+                    if (hasSeriesWon) {
+                      const seriesDiff = Number(b.seriesWon || 0) - Number(a.seriesWon || 0)
+                      if (seriesDiff !== 0) {
+                        return seriesDiff
+                      }
+                    }
+
+                    if (hasGamesWon) {
+                      const gamesDiff = Number(b.gamesWon || 0) - Number(a.gamesWon || 0)
+                      if (gamesDiff !== 0) {
+                        return gamesDiff
+                      }
+                    }
+
+                    if (hasPoints) {
+                      const lowerIsBetter = game.gameType === 'hearts' || game.gameType === 'canadian-salad'
+                      const pointsDiff = lowerIsBetter
+                        ? Number(a.points || 0) - Number(b.points || 0)
+                        : Number(b.points || 0) - Number(a.points || 0)
+                      if (pointsDiff !== 0) {
+                        return pointsDiff
+                      }
+                    }
+
+                    if (hasWinnings) {
+                      const winningsDiff = Number(b.winnings || 0) - Number(a.winnings || 0)
+                      if (winningsDiff !== 0) {
+                        return winningsDiff
+                      }
+                    }
+
+                    return String(a.playerName || '').localeCompare(String(b.playerName || ''))
+                  })[0]
+
+                  const notes = String(game.notes || '').trim()
+
+                  return (
+                    <section key={game.id} className="highlight-box">
+                      <p className="small-title">{gameName}</p>
+                      {notes ? <p className="muted small">{notes}</p> : null}
+                      <p className="small">
+                        <strong>Winner:</strong> {winner?.playerName || winner?.playerId || '—'}
+                      </p>
+                      <details className="game-results-details">
+                        <summary>See full results</summary>
+                        <div className="results-tables" style={{ marginTop: '0.75rem' }}>
+                          <div className="game-results-table">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>Player</th>
+                                  {hasPosition && <th>Place</th>}
+                                  {hasGamesWon && <th>Games</th>}
+                                  {hasSeriesWon && <th>Series</th>}
+                                  {hasPoints && <th>Points</th>}
+                                  {hasWinnings && <th>Winnings</th>}
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {results.map((result, idx) => (
+                                  <tr key={`${game.id}-${idx}`}>
+                                    <td>{result.playerName}</td>
+                                    {hasPosition && (
+                                      <td>
+                                        {Number.isFinite(Number(result.position)) ? `#${result.position}` : '—'}
+                                      </td>
+                                    )}
+                                    {hasGamesWon && (
+                                      <td>
+                                        {Number.isFinite(Number(result.gamesWon)) ? result.gamesWon : '—'}
+                                      </td>
+                                    )}
+                                    {hasSeriesWon && (
+                                      <td>
+                                        {Number.isFinite(Number(result.seriesWon)) ? result.seriesWon : '—'}
+                                      </td>
+                                    )}
+                                    {hasPoints && (
+                                      <td>
+                                        {Number.isFinite(Number(result.points)) ? result.points : '—'}
+                                      </td>
+                                    )}
+                                    {hasWinnings && (
+                                      <td>
+                                        {Number.isFinite(Number(result.winnings)) ? `$${result.winnings}` : '—'}
+                                      </td>
+                                    )}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </details>
+                    </section>
+                  )
+                })}
+              </div>
             </article>
           )
         })}

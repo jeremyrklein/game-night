@@ -58,9 +58,16 @@ function iconForGameType(gameType) {
   return byType[gameType] || Trophy
 }
 
-function StatCard({ label, value, detail, icon: Icon }) {
+function StatCard({ label, value, detail, icon: Icon, onClick }) {
   return (
-    <article className="glass-card stat-card">
+    <article
+      className={"glass-card stat-card" + (onClick ? " clickable" : "")}
+      tabIndex={onClick ? 0 : undefined}
+      role={onClick ? "button" : undefined}
+      onClick={onClick}
+      onKeyDown={onClick ? (e) => (e.key === 'Enter' || e.key === ' ') && onClick() : undefined}
+      style={{ cursor: onClick ? 'pointer' : undefined }}
+    >
       <div className="stat-icon-wrap">
         <div className="stat-icon">
           <Icon size={20} />
@@ -356,24 +363,28 @@ function App() {
                 value={summary.eventCount}
                 detail="Archived across all sessions"
                 icon={CalendarDays}
+                onClick={() => setActiveTab('Events')}
               />
               <StatCard
                 label="Active players"
                 value={summary.activePlayers}
                 detail="Current core roster"
                 icon={Users}
+                onClick={() => setActiveTab('Players')}
               />
               <StatCard
                 label="Trophies awarded"
                 value={summary.trophies}
                 detail="Virtual and seasonal"
                 icon={Trophy}
+                onClick={() => setActiveTab('Achievements')}
               />
               <StatCard
                 label="Games tracked"
-                value={`${summary.gameTypes}+`}
+                value={`${summary.gameTypes}`}
                 detail="Expandable rulesets"
                 icon={TableProperties}
+                onClick={() => setActiveTab('Events')}
               />
             </section>
 
@@ -391,7 +402,18 @@ function App() {
 
                 <div className="mini-bars">
                   {miniLeaders.map((entry, index) => (
-                    <div key={entry.player.id}>
+                    <div
+                      key={entry.player.id}
+                      className="clickable"
+                      tabIndex={0}
+                      role="button"
+                      onClick={() => {
+                        setSelectedPlayerId(entry.player.id)
+                        setActiveTab('Players')
+                      }}
+                      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedPlayerId(entry.player.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <div className="row between small-row">
                         <span className="small-title">
                           {index + 1}. {entry.player.name}
@@ -425,7 +447,18 @@ function App() {
                     const Icon = iconForGameType(gameType?.id)
 
                     return (
-                      <div key={item.gameType} className="leader-item">
+                      <div
+                        key={item.gameType}
+                        className="leader-item clickable"
+                        tabIndex={0}
+                        role="button"
+                        onClick={() => {
+                          setActiveTab('Events')
+                          setQuery(item.gameType)
+                        }}
+                        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setQuery(item.gameType)}
+                        style={{ cursor: 'pointer' }}
+                      >
                         <div className="row gap-8">
                           <div className="mini-icon">
                             <Icon size={15} />
@@ -506,132 +539,142 @@ function App() {
                       <h3>{event.title}</h3>
                       <p className="muted small">{recapText}</p>
 
-                      <div className="tag-row">
-                        {eventGames.map((game) => (
-                          <span key={game.id} className="tag">
-                            {computed.gameTypesById[game.gameType]?.name || game.gameType}
-                          </span>
-                        ))}
-                      </div>
+                      <div className="stack">
+                        {eventGameResults.map((game) => {
+                          const gameName = computed.gameTypesById[game.gameId]?.name || game.gameId
+                          const results = (game.results || []).map((result) => {
+                            const aliasKey = String(result.playerId || '')
+                              .trim()
+                              .toLowerCase()
+                            const player = computed.playerAliasMap[aliasKey]
+                            return {
+                              ...result,
+                              playerName: player?.name || result.playerName || result.playerId,
+                            }
+                          })
 
-                      <div className="highlight-box">
-                        <p className="small-title">Winners</p>
-                        <ul>
-                          {eventGames.map((game) => (
-                            <li key={`w-${game.id}`}>
-                              {computed.gameTypesById[game.gameType]?.name || game.gameType}:{' '}
-                              {computed.playersById[game.winner]?.name || game.winner}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                          const hasPosition = results.some((r) => Number.isFinite(Number(r.position)))
+                          const hasGamesWon = results.some((r) => Number.isFinite(Number(r.gamesWon)))
+                          const hasSeriesWon = results.some((r) => Number.isFinite(Number(r.seriesWon)))
+                          const hasPoints = results.some((r) => Number.isFinite(Number(r.points)))
+                          const hasWinnings = results.some((r) => Number.isFinite(Number(r.winnings)))
 
-                      <div style={{ paddingTop: '1rem', fontSize: '0.7rem', color: '#888', marginTop: '0.5rem' }}>
-                        [DEBUG: eventGameResults.length={eventGameResults?.length || 'UNDEFINED'} | type={typeof eventGameResults}]
-                      </div>
-                      {(() => {
-                        const hasGames = Array.isArray(eventGameResults) && eventGameResults.length > 0;
-                        if (hasGames) {
+                          const winner = [...results].sort((a, b) => {
+                            if (hasPosition) {
+                              const positionDiff = Number(a.position) - Number(b.position)
+                              if (positionDiff !== 0) {
+                                return positionDiff
+                              }
+                            }
+
+                            if (hasSeriesWon) {
+                              const seriesDiff = Number(b.seriesWon || 0) - Number(a.seriesWon || 0)
+                              if (seriesDiff !== 0) {
+                                return seriesDiff
+                              }
+                            }
+
+                            if (hasGamesWon) {
+                              const gamesDiff = Number(b.gamesWon || 0) - Number(a.gamesWon || 0)
+                              if (gamesDiff !== 0) {
+                                return gamesDiff
+                              }
+                            }
+
+                            if (hasPoints) {
+                              const lowerIsBetter = game.gameId === 'hearts' || game.gameId === 'canadian-salad'
+                              const pointsDiff = lowerIsBetter
+                                ? Number(a.points || 0) - Number(b.points || 0)
+                                : Number(b.points || 0) - Number(a.points || 0)
+                              if (pointsDiff !== 0) {
+                                return pointsDiff
+                              }
+                            }
+
+                            if (hasWinnings) {
+                              const winningsDiff = Number(b.winnings || 0) - Number(a.winnings || 0)
+                              if (winningsDiff !== 0) {
+                                return winningsDiff
+                              }
+                            }
+
+                            return String(a.playerName || '').localeCompare(String(b.playerName || ''))
+                          })[0]
+
+                          const notes = String(game.notes || '').trim()
+
                           return (
-                            <div className="highlight-box">
-                              <p className="small-title">Complete Results ({eventGameResults.length} games)</p>
-                              <div className="results-tables">
-                            {eventGameResults.map((game) => {
-                              const gameName =
-                                computed.gameTypesById[game.gameId]?.name || game.gameId
-                              const results = (game.results || []).map((result) => {
-                                const aliasKey = String(result.playerId || '')
-                                  .trim()
-                                  .toLowerCase()
-                                const player = computed.playerAliasMap[aliasKey]
-                                return {
-                                  ...result,
-                                  playerName: player?.name || result.playerId,
-                                }
-                              })
-
-                              const hasPosition = results.some((r) =>
-                                Number.isFinite(Number(r.position))
-                              )
-                              const hasGamesWon = results.some((r) =>
-                                Number.isFinite(Number(r.gamesWon))
-                              )
-                              const hasSeriesWon = results.some((r) =>
-                                Number.isFinite(Number(r.seriesWon))
-                              )
-                              const hasPoints = results.some((r) =>
-                                Number.isFinite(Number(r.points))
-                              )
-                              const hasWinnings = results.some((r) =>
-                                Number.isFinite(Number(r.winnings))
-                              )
-
-                              return (
-                                <div key={`table-${event.id}-${game.gameId}`} className="game-results-table">
-                                  <p className="muted tiny">{gameName}</p>
-                                  <table>
-                                    <thead>
-                                      <tr>
-                                        <th>Player</th>
-                                        {hasPosition && <th>Place</th>}
-                                        {hasGamesWon && <th>Games</th>}
-                                        {hasSeriesWon && <th>Series</th>}
-                                        {hasPoints && <th>Points</th>}
-                                        {hasWinnings && <th>Winnings</th>}
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {results.map((result, idx) => (
-                                        <tr key={`${event.id}-${game.gameId}-${idx}`}>
-                                          <td>{result.playerName}</td>
-                                          {hasPosition && (
-                                            <td>
-                                              {Number.isFinite(Number(result.position))
-                                                ? `#${result.position}`
-                                                : '—'}
-                                            </td>
-                                          )}
-                                          {hasGamesWon && (
-                                            <td>
-                                              {Number.isFinite(Number(result.gamesWon))
-                                                ? result.gamesWon
-                                                : '—'}
-                                            </td>
-                                          )}
-                                          {hasSeriesWon && (
-                                            <td>
-                                              {Number.isFinite(Number(result.seriesWon))
-                                                ? result.seriesWon
-                                                : '—'}
-                                            </td>
-                                          )}
-                                          {hasPoints && (
-                                            <td>
-                                              {Number.isFinite(Number(result.points))
-                                                ? result.points
-                                                : '—'}
-                                            </td>
-                                          )}
-                                          {hasWinnings && (
-                                            <td>
-                                              {Number.isFinite(Number(result.winnings))
-                                                ? `$${result.winnings}`
-                                                : '—'}
-                                            </td>
-                                          )}
+                            <section key={`game-${event.id}-${game.gameId}`} className="highlight-box">
+                              <p className="small-title">{gameName}</p>
+                              {notes ? <p className="muted small">{notes}</p> : null}
+                              <p className="small">
+                                <strong>Winner:</strong> {winner?.playerName || winner?.playerId || '—'}
+                              </p>
+                              <details className="game-results-details">
+                                <summary>See full results</summary>
+                                <div className="results-tables" style={{ marginTop: '0.75rem' }}>
+                                  <div className="game-results-table">
+                                    <table>
+                                      <thead>
+                                        <tr>
+                                          <th>Player</th>
+                                          {hasPosition && <th>Place</th>}
+                                          {hasGamesWon && <th>Games</th>}
+                                          {hasSeriesWon && <th>Series</th>}
+                                          {hasPoints && <th>Points</th>}
+                                          {hasWinnings && <th>Winnings</th>}
                                         </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
+                                      </thead>
+                                      <tbody>
+                                        {results.map((result, idx) => (
+                                          <tr key={`${event.id}-${game.gameId}-${idx}`}>
+                                            <td>{result.playerName}</td>
+                                            {hasPosition && (
+                                              <td>
+                                                {Number.isFinite(Number(result.position))
+                                                  ? `#${result.position}`
+                                                  : '—'}
+                                              </td>
+                                            )}
+                                            {hasGamesWon && (
+                                              <td>
+                                                {Number.isFinite(Number(result.gamesWon))
+                                                  ? result.gamesWon
+                                                  : '—'}
+                                              </td>
+                                            )}
+                                            {hasSeriesWon && (
+                                              <td>
+                                                {Number.isFinite(Number(result.seriesWon))
+                                                  ? result.seriesWon
+                                                  : '—'}
+                                              </td>
+                                            )}
+                                            {hasPoints && (
+                                              <td>
+                                                {Number.isFinite(Number(result.points))
+                                                  ? result.points
+                                                  : '—'}
+                                              </td>
+                                            )}
+                                            {hasWinnings && (
+                                              <td>
+                                                {Number.isFinite(Number(result.winnings))
+                                                  ? `$${result.winnings}`
+                                                  : '—'}
+                                              </td>
+                                            )}
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
                                 </div>
-                              )
-                            })}
-                              </div>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })()}
+                              </details>
+                            </section>
+                          )
+                        })}
+                      </div>
                     </div>
                   </article>
                 )

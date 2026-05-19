@@ -98,5 +98,15 @@
     "joinedYear": 2026,
     "avatar": "",
     "active": true
+  },
+  {
+    "id": "p11",
+    "name": "Mike Chan",
+    "nickname": "Mike",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2023,
+    "avatar": "",
+    "active": true
   }
 ]

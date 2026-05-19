@@ -1,0 +1,78 @@
+{
+  "p01": {
+    "events_played": 19,
+    "average_place": {
+      "poker": 3.5,
+      "sequence": 2.125
+    },
+    "average_score": {},
+    "moon_shots": 0
+  },
+  "p03": {
+    "events_played": 19,
+    "average_place": {
+      "sequence": 2.5
+    },
+    "average_score": {},
+    "moon_shots": 0
+  },
+  "p04": {
+    "events_played": 19,
+    "average_place": {
+      "blackjack": 3.5,
+      "canadian-salad": 4.0,
+      "hearts": 3.5,
+      "poker": 3.3333333333333335,
+      "sequence": 2.5
+    },
+    "average_score": {
+      "canadian-salad": 81.66666666666667,
+      "hearts": 102.0
+    },
+    "moon_shots": 2
+  },
+  "p02": {
+    "events_played": 18,
+    "average_place": {
+      "poker": 4.0,
+      "sequence": 2.375
+    },
+    "average_score": {},
+    "moon_shots": 1
+  },
+  "p06": {
+    "events_played": 11,
+    "average_place": {
+      "canadian-salad": 3.8947368421052633,
+      "hearts": 3.85,
+      "poker": 3.730769230769231
+    },
+    "average_score": {
+      "canadian-salad": 95.0,
+      "hearts": 102.0
+    },
+    "moon_shots": 2
+  },
+  "p10": {
+    "events_played": 9,
+    "average_place": {
+      "hearts": 3.6923076923076925
+    },
+    "average_score": {
+      "hearts": 66.0
+    },
+    "moon_shots": 0
+  },
+  "p05": {
+    "events_played": 7,
+    "average_place": {
+      "blackjack": 5.428571428571429,
+      "hearts": 4.714285714285714,
+      "poker": 5.428571428571429
+    },
+    "average_score": {
+      "hearts": 64.0
+    },
+    "moon_shots": 0
+  }
+}
