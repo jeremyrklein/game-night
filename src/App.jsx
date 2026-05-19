@@ -559,7 +559,7 @@ function App() {
                           const hasPoints = results.some((r) => Number.isFinite(Number(r.points)))
                           const hasWinnings = results.some((r) => Number.isFinite(Number(r.winnings)))
 
-                          const winner = [...results].sort((a, b) => {
+                          const fallbackWinner = [...results].sort((a, b) => {
                             if (hasPosition) {
                               const positionDiff = Number(a.position) - Number(b.position)
                               if (positionDiff !== 0) {
@@ -600,6 +600,9 @@ function App() {
 
                             return String(a.playerName || '').localeCompare(String(b.playerName || ''))
                           })[0]
+
+                          const explicitWinner = results.find((result) => result.playerId === game.winnerId)
+                          const winner = explicitWinner || fallbackWinner
 
                           const notes = String(game.notes || '').trim()
 

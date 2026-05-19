@@ -204,10 +204,14 @@ def canonical_game(raw_game: str) -> str | None:
     return GAME_MAP.get(key(raw_game))
 
 
-def winner_from_results(results: list[dict]) -> dict[str, object]:
+def winner_from_results(results: list[dict], game_id: str | None = None) -> dict[str, object]:
     ranked = [result for result in results if result.get("position") is not None]
     if ranked:
-        return sorted(ranked, key=lambda result: int(result["position"]))[0]
+        # Trust placement only when it is clearly meaningful.
+        # Some historical rows only contain a single placement that is not the winner.
+        positions = [int(result["position"]) for result in ranked]
+        if len(ranked) >= 2 or any(position == 1 for position in positions):
+            return sorted(ranked, key=lambda result: int(result["position"]))[0]
 
     ranked = [result for result in results if result.get("seriesWon") is not None]
     if ranked:
@@ -220,6 +224,16 @@ def winner_from_results(results: list[dict]) -> dict[str, object]:
     if ranked:
         return sorted(ranked, key=lambda result: -int(result.get("gamesWon", 0)))[0]
 
+    ranked = [result for result in results if result.get("points") is not None]
+    if len(ranked) >= 2:
+        if game_id in {"hearts", "canadian-salad"}:
+            return sorted(ranked, key=lambda result: int(result.get("points", 0)))[0]
+        return sorted(ranked, key=lambda result: -int(result.get("points", 0)))[0]
+
+    ranked = [result for result in results if result.get("winnings") is not None]
+    if len(ranked) >= 2:
+        return sorted(ranked, key=lambda result: -int(result.get("winnings", 0)))[0]
+
     return results[0] if results else {}
 
 
@@ -227,7 +241,7 @@ def build_game_summary(game_id: str, results: list[dict]) -> str:
     if not results:
         return f"{GAME_NAMES.get(game_id, game_id)}: no scored results were recorded."
 
-    winner = winner_from_results(results)
+    winner = winner_from_results(results, game_id)
     winner_name = str(winner.get("playerName", winner.get("playerId", "")))
 
     if game_id == "sequence":
@@ -274,14 +288,15 @@ def build_games_from_events(events: list[dict]) -> list[dict]:
                 else:
                     scores[player_id] = 0
 
-            winner = winner_from_results(results)
+            winner_id = str(event_game.get("winnerId", "")).strip()
+            winner = winner_from_results(results, event_game["gameId"])
             games.append(
                 {
                     "id": f"{event['id']}-{event_game['gameId']}-{index}",
                     "eventId": event["id"],
                     "gameType": event_game["gameId"],
                     "players": players,
-                    "winner": str(winner.get("playerId", "")),
+                    "winner": winner_id or str(winner.get("playerId", "")),
                     "scores": scores,
                     "notes": event_game.get("notes", ""),
                 }
@@ -523,6 +538,8 @@ def main() -> int:
                 continue
             kept_games.append(game)
 
+            winner = winner_from_results(game["results"], game["gameId"])
+            game["winnerId"] = str(winner.get("playerId", ""))
             summary = build_game_summary(game["gameId"], game["results"])
             game_summaries.append(f"{GAME_NAMES[game['gameId']]}: {summary.split(': ', 1)[-1] if ': ' in summary else summary}")
             highlights.append(summary)
@@ -539,16 +556,16 @@ def main() -> int:
         event["highlights"] = highlights or [event["recap"]]
         events.append(event)
 
-        moon_shots = count_moon_shots(valid_rows, player_lookup)
+    moon_shots = count_moon_shots(valid_rows, player_lookup)
 
-        for event in events:
-            for game in event.get("games", []):
-                if game.get("gameId") != "hearts":
-                    continue
-                for result in game.get("results", []):
-                    player_id = str(result.get("playerId", ""))
-                    if moon_shots.get(player_id):
-                        result["moonShots"] = moon_shots[player_id]
+    for event in events:
+        for game in event.get("games", []):
+            if game.get("gameId") != "hearts":
+                continue
+            for result in game.get("results", []):
+                player_id = str(result.get("playerId", ""))
+                if moon_shots.get(player_id):
+                    result["moonShots"] = moon_shots[player_id]
 
     games = build_games_from_events(events)
 

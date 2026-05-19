@@ -9,6 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "data:import": "python scripts/import_totals_csv.py",
+    "data:validate": "python scripts/validate_data_consistency.py",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

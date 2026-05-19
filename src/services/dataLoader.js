@@ -40,14 +40,21 @@ function normalizePlayerId(playerId, lookup) {
   return lookup[normalized] || playerId
 }
 
-function winnerFromResults(results) {
+function winnerFromResults(results, gameType) {
   if (!Array.isArray(results) || results.length === 0) {
     return ''
   }
 
-  const byPosition = results
+  const positioned = results
     .filter((entry) => Number.isFinite(Number(entry.position)))
-    .sort((a, b) => Number(a.position) - Number(b.position))[0]
+
+  // Trust positions when at least two ranks exist or someone is explicitly first.
+  const hasMeaningfulPositions =
+    positioned.length >= 2 || positioned.some((entry) => Number(entry.position) === 1)
+
+  const byPosition = hasMeaningfulPositions
+    ? [...positioned].sort((a, b) => Number(a.position) - Number(b.position))[0]
+    : null
 
   if (byPosition?.playerId) {
     return byPosition.playerId
@@ -62,7 +69,34 @@ function winnerFromResults(results) {
     return Number(b.gamesWon || 0) - Number(a.gamesWon || 0)
   })[0]
 
-  return bySeriesAndGames?.playerId || ''
+  if (bySeriesAndGames?.playerId && (Number(bySeriesAndGames.seriesWon || 0) > 0 || Number(bySeriesAndGames.gamesWon || 0) > 0)) {
+    return bySeriesAndGames.playerId
+  }
+
+  const withPoints = results.filter((entry) => Number.isFinite(Number(entry.points)))
+  if (withPoints.length >= 2) {
+    const byPoints = [...withPoints].sort((a, b) => {
+      const aPoints = Number(a.points)
+      const bPoints = Number(b.points)
+      if (gameType === 'hearts' || gameType === 'canadian-salad') {
+        return aPoints - bPoints
+      }
+      return bPoints - aPoints
+    })[0]
+    if (byPoints?.playerId) {
+      return byPoints.playerId
+    }
+  }
+
+  const withWinnings = results.filter((entry) => Number.isFinite(Number(entry.winnings)))
+  if (withWinnings.length >= 2) {
+    const byWinnings = [...withWinnings].sort((a, b) => Number(b.winnings) - Number(a.winnings))[0]
+    if (byWinnings?.playerId) {
+      return byWinnings.playerId
+    }
+  }
+
+  return results[0]?.playerId || ''
 }
 
 function scoreFromResult(result) {
@@ -96,7 +130,9 @@ function gamesFromEvents(events, playerLookup) {
       }))
 
       const playerIds = [...new Set(normalizedResults.map((result) => result.playerId))]
-      const winner = winnerFromResults(normalizedResults)
+      const winner =
+        normalizePlayerId(eventGame.winnerId, playerLookup) ||
+        winnerFromResults(normalizedResults, eventGame.gameId)
       const scores = Object.fromEntries(
         normalizedResults.map((result) => [result.playerId, scoreFromResult(result)]),
       )
