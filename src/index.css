@@ -667,6 +667,50 @@ select {
   margin-top: 0.8rem;
 }
 
+.results-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.results-hero-card,
+.results-section-card {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.back-link,
+.results-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link {
+  border: 1px solid #dbe1ea;
+  background: #fff;
+  color: #0f172a;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+
+.results-link {
+  color: #0f172a;
+  margin-top: 0.35rem;
+}
+
+.results-link:hover,
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.standalone-results-table table {
+  min-width: 640px;
+}
+
 .game-results-table {
   overflow-x: auto;
 }
@@ -706,4 +750,19 @@ select {
   color: #94a3b8;
   font-weight: 500;
   margin-bottom: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .results-page {
+    gap: 0.8rem;
+  }
+
+  .results-hero-card,
+  .results-section-card {
+    padding: 0.9rem;
+  }
+
+  .standalone-results-table table {
+    min-width: 560px;
+  }
 }

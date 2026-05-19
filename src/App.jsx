@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   CalendarDays,
@@ -20,7 +20,9 @@ import {
   Users,
 } from 'lucide-react'
 import { AUTH_SESSION_KEY, SHARED_PASSWORD } from './config/auth'
+import GameResultsPage from './components/GameResultsPage'
 import { useHallOfFameData } from './hooks/useHallOfFameData'
+import { buildGamePath, getGameDetails, parseGamePath } from './utils/gameResults'
 import {
   buildGameTypeLeaders,
   buildLifetimeLeaderboard,
@@ -132,6 +134,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('Dashboard')
   const [query, setQuery] = useState('')
   const [selectedPlayerId, setSelectedPlayerId] = useState(null)
+  const [selectedGameRoute, setSelectedGameRoute] = useState(() => parseGamePath(window.location.hash))
   const [isUnlocked, setIsUnlocked] = useState(
     () => window.sessionStorage.getItem(AUTH_SESSION_KEY) === 'true',
   )
@@ -241,6 +244,35 @@ function App() {
       })
   }, [computed, data, query])
 
+  const selectedGameView = useMemo(() => {
+    if (!data || !computed || !selectedGameRoute) {
+      return null
+    }
+
+    const event = data.events.find((candidate) => candidate.id === selectedGameRoute.eventId)
+    if (!event) {
+      return null
+    }
+
+    const indexedGame = event.games?.[selectedGameRoute.gameIndex]
+    const eventGame = indexedGame?.gameId === selectedGameRoute.gameId
+      ? indexedGame
+      : event.games?.find((candidate) => candidate.gameId === selectedGameRoute.gameId)
+
+    if (!eventGame) {
+      return null
+    }
+
+    return {
+      event,
+      gameDetails: getGameDetails(eventGame, {
+        playersById: computed.playersById,
+        playerAliasMap: computed.playerAliasMap,
+        gameTypesById: computed.gameTypesById,
+      }),
+    }
+  }, [computed, data, selectedGameRoute])
+
   const summary = useMemo(() => {
     if (!data || !computed) {
       return null
@@ -269,6 +301,32 @@ function App() {
     window.sessionStorage.removeItem(AUTH_SESSION_KEY)
     setIsUnlocked(false)
   }
+
+  const clearSelectedGameRoute = () => {
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
+    setSelectedGameRoute(null)
+  }
+
+  const handleTabChange = (tab) => {
+    clearSelectedGameRoute()
+    setActiveTab(tab)
+  }
+
+  useEffect(() => {
+    const syncRoute = () => {
+      setSelectedGameRoute(parseGamePath(window.location.hash))
+    }
+
+    window.addEventListener('hashchange', syncRoute)
+    return () => window.removeEventListener('hashchange', syncRoute)
+  }, [])
+
+  useEffect(() => {
+    if (selectedGameRoute) {
+      setActiveTab('Events')
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+  }, [selectedGameRoute])
 
   if (loading) {
     return <div className="status">Loading game night data…</div>
@@ -312,7 +370,7 @@ function App() {
                 key={tab}
                 type="button"
                 className={cx('tab-btn', activeTab === tab && 'tab-btn-active')}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => handleTabChange(tab)}
               >
                 {tab}
               </button>
@@ -322,7 +380,18 @@ function App() {
       </header>
 
       <main className="container content-stack">
-        {activeTab === 'Dashboard' && (
+        {selectedGameView ? (
+          <GameResultsPage
+            event={selectedGameView.event}
+            gameDetails={selectedGameView.gameDetails}
+            onBack={() => {
+              clearSelectedGameRoute()
+              setActiveTab('Events')
+            }}
+          />
+        ) : null}
+
+        {!selectedGameView && activeTab === 'Dashboard' && (
           <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <div className="hero-grid">
               <article className="hero-card">
@@ -336,13 +405,13 @@ function App() {
                   and private stats behind a simple shared-password gate.
                 </p>
                 <div className="hero-actions">
-                  <button type="button" onClick={() => setActiveTab('Events')}>
+                  <button type="button" onClick={() => handleTabChange('Events')}>
                     Browse events
                   </button>
                   <button
                     type="button"
                     className="secondary-btn"
-                    onClick={() => setActiveTab('Players')}
+                    onClick={() => handleTabChange('Players')}
                   >
                     View dossiers
                   </button>
@@ -363,28 +432,28 @@ function App() {
                 value={summary.eventCount}
                 detail="Archived across all sessions"
                 icon={CalendarDays}
-                onClick={() => setActiveTab('Events')}
+                onClick={() => handleTabChange('Events')}
               />
               <StatCard
                 label="Active players"
                 value={summary.activePlayers}
                 detail="Current core roster"
                 icon={Users}
-                onClick={() => setActiveTab('Players')}
+                onClick={() => handleTabChange('Players')}
               />
               <StatCard
                 label="Trophies awarded"
                 value={summary.trophies}
                 detail="Virtual and seasonal"
                 icon={Trophy}
-                onClick={() => setActiveTab('Achievements')}
+                onClick={() => handleTabChange('Achievements')}
               />
               <StatCard
                 label="Games tracked"
                 value={`${summary.gameTypes}`}
                 detail="Expandable rulesets"
                 icon={TableProperties}
-                onClick={() => setActiveTab('Events')}
+                onClick={() => handleTabChange('Events')}
               />
             </section>
 
@@ -409,9 +478,14 @@ function App() {
                       role="button"
                       onClick={() => {
                         setSelectedPlayerId(entry.player.id)
-                        setActiveTab('Players')
+                        handleTabChange('Players')
                       }}
-                      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedPlayerId(entry.player.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          setSelectedPlayerId(entry.player.id)
+                          handleTabChange('Players')
+                        }
+                      }}
                       style={{ cursor: 'pointer' }}
                     >
                       <div className="row between small-row">
@@ -453,7 +527,7 @@ function App() {
                         tabIndex={0}
                         role="button"
                         onClick={() => {
-                          setActiveTab('Events')
+                          handleTabChange('Events')
                           setQuery(item.gameType)
                         }}
                         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setQuery(item.gameType)}
@@ -483,7 +557,7 @@ function App() {
           </motion.section>
         )}
 
-        {activeTab === 'Events' && (
+        {!selectedGameView && activeTab === 'Events' && (
           <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <div className="row between wrap-gap">
               <div>
@@ -540,183 +614,29 @@ function App() {
                       <p className="muted small">{recapText}</p>
 
                       <div className="stack">
-                        {eventGameResults.map((game) => {
-                          const gameName = computed.gameTypesById[game.gameId]?.name || game.gameId
-                          const results = (game.results || []).map((result) => {
-                            const aliasKey = String(result.playerId || '')
-                              .trim()
-                              .toLowerCase()
-                            const player = computed.playerAliasMap[aliasKey]
-                            return {
-                              ...result,
-                              playerName: player?.name || result.playerName || result.playerId,
-                            }
+                        {eventGameResults.map((game, gameIndex) => {
+                          const gameDetails = getGameDetails(game, {
+                            playersById: computed.playersById,
+                            playerAliasMap: computed.playerAliasMap,
+                            gameTypesById: computed.gameTypesById,
                           })
-
-                          const hasPosition = results.some((r) => Number.isFinite(Number(r.position)))
-                          const hasGamesWon = results.some((r) => Number.isFinite(Number(r.gamesWon)))
-                          const hasSeriesWon = results.some((r) => Number.isFinite(Number(r.seriesWon)))
-                          const hasPoints = results.some((r) => Number.isFinite(Number(r.points)))
-                          const hasWinnings = results.some((r) => Number.isFinite(Number(r.winnings)))
-                          const rounds = Array.isArray(game.rounds) ? game.rounds : []
-
-                          const fallbackWinner = [...results].sort((a, b) => {
-                            if (hasPosition) {
-                              const positionDiff = Number(a.position) - Number(b.position)
-                              if (positionDiff !== 0) {
-                                return positionDiff
-                              }
-                            }
-
-                            if (hasSeriesWon) {
-                              const seriesDiff = Number(b.seriesWon || 0) - Number(a.seriesWon || 0)
-                              if (seriesDiff !== 0) {
-                                return seriesDiff
-                              }
-                            }
-
-                            if (hasGamesWon) {
-                              const gamesDiff = Number(b.gamesWon || 0) - Number(a.gamesWon || 0)
-                              if (gamesDiff !== 0) {
-                                return gamesDiff
-                              }
-                            }
-
-                            if (hasPoints) {
-                              const lowerIsBetter = game.gameId === 'hearts' || game.gameId === 'canadian-salad'
-                              const pointsDiff = lowerIsBetter
-                                ? Number(a.points || 0) - Number(b.points || 0)
-                                : Number(b.points || 0) - Number(a.points || 0)
-                              if (pointsDiff !== 0) {
-                                return pointsDiff
-                              }
-                            }
-
-                            if (hasWinnings) {
-                              const winningsDiff = Number(b.winnings || 0) - Number(a.winnings || 0)
-                              if (winningsDiff !== 0) {
-                                return winningsDiff
-                              }
-                            }
-
-                            return String(a.playerName || '').localeCompare(String(b.playerName || ''))
-                          })[0]
-
-                          const explicitWinner = results.find((result) => result.playerId === game.winnerId)
-                          const winner = explicitWinner || fallbackWinner
-
-                          const notes = String(game.notes || '').trim()
 
                           return (
                             <section key={`game-${event.id}-${game.gameId}`} className="highlight-box">
-                              <p className="small-title">{gameName}</p>
-                              {notes ? <p className="muted small">{notes}</p> : null}
+                              <p className="small-title">{gameDetails.gameName}</p>
+                              {gameDetails.notes ? <p className="muted small">{gameDetails.notes}</p> : null}
                               <p className="small">
-                                <strong>Winner:</strong> {winner?.playerName || winner?.playerId || '—'}
+                                <strong>Winner:</strong> {gameDetails.winner?.playerName || gameDetails.winner?.playerId || '—'}
                               </p>
-                              <details className="game-results-details">
-                                <summary>See full results</summary>
-                                <div className="results-tables" style={{ marginTop: '0.75rem' }}>
-                                  <div className="game-results-table">
-                                    <table>
-                                      <thead>
-                                        <tr>
-                                          <th>Player</th>
-                                          {hasPosition && <th>Place</th>}
-                                          {hasGamesWon && <th>Games</th>}
-                                          {hasSeriesWon && <th>Series</th>}
-                                          {hasPoints && <th>Points</th>}
-                                          {hasWinnings && <th>Winnings</th>}
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {results.map((result, idx) => (
-                                          <tr key={`${event.id}-${game.gameId}-${idx}`}>
-                                            <td>{result.playerName}</td>
-                                            {hasPosition && (
-                                              <td>
-                                                {Number.isFinite(Number(result.position))
-                                                  ? `#${result.position}`
-                                                  : '—'}
-                                              </td>
-                                            )}
-                                            {hasGamesWon && (
-                                              <td>
-                                                {Number.isFinite(Number(result.gamesWon))
-                                                  ? result.gamesWon
-                                                  : '—'}
-                                              </td>
-                                            )}
-                                            {hasSeriesWon && (
-                                              <td>
-                                                {Number.isFinite(Number(result.seriesWon))
-                                                  ? result.seriesWon
-                                                  : '—'}
-                                              </td>
-                                            )}
-                                            {hasPoints && (
-                                              <td>
-                                                {Number.isFinite(Number(result.points))
-                                                  ? result.points
-                                                  : '—'}
-                                              </td>
-                                            )}
-                                            {hasWinnings && (
-                                              <td>
-                                                {Number.isFinite(Number(result.winnings))
-                                                  ? `$${result.winnings}`
-                                                  : '—'}
-                                              </td>
-                                            )}
-                                          </tr>
-                                        ))}
-                                      </tbody>
-                                    </table>
-                                  </div>
-
-                                  {rounds.length > 0 ? (
-                                    <div className="game-results-table">
-                                      <p className="small-title" style={{ marginBottom: '0.5rem' }}>
-                                        Round Breakdown
-                                      </p>
-                                      <table>
-                                        <thead>
-                                          <tr>
-                                            <th>Round</th>
-                                            {results.map((result) => (
-                                              <th key={`${event.id}-${game.gameId}-${result.playerId}-round-head`}>
-                                                {result.playerName}
-                                              </th>
-                                            ))}
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {rounds.map((round, roundIndex) => {
-                                            const valuesByPlayerId = Object.fromEntries(
-                                              (round.values || []).map((value) => [value.playerId, value.value]),
-                                            )
-                                            const roundLabel = [round.step, round.label].filter(Boolean).join(' - ')
-
-                                            return (
-                                              <tr key={`${event.id}-${game.gameId}-round-${roundIndex}`}>
-                                                <td>{roundLabel || `Round ${roundIndex + 1}`}</td>
-                                                {results.map((result) => (
-                                                  <td key={`${event.id}-${game.gameId}-round-${roundIndex}-${result.playerId}`}>
-                                                    {valuesByPlayerId[result.playerId] !== '' &&
-                                                    valuesByPlayerId[result.playerId] !== undefined
-                                                      ? String(valuesByPlayerId[result.playerId])
-                                                      : '—'}
-                                                  </td>
-                                                ))}
-                                              </tr>
-                                            )
-                                          })}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  ) : null}
-                                </div>
-                              </details>
+                              <a
+                                className="results-link"
+                                href={buildGamePath(event.id, game.gameId, gameIndex)}
+                                onClick={() => setActiveTab('Events')}
+                              >
+                                {gameDetails.rounds.length > 0
+                                  ? 'Open full results and round breakdown'
+                                  : 'Open full results'}
+                              </a>
                             </section>
                           )
                         })}
@@ -729,7 +649,7 @@ function App() {
           </motion.section>
         )}
 
-        {activeTab === 'Players' && selectedPlayer && (
+        {!selectedGameView && activeTab === 'Players' && selectedPlayer && (
           <motion.section
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -815,7 +735,7 @@ function App() {
           </motion.section>
         )}
 
-        {activeTab === 'Achievements' && (
+        {!selectedGameView && activeTab === 'Achievements' && (
           <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <h2 className="section-title">Achievements and virtual trophies</h2>
             <p className="muted">
