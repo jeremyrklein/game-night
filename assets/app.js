@@ -832,7 +832,7 @@ function renderInsights() {
 }
 
 /* Score direction per game type. lower-is-better => penalty scoring (hearts). */
-const SCORE_LOWER_IS_BETTER = new Set(['hearts']);
+const SCORE_LOWER_IS_BETTER = new Set(['hearts', 'canadian-salad']);
 
 function gameTypeHasScores(games) {
   return games.some((g) => Object.values(g.scores || {}).some((v) => v !== 0));
