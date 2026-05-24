@@ -73,7 +73,8 @@
     "specialty": "Role-playing games.",
     "joinedYear": 2023,
     "avatar": "./photos/players/aaron.png",
-    "active": true
+    "active": true,
+    "card": "./assets/cards/aaron-card.png"
   },
   {
     "id": "p08",
