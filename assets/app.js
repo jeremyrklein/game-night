@@ -378,7 +378,7 @@ function renderHeader() {
     <header class="premium-header">
       <div class="container row between wrap-gap">
         <div class="row gap-12">
-          <div class="brand-icon">${ICON.dice}</div>
+          <div class="brand-icon"><img src="./assets/game-night-icon.png" alt="Game Night" /></div>
           <div>
             <h1>Game Night Hall of Fame</h1>
             <p class="muted">Suffering through dirty jokes since 1998.</p>
