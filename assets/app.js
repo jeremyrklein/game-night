@@ -381,7 +381,7 @@ function renderHeader() {
           <div class="brand-icon">${ICON.dice}</div>
           <div>
             <h1>Game Night Hall of Fame</h1>
-            <p class="muted">Poker, Hearts, Canadian Salad, Sequence, and every disputed tiebreaker.</p>
+            <p class="muted">Suffering through dirty jokes since 1998.</p>
           </div>
         </div>
         <nav class="tab-nav" aria-label="Sections">
