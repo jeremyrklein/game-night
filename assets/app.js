@@ -403,6 +403,220 @@ function renderActiveTab() {
 }
 
 /* ---------- dashboard ---------- */
+
+function buildRandomFacts(data, computed) {
+  const facts = [];
+  const playerName = (id) => computed.playersById[id]?.name || id;
+  const games = data.games;
+  const events = data.events;
+
+  // 1. Biggest Hearts blowout
+  {
+    let best = null;
+    games.filter((g) => g.gameType === 'hearts').forEach((g) => {
+      const vals = Object.values(g.scores || {}).filter((v) => typeof v === 'number');
+      if (vals.length < 3) return;
+      const gap = Math.max(...vals) - Math.min(...vals);
+      if (!best || gap > best.gap) best = { gap, game: g };
+    });
+    if (best) {
+      const ev = events.find((e) => e.id === best.game.eventId);
+      facts.push({
+        icon: ICON.heart,
+        title: 'Biggest Hearts blowout',
+        body: `${best.gap} points separated the winner from last place on ${ev?.date || best.game.eventId}.`,
+      });
+    }
+  }
+
+  // 2. Photo finish (closest 1st/2nd in any scored game)
+  {
+    let best = null;
+    games.forEach((g) => {
+      const vals = Object.values(g.scores || {}).filter((v) => typeof v === 'number');
+      if (vals.length < 2) return;
+      const lower = SCORE_LOWER_IS_BETTER.has(g.gameType);
+      const sorted = [...vals].sort((a, b) => lower ? a - b : b - a);
+      const gap = Math.abs(sorted[0] - sorted[1]);
+      if (!best || gap < best.gap) best = { gap, game: g };
+    });
+    if (best) {
+      const ev = events.find((e) => e.id === best.game.eventId);
+      const typeName = computed.gameTypesById[best.game.gameType]?.name || best.game.gameType;
+      facts.push({
+        icon: ICON.trend,
+        title: 'Photo finish',
+        body: `Only ${best.gap} point${best.gap === 1 ? '' : 's'} between 1st and 2nd in ${typeName} on ${ev?.date || ''}.`,
+      });
+    }
+  }
+
+  // 3. Marathon night
+  {
+    let best = null;
+    events.forEach((e) => {
+      const n = (e.games || []).length;
+      if (!best || n > best.n) best = { n, ev: e };
+    });
+    if (best) facts.push({
+      icon: ICON.flame,
+      title: 'Marathon night',
+      body: `${best.n} games were played on ${best.ev.date} — the busiest night on record.`,
+    });
+  }
+
+  // 4. Busiest year
+  {
+    const byYear = {};
+    events.forEach((e) => {
+      const y = (e.date || '').slice(0, 4);
+      if (y) byYear[y] = (byYear[y] || 0) + 1;
+    });
+    const top = Object.entries(byYear).sort((a, b) => b[1] - a[1])[0];
+    if (top) facts.push({
+      icon: ICON.calendar,
+      title: 'Peak season',
+      body: `${top[0]} was the busiest year with ${top[1]} event${top[1] === 1 ? '' : 's'}.`,
+    });
+  }
+
+  // 5. Always a bridesmaid (most 2nd-place finishes)
+  {
+    const seconds = {};
+    events.forEach((e) => {
+      (e.games || []).forEach((g) => {
+        (g.results || []).forEach((r) => {
+          if (Number(r.position) === 2) seconds[r.playerId] = (seconds[r.playerId] || 0) + 1;
+        });
+      });
+    });
+    const top = Object.entries(seconds).sort((a, b) => b[1] - a[1])[0];
+    if (top && top[1] >= 2) facts.push({
+      icon: ICON.trophy,
+      title: 'Always a bridesmaid',
+      body: `${playerName(top[0])} has finished 2nd a league-leading ${top[1]} times.`,
+    });
+  }
+
+  // 6. Heart of darkness (highest single Hearts score)
+  {
+    let worst = null;
+    games.filter((g) => g.gameType === 'hearts').forEach((g) => {
+      Object.entries(g.scores || {}).forEach(([pid, v]) => {
+        if (typeof v !== 'number') return;
+        if (!worst || v > worst.v) worst = { v, pid, game: g };
+      });
+    });
+    if (worst) {
+      const ev = events.find((e) => e.id === worst.game.eventId);
+      facts.push({
+        icon: ICON.heart,
+        title: 'Heart of darkness',
+        body: `${playerName(worst.pid)} took ${worst.v} points in a single Hearts game on ${ev?.date || ''}.`,
+      });
+    }
+  }
+
+  // 7. Mr. Consistency (smallest stdev in Hearts scores, min 5 games)
+  {
+    const byP = {};
+    games.filter((g) => g.gameType === 'hearts').forEach((g) => {
+      Object.entries(g.scores || {}).forEach(([pid, v]) => {
+        if (typeof v !== 'number') return;
+        (byP[pid] = byP[pid] || []).push(v);
+      });
+    });
+    let best = null;
+    Object.entries(byP).forEach(([pid, arr]) => {
+      if (arr.length < 5) return;
+      const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
+      const stdev = Math.sqrt(arr.reduce((a, b) => a + (b - mean) ** 2, 0) / arr.length);
+      if (!best || stdev < best.stdev) best = { stdev, mean, pid, n: arr.length };
+    });
+    if (best) facts.push({
+      icon: ICON.trend,
+      title: 'Mr. Consistency',
+      body: `${playerName(best.pid)} averages ${best.mean.toFixed(1)} in Hearts with the lowest swing (±${best.stdev.toFixed(1)}) across ${best.n} games.`,
+    });
+  }
+
+  // 8. Variety champion
+  {
+    const types = {};
+    games.forEach((g) => {
+      (g.players || []).forEach((pid) => {
+        (types[pid] = types[pid] || new Set()).add(g.gameType);
+      });
+    });
+    const top = Object.entries(types).map(([pid, s]) => [pid, s.size]).sort((a, b) => b[1] - a[1])[0];
+    if (top) facts.push({
+      icon: ICON.dice,
+      title: 'Variety champion',
+      body: `${playerName(top[0])} has played ${top[1]} different game types — more than anyone else.`,
+    });
+  }
+
+  // 9. Most events attended
+  {
+    const attend = {};
+    events.forEach((e) => {
+      const seen = new Set();
+      (e.games || []).forEach((g) => (g.results || []).forEach((r) => seen.add(r.playerId)));
+      seen.forEach((pid) => attend[pid] = (attend[pid] || 0) + 1);
+    });
+    const top = Object.entries(attend).sort((a, b) => b[1] - a[1])[0];
+    if (top) facts.push({
+      icon: ICON.users,
+      title: 'Iron seat',
+      body: `${playerName(top[0])} has shown up to ${top[1]} of ${events.length} recorded game nights.`,
+    });
+  }
+
+  // 10. Long-haul player
+  {
+    const veterans = data.players
+      .filter((p) => p.active && Number.isFinite(Number(p.joinedYear)))
+      .sort((a, b) => Number(a.joinedYear) - Number(b.joinedYear));
+    if (veterans.length) {
+      const v = veterans[0];
+      facts.push({
+        icon: ICON.trophy,
+        title: 'Long-haul player',
+        body: `${v.name} has been rolling dice with the crew since ${v.joinedYear}.`,
+      });
+    }
+  }
+
+  // 11. Longest dry spell
+  {
+    const dated = events.map((e) => new Date(e.date)).filter((d) => !isNaN(d)).sort((a, b) => a - b);
+    let best = null;
+    for (let i = 1; i < dated.length; i++) {
+      const days = Math.round((dated[i] - dated[i - 1]) / 86400000);
+      if (!best || days > best.days) best = { days, from: dated[i - 1], to: dated[i] };
+    }
+    if (best) {
+      const fmt = (d) => d.toISOString().slice(0, 10);
+      facts.push({
+        icon: ICON.calendar,
+        title: 'The long pause',
+        body: `${best.days} days passed between ${fmt(best.from)} and ${fmt(best.to)} — the longest quiet stretch.`,
+      });
+    }
+  }
+
+  // 12. Grand total
+  {
+    facts.push({
+      icon: ICON.table,
+      title: 'By the numbers',
+      body: `${games.length} games tracked across ${events.length} events and ${data.players.length} players.`,
+    });
+  }
+
+  return facts;
+}
+
 function renderDashboard() {
   const { data, computed, isUnlocked, unlockError } = state;
   const summary = {
@@ -413,6 +627,8 @@ function renderDashboard() {
   };
   const miniLeaders = computed.leaderboard.slice(0, 4);
   const maxWins = Math.max(...miniLeaders.map((e) => e.stats.wins), 1);
+  const facts = buildRandomFacts(data, computed);
+  const fact = facts.length ? facts[Math.floor(Math.random() * facts.length)] : null;
 
   const statCard = (label, value, detail, icon, tab) => `
     <article class="glass-card stat-card clickable" tabindex="0" role="button" data-action="tab" data-tab="${tab}" style="cursor:pointer">
@@ -439,23 +655,17 @@ function renderDashboard() {
             <button type="button" class="secondary-btn" data-action="tab" data-tab="Players">View dossiers</button>
           </div>
         </article>
-
-        <article class="glass-card gate-card">
-          <div class="gate-head">
-            <div class="gate-icon-wrap">${isUnlocked ? ICON.unlock : ICON.lock}</div>
-            <div>
-              <h3>Detailed stats access</h3>
-              <p class="muted small">${isUnlocked ? 'Private leaderboard details are visible.' : 'Use the shared group password to reveal detailed stats.'}</p>
+        ${fact ? `
+          <article class="glass-card fact-card">
+            <div class="fact-head">
+              <div class="fact-icon">${fact.icon}</div>
+              <p class="muted small">Did you know?</p>
             </div>
-          </div>
-          ${isUnlocked
-            ? `<button type="button" class="secondary-btn" data-action="lock">Lock stats</button>`
-            : `<form class="gate-form" data-action="unlock-form">
-                 <input type="password" name="password" placeholder="Shared password" aria-label="Shared password" />
-                 <button type="submit">Unlock</button>
-               </form>`}
-          ${unlockError ? `<p class="error-text">${escapeHtml(unlockError)}</p>` : ''}
-        </article>
+            <h3>${escapeHtml(fact.title)}</h3>
+            <p>${escapeHtml(fact.body)}</p>
+            <button type="button" class="secondary-btn fact-refresh" data-action="refresh-fact">Show another</button>
+          </article>
+        ` : ''}
       </div>
 
       <section class="stats-grid">
@@ -1260,6 +1470,9 @@ function onClick(e) {
     }
     case 'retry': {
       bootstrap(true); break;
+    }
+    case 'refresh-fact': {
+      render(); break;
     }
     case 'chart-select-series': {
       const wrap = target.closest('[data-chart-wrap]');

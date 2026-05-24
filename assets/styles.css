@@ -185,6 +185,41 @@ body {
   margin-top: 1rem;
 }
 
+.fact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.3rem;
+}
+.fact-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.fact-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(2, 6, 23, 0.06);
+  color: #020617;
+}
+.fact-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.fact-card p {
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.45;
+}
+.fact-refresh {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
 .hero-actions button,
 .gate-form button,
 .glass-card > button {
