@@ -27,7 +27,7 @@
       "p05"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Best average finish at 2.71 across qualified players (minimum 5 events)."
+    "reason": "Best average finish at 2.79 across qualified players (minimum 5 events)."
   },
   {
     "id": "a004",
@@ -124,22 +124,20 @@
     "name": "Best average Table Tennis finish",
     "holder": "p03",
     "holders": [
-      "p03",
-      "p04"
+      "p03"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Tied for best average Table Tennis finish at 1.67 (minimum 3 Table Tennis games)."
+    "reason": "Best average Table Tennis finish at 1.67 (minimum 3 Table Tennis games)."
   },
   {
     "id": "a014",
     "name": "Worst average Table Tennis finish",
     "holder": "p01",
     "holders": [
-      "p01",
-      "p02"
+      "p01"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Tied for worst average Table Tennis finish at 4.00 (minimum 3 Table Tennis games)."
+    "reason": "Worst average Table Tennis finish at 4.50 (minimum 3 Table Tennis games)."
   },
   {
     "id": "a015",

@@ -5,15 +5,15 @@
     "gameType": "table-tennis",
     "players": [
       "p19",
-      "p01",
-      "p02",
-      "p17",
+      "p16",
+      "p04",
       "p05",
-      "p03"
+      "p17",
+      "p01"
     ],
     "winner": "p19",
     "scores": {},
-    "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds."
+    "notes": "Bracket. Full placements recorded."
   },
   {
     "id": "e2004-07-24-table-tennis-1",
@@ -21,15 +21,17 @@
     "gameType": "table-tennis",
     "players": [
       "p03",
-      "p01",
-      "p02",
-      "p17",
+      "p04",
       "p05",
-      "p19"
+      "p02",
+      "p01",
+      "p19",
+      "p17",
+      "p20"
     ],
     "winner": "p03",
     "scores": {},
-    "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds."
+    "notes": "Bracket. Full placements recorded."
   },
   {
     "id": "e2006-07-22-table-tennis-1",
@@ -53,8 +55,8 @@
     "notes": "Round-robin (5 players)."
   },
   {
-    "id": "e2007-03-10-table-tennis-1",
-    "eventId": "e2007-03-10",
+    "id": "e2007-03-20-table-tennis-1",
+    "eventId": "e2007-03-20",
     "gameType": "table-tennis",
     "players": [
       "p05",
@@ -65,8 +67,15 @@
       "p14"
     ],
     "winner": "p05",
-    "scores": {},
-    "notes": "Single-elimination bracket. Finishes only."
+    "scores": {
+      "p05": 9,
+      "p13": 9,
+      "p02": 6,
+      "p01": 8,
+      "p18": 4,
+      "p14": 0
+    },
+    "notes": "Single-elimination bracket. W/L records from full event."
   },
   {
     "id": "e2007-04-07-table-tennis-1",
@@ -77,11 +86,11 @@
       "p04",
       "p03",
       "p15",
-      "p01",
       "p16",
-      "p02",
+      "p01",
       "p17",
-      "p14"
+      "p14",
+      "p02"
     ],
     "winner": "p05",
     "scores": {
@@ -89,11 +98,11 @@
       "p04": 79,
       "p03": 77,
       "p15": 72,
+      "p16": 8,
       "p01": 64,
-      "p16": 77,
-      "p02": 75,
       "p17": 67,
-      "p14": 17
+      "p14": 17,
+      "p02": 75
     },
     "notes": "Round-robin + single-elimination bracket. Totals from both phases."
   },

@@ -118,7 +118,7 @@
   },
   {
     "id": "p12",
-    "name": "Mick Tatcher",
+    "name": "Mick Tacher",
     "nickname": "",
     "bio": "",
     "specialty": "",
@@ -178,7 +178,7 @@
   },
   {
     "id": "p18",
-    "name": "Bryce Wi",
+    "name": "Bryce Jolley",
     "nickname": "",
     "bio": "",
     "specialty": "",
@@ -190,6 +190,16 @@
     "id": "p19",
     "name": "Jason Lackey",
     "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2004,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p20",
+    "name": "Sam Linford",
+    "nickname": "Sam",
     "bio": "",
     "specialty": "",
     "joinedYear": 2004,

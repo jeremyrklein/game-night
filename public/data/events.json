@@ -13,7 +13,7 @@
     "games": [
       {
         "gameId": "table-tennis",
-        "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds.",
+        "notes": "Bracket. Full placements recorded.",
         "results": [
           {
             "playerId": "p19",
@@ -22,29 +22,34 @@
             "position": 1
           },
           {
-            "playerId": "p01",
-            "playerName": "Jake Klein",
-            "sourceName": "Jake Klein"
+            "playerId": "p16",
+            "playerName": "Dave Coleman",
+            "sourceName": "Dave Coleman",
+            "position": 2
           },
           {
-            "playerId": "p02",
-            "playerName": "Jeremy Klein",
-            "sourceName": "Jeremy Klein"
-          },
-          {
-            "playerId": "p17",
-            "playerName": "Dan Klein",
-            "sourceName": "Dan Klein"
+            "playerId": "p04",
+            "playerName": "Mitch Stuard",
+            "sourceName": "Mitch Stuard",
+            "position": 3
           },
           {
             "playerId": "p05",
             "playerName": "Jon Hicks",
-            "sourceName": "Jon Hicks"
+            "sourceName": "Jon Hicks",
+            "position": 4
           },
           {
-            "playerId": "p03",
-            "playerName": "Clark Close",
-            "sourceName": "Clark Close"
+            "playerId": "p17",
+            "playerName": "Dan Klein",
+            "sourceName": "Dan Klein",
+            "position": 5
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake Klein",
+            "position": 6
           }
         ],
         "rounds": [],
@@ -66,7 +71,7 @@
     "games": [
       {
         "gameId": "table-tennis",
-        "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds.",
+        "notes": "Bracket. Full placements recorded.",
         "results": [
           {
             "playerId": "p03",
@@ -75,29 +80,46 @@
             "position": 1
           },
           {
-            "playerId": "p01",
-            "playerName": "Jake Klein",
-            "sourceName": "Jake Klein"
-          },
-          {
-            "playerId": "p02",
-            "playerName": "Jeremy Klein",
-            "sourceName": "Jeremy Klein"
-          },
-          {
-            "playerId": "p17",
-            "playerName": "Dan Klein",
-            "sourceName": "Dan Klein"
+            "playerId": "p04",
+            "playerName": "Mitch Stuard",
+            "sourceName": "Mitch Stuard",
+            "position": 2
           },
           {
             "playerId": "p05",
             "playerName": "Jon Hicks",
-            "sourceName": "Jon Hicks"
+            "sourceName": "Jon Hicks",
+            "position": 3
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jeremy Klein",
+            "position": 4
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake Klein",
+            "position": 5
           },
           {
             "playerId": "p19",
             "playerName": "Jason Lackey",
-            "sourceName": "Jason Lackey"
+            "sourceName": "Jason Lackey",
+            "position": 6
+          },
+          {
+            "playerId": "p17",
+            "playerName": "Dan Klein",
+            "sourceName": "Dan Klein",
+            "position": 7
+          },
+          {
+            "playerId": "p20",
+            "playerName": "Sam Linford",
+            "sourceName": "Sam Linford",
+            "position": 8
           }
         ],
         "rounds": [],
@@ -178,9 +200,9 @@
     ]
   },
   {
-    "id": "e2007-03-10",
-    "title": "Table Tennis Tournament - 2007-03-10",
-    "date": "2007-03-10",
+    "id": "e2007-03-20",
+    "title": "Table Tennis Tournament - 2007-03-20",
+    "date": "2007-03-20",
     "location": "",
     "host": "",
     "photo": "",
@@ -191,43 +213,55 @@
     "games": [
       {
         "gameId": "table-tennis",
-        "notes": "Single-elimination bracket. Finishes only.",
+        "notes": "Single-elimination bracket. W/L records from full event.",
         "results": [
           {
             "playerId": "p05",
             "playerName": "Jon Hicks",
             "sourceName": "Jon",
-            "position": 1
+            "position": 1,
+            "gamesWon": 9,
+            "gamesLost": 4
           },
           {
             "playerId": "p13",
             "playerName": "Tila Reynolds",
             "sourceName": "Tila",
-            "position": 2
+            "position": 2,
+            "gamesWon": 9,
+            "gamesLost": 6
           },
           {
             "playerId": "p02",
             "playerName": "Jeremy Klein",
             "sourceName": "Jer",
-            "position": 3
+            "position": 3,
+            "gamesWon": 6,
+            "gamesLost": 5
           },
           {
             "playerId": "p01",
             "playerName": "Jake Klein",
             "sourceName": "Jake",
-            "position": 4
+            "position": 4,
+            "gamesWon": 8,
+            "gamesLost": 4
           },
           {
             "playerId": "p18",
-            "playerName": "Bryce Wi",
+            "playerName": "Bryce Jolley",
             "sourceName": "Bryce",
-            "position": 5
+            "position": 5,
+            "gamesWon": 4,
+            "gamesLost": 5
           },
           {
             "playerId": "p14",
             "playerName": "Geoff Brown",
             "sourceName": "Geoff",
-            "position": 6
+            "position": 6,
+            "gamesWon": 0,
+            "gamesLost": 9
           }
         ],
         "rounds": [],
@@ -292,6 +326,14 @@
             "points": 72
           },
           {
+            "playerId": "p16",
+            "playerName": "Dave Coleman",
+            "sourceName": "Dave Coleman",
+            "position": 5,
+            "gamesWon": 8,
+            "gamesLost": 8
+          },
+          {
             "playerId": "p01",
             "playerName": "Jake Klein",
             "sourceName": "Jake Klein",
@@ -300,26 +342,6 @@
             "gamesLost": 9,
             "pointDiff": -17,
             "points": 64
-          },
-          {
-            "playerId": "p16",
-            "playerName": "Dave Coleman",
-            "sourceName": "Dave Coleman",
-            "position": 6,
-            "gamesWon": 8,
-            "gamesLost": 9,
-            "pointDiff": 19,
-            "points": 77
-          },
-          {
-            "playerId": "p02",
-            "playerName": "Jeremy Klein",
-            "sourceName": "Jer Klein",
-            "position": 7,
-            "gamesWon": 4,
-            "gamesLost": 8,
-            "pointDiff": -5,
-            "points": 75
           },
           {
             "playerId": "p17",
@@ -340,6 +362,16 @@
             "gamesLost": 12,
             "pointDiff": -71,
             "points": 17
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jer Klein",
+            "position": 7,
+            "gamesWon": 4,
+            "gamesLost": 8,
+            "pointDiff": -5,
+            "points": 75
           }
         ],
         "rounds": [],
@@ -389,7 +421,7 @@
           },
           {
             "playerId": "p12",
-            "playerName": "Mick Tatcher",
+            "playerName": "Mick Tacher",
             "sourceName": "Mick Tatcher",
             "position": 4,
             "gamesWon": 3,
