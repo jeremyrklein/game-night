@@ -189,7 +189,9 @@ function pickWinner(results, gameType) {
       : Number(b.points) - Number(a.points))[0];
     if (top?.playerId) return top.playerId;
   }
-  return results[0]?.playerId || '';
+  // No positional or score signal — don't pretend the first listed result is
+  // the winner. Some events were played but never had placements recorded.
+  return '';
 }
 
 function scoreFromResult(r) {

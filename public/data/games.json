@@ -130,6 +130,20 @@
     "notes": "Round-robin (6 players). W-L records as recorded."
   },
   {
+    "id": "e2009-03-28-table-tennis-1",
+    "eventId": "e2009-03-28",
+    "gameType": "table-tennis",
+    "players": [
+      "p21",
+      "p22",
+      "p23",
+      "p24"
+    ],
+    "winner": "p21",
+    "scores": {},
+    "notes": "Tournament was played but no placement, W/L, or points data was kept. Participants only."
+  },
+  {
     "id": "e2018-02-24-blackjack-1",
     "eventId": "e2018-02-24",
     "gameType": "blackjack",

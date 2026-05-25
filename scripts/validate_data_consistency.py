@@ -64,8 +64,16 @@ def main() -> int:
             if game_id and game_id not in game_type_ids:
                 errors.append(f"Event {event_id} uses unknown game type {game_id}.")
 
+            # A missing winnerId is allowed when no result carries a position
+            # (e.g. an event we know was played but for which placements were
+            # never recorded). Otherwise the winner must be a real participant.
+            any_positioned = any(
+                isinstance(result.get("position"), int)
+                for result in event_game.get("results", [])
+            )
             if not winner_id:
-                errors.append(f"Event {event_id} game {game_id} missing winnerId.")
+                if any_positioned:
+                    errors.append(f"Event {event_id} game {game_id} missing winnerId.")
             elif winner_id not in result_ids:
                 errors.append(f"Event {event_id} game {game_id} winnerId {winner_id} not in results.")
 
