@@ -1590,7 +1590,7 @@ function renderBracketSection(eventGame, computed) {
     };
     return `
       <div class="bracket-match">
-        <div class="bracket-match-id">${escapeHtml(m.id || '')}</div>
+        <div class="bracket-match-header">${escapeHtml(m.id || '')}</div>
         ${row(m.p1, m.p1Score, p1Win, p2Win)}
         ${row(m.p2, m.p2Score, p2Win, p1Win)}
       </div>
@@ -1612,10 +1612,12 @@ function renderBracketSection(eventGame, computed) {
     return `
       <div class="bracket-section">
         <div class="bracket-rounds">
-          ${rounds.map((r) => `
-            <div class="bracket-col">
+          ${rounds.map((r, i) => `
+            <div class="bracket-col" data-round-index="${i}">
               <div class="bracket-col-label">${escapeHtml(roundLabel(section, r, total))}</div>
-              ${byRound[r].map(renderMatch).join('')}
+              <div class="bracket-col-matches">
+                ${byRound[r].map(renderMatch).join('')}
+              </div>
             </div>
           `).join('')}
         </div>
