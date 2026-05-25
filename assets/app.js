@@ -1124,7 +1124,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
   const perPlayer = {};
   filteredGames.forEach((g) => {
     (g.players || []).forEach((pid) => {
-      const row = perPlayer[pid] || (perPlayer[pid] = { played: 0, wins: 0, scores: [], places: [] });
+      const row = perPlayer[pid] || (perPlayer[pid] = { played: 0, wins: 0, scores: [], places: [], gamesWon: 0, gamesLost: 0 });
       row.played += 1;
       if (g.winner === pid) row.wins += 1;
       const s = g.scores?.[pid];
@@ -1139,10 +1139,14 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
       if (eg.gameId !== gameTypeId) return;
       (eg.results || []).forEach((r) => {
         const pid = r.playerId;
-        const pos = Number(r.position);
-        if (!pid || !Number.isFinite(pos) || pos < 1) return;
         const row = perPlayer[pid];
-        if (row) row.places.push(pos);
+        if (!row) return;
+        const pos = Number(r.position);
+        if (Number.isFinite(pos) && pos >= 1) row.places.push(pos);
+        const gw = Number(r.gamesWon);
+        const gl = Number(r.gamesLost);
+        if (Number.isFinite(gw)) row.gamesWon += gw;
+        if (Number.isFinite(gl)) row.gamesLost += gl;
       });
     });
   });
@@ -1156,6 +1160,8 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
       const best = scoreSample.length ? (lowerBetter ? Math.min(...scoreSample) : Math.max(...scoreSample)) : null;
       const worst = scoreSample.length ? (lowerBetter ? Math.max(...scoreSample) : Math.min(...scoreSample)) : null;
       const avgFinish = r.places.length ? r.places.reduce((a, b) => a + b, 0) / r.places.length : null;
+      const gamesTotal = r.gamesWon + r.gamesLost;
+      const gameWinPct = gamesTotal ? (r.gamesWon / gamesTotal) * 100 : null;
       return {
         pid, name,
         played: r.played,
@@ -1163,6 +1169,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
         winPct: r.played ? (r.wins / r.played) * 100 : 0,
         avg, best, worst,
         avgFinish, placesCount: r.places.length,
+        gamesWon: r.gamesWon, gamesLost: r.gamesLost, gameWinPct,
         hasNonZero: nonZero.length > 0,
       };
     })
@@ -1186,6 +1193,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
   const playedLabel = isTournament ? 'Tournaments' : 'Played';
   const winsLabel = isTournament ? 'Tournament wins' : 'Wins';
   const winPctLabel = isTournament ? 'Tournament win %' : 'Win %';
+  const hasGameRecord = isTournament && statRows.some((r) => (r.gamesWon + r.gamesLost) > 0);
 
   const table = `
     <div class="table-wrap">
@@ -1196,6 +1204,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
             <th class="num">${playedLabel}</th>
             <th class="num">${winsLabel}</th>
             <th class="num">${winPctLabel}</th>
+            ${hasGameRecord ? `<th class="num" title="Individual games won across round-robin and bracket play">Game W</th><th class="num" title="Individual games lost">Game L</th><th class="num" title="Game win % across round-robin and bracket play">Game win %</th>` : ''}
             ${hasAvgFinish ? `<th class="num" title="Average finish across events with a recorded placement">Avg finish</th>` : ''}
             ${hasScores ? `<th class="num">Avg score</th><th class="num">Best</th><th class="num">Worst</th>` : ''}
           </tr>
@@ -1207,6 +1216,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
               <td class="num">${r.played}</td>
               <td class="num">${r.wins}</td>
               <td class="num">${r.winPct.toFixed(0)}%</td>
+              ${hasGameRecord ? `<td class="num">${r.gamesWon || 0}</td><td class="num">${r.gamesLost || 0}</td><td class="num">${r.gameWinPct == null ? '—' : r.gameWinPct.toFixed(0) + '%'}</td>` : ''}
               ${hasAvgFinish ? `<td class="num" title="${r.placesCount} event${r.placesCount === 1 ? '' : 's'} with a recorded placement">${r.avgFinish == null ? '—' : r.avgFinish.toFixed(2)}</td>` : ''}
               ${hasScores ? `
                 <td class="num">${fmt(r.avg)}</td>
