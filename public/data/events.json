@@ -445,6 +445,29 @@
           }
         ],
         "rounds": [],
+        "bracket": {
+          "format": "double-elimination",
+          "seeds": [
+            { "seed": 1, "playerId": "p04" },
+            { "seed": 2, "playerId": "p13" },
+            { "seed": 3, "playerId": "p01" },
+            { "seed": 4, "playerId": "p02" },
+            { "seed": 5, "playerId": "p12" },
+            { "seed": 6, "playerId": "p14" }
+          ],
+          "matches": [
+            { "id": "Gm1",  "bracket": "W", "round": 1, "p1": "p14", "p2": "p01", "p1Score": 0, "p2Score": 2, "winner": "p01" },
+            { "id": "Gm2",  "bracket": "W", "round": 1, "p1": "p12", "p2": "p02", "p1Score": 2, "p2Score": 0, "winner": "p12" },
+            { "id": "Gm3",  "bracket": "W", "round": 2, "p1": "p01", "p2": "p04", "p1Score": 0, "p2Score": 2, "winner": "p04" },
+            { "id": "Gm4",  "bracket": "W", "round": 2, "p1": "p12", "p2": "p13", "p1Score": 0, "p2Score": 2, "winner": "p13" },
+            { "id": "Gm5",  "bracket": "L", "round": 1, "p1": "p14", "p2": "p02", "p1Score": 0, "p2Score": 2, "winner": "p02" },
+            { "id": "Gm6",  "bracket": "L", "round": 1, "p1": "p01", "p2": "p12", "p1Score": 2, "p2Score": 1, "winner": "p01" },
+            { "id": "Gm7",  "bracket": "L", "round": 2, "p1": "p02", "p2": "p01", "p1Score": 2, "p2Score": 0, "winner": "p02" },
+            { "id": "Gm8",  "bracket": "W", "round": 3, "p1": "p04", "p2": "p13", "p1Score": 2, "p2Score": 0, "winner": "p04" },
+            { "id": "Gm9",  "bracket": "L", "round": 3, "p1": "p13", "p2": "p02", "p1Score": 0, "p2Score": 2, "winner": "p02" },
+            { "id": "Gm10", "bracket": "F", "round": 1, "p1": "p04", "p2": "p02", "p1Score": 2, "p2Score": 0, "winner": "p04" }
+          ]
+        },
         "winnerId": "p04"
       }
     ]

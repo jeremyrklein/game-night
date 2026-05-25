@@ -984,6 +984,125 @@ img.avatar-inline {
   text-align: center;
 }
 
+/* ---------- Tournament bracket ---------- */
+.bracket-seeds {
+  margin: 0.75rem 0 1rem;
+  padding: 0.6rem 0.8rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+.bracket-seed-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.4rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}
+.bracket-seed-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #334155;
+}
+.bracket-section {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+.bracket-rounds {
+  display: flex;
+  gap: 1.25rem;
+  align-items: stretch;
+  min-width: max-content;
+  padding-bottom: 0.4rem;
+}
+.bracket-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 0.8rem;
+  min-width: 180px;
+}
+.bracket-col-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 0.2rem;
+  padding: 0.15rem 0.35rem;
+  background: #f1f5f9;
+  border-radius: 6px;
+  align-self: flex-start;
+}
+.bracket-match {
+  position: relative;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+.bracket-match-id {
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  font-size: 0.62rem;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.bracket-row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.88rem;
+  color: #475569;
+  background: #ffffff;
+}
+.bracket-row + .bracket-row {
+  border-top: 1px solid #e2e8f0;
+}
+.bracket-row.is-winner {
+  color: #0f172a;
+  font-weight: 600;
+  background: #ecfdf5;
+}
+.bracket-row.is-loser {
+  color: #94a3b8;
+}
+.bracket-seed {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #475569;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+.bracket-row.is-winner .bracket-seed {
+  background: #bbf7d0;
+  color: #166534;
+}
+.bracket-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bracket-score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: inherit;
+}
+
 .note-stack {
   margin-top: 0.8rem;
   display: grid;
@@ -1142,3 +1261,5 @@ img.avatar-inline {
     min-width: 560px;
   }
 }
+
+

@@ -1553,7 +1553,103 @@ function renderResultsPage() {
     `;
   }
 
-  return `<section class="results-page stack">${head}${finals}${rounds}</section>`;
+  return `<section class="results-page stack">${head}${finals}${rounds}${renderBracketSection(eventGame, computed)}</section>`;
+}
+
+function renderBracketSection(eventGame, computed) {
+  const bracket = eventGame?.bracket;
+  if (!bracket || !Array.isArray(bracket.matches) || !bracket.matches.length) return '';
+  const playersById = computed.playersById || {};
+  const nameOf = (pid) => playersById[pid]?.name || pid || '—';
+  const seedOf = (pid) => {
+    const s = (bracket.seeds || []).find((s) => s.playerId === pid);
+    return s ? s.seed : null;
+  };
+
+  const wb = {};
+  const lb = {};
+  const gf = [];
+  bracket.matches.forEach((m) => {
+    if (m.bracket === 'W') (wb[m.round] = wb[m.round] || []).push(m);
+    else if (m.bracket === 'L') (lb[m.round] = lb[m.round] || []).push(m);
+    else gf.push(m);
+  });
+
+  const renderMatch = (m) => {
+    const p1Win = m.winner === m.p1;
+    const p2Win = m.winner === m.p2;
+    const row = (pid, score, isWinner, isLoser) => {
+      const seed = seedOf(pid);
+      return `
+        <div class="bracket-row ${isWinner ? 'is-winner' : ''} ${isLoser ? 'is-loser' : ''}">
+          <span class="bracket-seed">${seed != null ? seed : ''}</span>
+          <span class="bracket-name">${escapeHtml(nameOf(pid))}</span>
+          <span class="bracket-score">${score != null ? score : ''}</span>
+        </div>
+      `;
+    };
+    return `
+      <div class="bracket-match">
+        <div class="bracket-match-id">${escapeHtml(m.id || '')}</div>
+        ${row(m.p1, m.p1Score, p1Win, p2Win)}
+        ${row(m.p2, m.p2Score, p2Win, p1Win)}
+      </div>
+    `;
+  };
+
+  const roundLabel = (section, n, total) => {
+    if (section === 'F') return 'Grand Final';
+    const prefix = section === 'W' ? 'Winners' : 'Losers';
+    if (n === total) return `${prefix} Final`;
+    if (n === total - 1) return `${prefix} Semifinal`;
+    return `${prefix} R${n}`;
+  };
+
+  const renderSection = (section, byRound) => {
+    const rounds = Object.keys(byRound).map(Number).sort((a, b) => a - b);
+    if (!rounds.length) return '';
+    const total = Math.max(...rounds);
+    return `
+      <div class="bracket-section">
+        <div class="bracket-rounds">
+          ${rounds.map((r) => `
+            <div class="bracket-col">
+              <div class="bracket-col-label">${escapeHtml(roundLabel(section, r, total))}</div>
+              ${byRound[r].map(renderMatch).join('')}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  };
+
+  const seedList = (bracket.seeds || []).length ? `
+    <div class="bracket-seeds">
+      <span class="muted tiny upcase">Seeds</span>
+      <ol class="bracket-seed-list">
+        ${(bracket.seeds || []).slice().sort((a, b) => a.seed - b.seed).map((s) => `
+          <li><span class="bracket-seed">${s.seed}</span> ${escapeHtml(nameOf(s.playerId))}</li>
+        `).join('')}
+      </ol>
+    </div>
+  ` : '';
+
+  const formatLabel = bracket.format === 'double-elimination'
+    ? 'Double Elimination'
+    : (bracket.format ? bracket.format.replace(/-/g, ' ') : 'Bracket');
+
+  return `
+    <article class="glass-card results-section-card">
+      <div class="row between wrap-gap">
+        <h3>Bracket</h3>
+        <span class="muted small">${escapeHtml(formatLabel)}</span>
+      </div>
+      ${seedList}
+      ${renderSection('W', wb)}
+      ${renderSection('L', lb)}
+      ${gf.length ? renderSection('F', { 1: gf }) : ''}
+    </article>
+  `;
 }
 
 function notFound() {
