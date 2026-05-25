@@ -1291,13 +1291,12 @@ function renderLineChartDates(series, opts = {}) {
   const innerH = H - PAD_T - PAD_B;
   const allDates = [...new Set(series.flatMap((s) => s.points.map((p) => p.date)))].sort();
   if (!allDates.length) return '<p class="muted small">No data.</p>';
-  const t0 = new Date(allDates[0]).getTime();
-  const t1 = new Date(allDates[allDates.length - 1]).getTime();
-  const span = Math.max(1, t1 - t0);
+  const dateIndex = new Map(allDates.map((d, i) => [d, i]));
+  const n = allDates.length;
   const allVals = series.flatMap((s) => s.points.map((p) => p.value));
   const minY = invertY ? Math.min(1, ...allVals) : Math.min(0, ...allVals);
   const maxY = Math.max(invertY ? 1 : 1, ...allVals);
-  const x = (d) => PAD_L + ((new Date(d).getTime() - t0) / span) * innerW;
+  const x = (d) => PAD_L + (n <= 1 ? innerW / 2 : (dateIndex.get(d) / (n - 1)) * innerW);
   const y = (v) => invertY
     ? PAD_T + ((v - minY) / (maxY - minY || 1)) * innerH
     : PAD_T + innerH - ((v - minY) / (maxY - minY || 1)) * innerH;
