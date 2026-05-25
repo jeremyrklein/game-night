@@ -1182,6 +1182,10 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
 
   const fmt = (v) => v == null ? '—' : (Number.isInteger(v) ? v : v.toFixed(1));
   const hasAvgFinish = statRows.some((r) => r.avgFinish != null);
+  const isTournament = gameTypeId === 'table-tennis';
+  const playedLabel = isTournament ? 'Tournaments' : 'Played';
+  const winsLabel = isTournament ? 'Tournament wins' : 'Wins';
+  const winPctLabel = isTournament ? 'Tournament win %' : 'Win %';
 
   const table = `
     <div class="table-wrap">
@@ -1189,9 +1193,9 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
         <thead>
           <tr>
             <th>Player</th>
-            <th class="num">Played</th>
-            <th class="num">Wins</th>
-            <th class="num">Win %</th>
+            <th class="num">${playedLabel}</th>
+            <th class="num">${winsLabel}</th>
+            <th class="num">${winPctLabel}</th>
             ${hasAvgFinish ? `<th class="num" title="Average finish across events with a recorded placement">Avg finish</th>` : ''}
             ${hasScores ? `<th class="num">Avg score</th><th class="num">Best</th><th class="num">Worst</th>` : ''}
           </tr>
