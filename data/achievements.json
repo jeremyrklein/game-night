@@ -27,7 +27,7 @@
       "p01"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Best average finish at 3.12 across qualified players (minimum 5 events)."
+    "reason": "Best average finish at 3.20 across qualified players (minimum 5 events)."
   },
   {
     "id": "a004",
@@ -121,6 +121,28 @@
   },
   {
     "id": "a013",
+    "name": "Best average table-tennis finish",
+    "holder": "p03",
+    "holders": [
+      "p03",
+      "p04"
+    ],
+    "dateAwarded": "2026-05-16",
+    "reason": "Tied for best average table-tennis finish at 1.67 (minimum 3 table-tennis games)."
+  },
+  {
+    "id": "a014",
+    "name": "Worst average table-tennis finish",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02"
+    ],
+    "dateAwarded": "2026-05-16",
+    "reason": "Tied for worst average table-tennis finish at 4.00 (minimum 3 table-tennis games)."
+  },
+  {
+    "id": "a015",
     "name": "Most Hearts wins",
     "holder": "p01",
     "holders": [
@@ -132,7 +154,7 @@
     "reason": "Tied atop the Hearts win column with 2 wins."
   },
   {
-    "id": "a014",
+    "id": "a016",
     "name": "Most Oh Heck wins",
     "holder": "p01",
     "holders": [
@@ -142,7 +164,7 @@
     "reason": "Leads the Oh Heck win column with 1 wins."
   },
   {
-    "id": "a015",
+    "id": "a017",
     "name": "Most Poker wins",
     "holder": "p01",
     "holders": [
@@ -152,7 +174,18 @@
     "reason": "Leads the Poker win column with 5 wins."
   },
   {
-    "id": "a016",
+    "id": "a018",
+    "name": "Most table-tennis wins",
+    "holder": "p03",
+    "holders": [
+      "p03",
+      "p05"
+    ],
+    "dateAwarded": "2026-05-16",
+    "reason": "Tied atop the table-tennis win column with 2 wins."
+  },
+  {
+    "id": "a019",
     "name": "Longest Hearts streak",
     "holder": "p04",
     "holders": [
@@ -162,7 +195,7 @@
     "reason": "Longest Hearts streak at 2 straight sessions."
   },
   {
-    "id": "a017",
+    "id": "a020",
     "name": "Longest Poker streak",
     "holder": "p01",
     "holders": [
@@ -172,7 +205,7 @@
     "reason": "Longest Poker streak at 2 straight sessions."
   },
   {
-    "id": "a018",
+    "id": "a021",
     "name": "Longest Sequence event streak",
     "holder": "p01",
     "holders": [
@@ -183,7 +216,18 @@
     "reason": "Tied for the longest Sequence event streak at 2 straight sessions."
   },
   {
-    "id": "a019",
+    "id": "a022",
+    "name": "Longest table-tennis streak",
+    "holder": "p03",
+    "holders": [
+      "p03",
+      "p05"
+    ],
+    "dateAwarded": "2007-04-07",
+    "reason": "Tied for the longest table-tennis streak at 2 straight sessions."
+  },
+  {
+    "id": "a023",
     "name": "Most Sequence games",
     "holder": "p01",
     "holders": [
@@ -193,7 +237,7 @@
     "reason": "Most Sequence games with 72 game wins."
   },
   {
-    "id": "a020",
+    "id": "a024",
     "name": "Most Sequence series",
     "holder": "p01",
     "holders": [
@@ -203,7 +247,7 @@
     "reason": "Most Sequence series with 27 series wins."
   },
   {
-    "id": "a021",
+    "id": "a025",
     "name": "Most Sequence events",
     "holder": "p01",
     "holders": [

@@ -1,5 +1,126 @@
 [
   {
+    "id": "e2004-07-17-table-tennis-1",
+    "eventId": "e2004-07-17",
+    "gameType": "table-tennis",
+    "players": [
+      "p19",
+      "p01",
+      "p02",
+      "p17",
+      "p05",
+      "p03"
+    ],
+    "winner": "p19",
+    "scores": {},
+    "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds."
+  },
+  {
+    "id": "e2004-07-24-table-tennis-1",
+    "eventId": "e2004-07-24",
+    "gameType": "table-tennis",
+    "players": [
+      "p03",
+      "p01",
+      "p02",
+      "p17",
+      "p05",
+      "p19"
+    ],
+    "winner": "p03",
+    "scores": {},
+    "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds."
+  },
+  {
+    "id": "e2006-07-22-table-tennis-1",
+    "eventId": "e2006-07-22",
+    "gameType": "table-tennis",
+    "players": [
+      "p03",
+      "p04",
+      "p16",
+      "p01",
+      "p17"
+    ],
+    "winner": "p03",
+    "scores": {
+      "p03": 29,
+      "p04": 45,
+      "p16": 34,
+      "p01": 30,
+      "p17": 29
+    },
+    "notes": "Round-robin (5 players)."
+  },
+  {
+    "id": "e2007-03-10-table-tennis-1",
+    "eventId": "e2007-03-10",
+    "gameType": "table-tennis",
+    "players": [
+      "p05",
+      "p13",
+      "p02",
+      "p01",
+      "p18",
+      "p14"
+    ],
+    "winner": "p05",
+    "scores": {},
+    "notes": "Single-elimination bracket. Finishes only."
+  },
+  {
+    "id": "e2007-04-07-table-tennis-1",
+    "eventId": "e2007-04-07",
+    "gameType": "table-tennis",
+    "players": [
+      "p05",
+      "p04",
+      "p03",
+      "p15",
+      "p01",
+      "p16",
+      "p02",
+      "p17",
+      "p14"
+    ],
+    "winner": "p05",
+    "scores": {
+      "p05": 87,
+      "p04": 79,
+      "p03": 77,
+      "p15": 72,
+      "p01": 64,
+      "p16": 77,
+      "p02": 75,
+      "p17": 67,
+      "p14": 17
+    },
+    "notes": "Round-robin + single-elimination bracket. Totals from both phases."
+  },
+  {
+    "id": "e2007-04-21-table-tennis-1",
+    "eventId": "e2007-04-21",
+    "gameType": "table-tennis",
+    "players": [
+      "p04",
+      "p02",
+      "p01",
+      "p12",
+      "p13",
+      "p14"
+    ],
+    "winner": "p04",
+    "scores": {
+      "p04": 6,
+      "p02": 6,
+      "p01": 4,
+      "p12": 3,
+      "p13": 2,
+      "p14": 0
+    },
+    "notes": "Round-robin (6 players). W-L records as recorded."
+  },
+  {
     "id": "e2018-02-24-blackjack-1",
     "eventId": "e2018-02-24",
     "gameType": "blackjack",

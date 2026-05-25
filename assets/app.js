@@ -57,6 +57,7 @@ const ICON = {
   poker: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>',
   sequence: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/></svg>',
   ohHeck: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="3"/><text x="12" y="15.6" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8.5" font-weight="800" fill="currentColor" stroke="none">OH!</text></svg>',
+  tableTennis: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="11" r="5.5"/><path d="M13.2 7.1l5.6-3.2a1 1 0 0 1 1.4.4l1.1 1.9a1 1 0 0 1-.4 1.4l-5.6 3.2"/><circle cx="18" cy="19" r="1" fill="currentColor" stroke="none"/></svg>',
 };
 
 function iconForAchievement(name) {
@@ -65,6 +66,7 @@ function iconForAchievement(name) {
   if (n.includes('poker')) return ICON.poker;
   if (n.includes('sequence')) return ICON.sequence;
   if (n.includes('oh heck')) return ICON.ohHeck;
+  if (n.includes('table tennis') || n.includes('ping')) return ICON.tableTennis;
   return ICON.trophy;
 }
 
@@ -74,6 +76,7 @@ function gameTypeForAchievement(name) {
   if (n.includes('poker')) return 'poker';
   if (n.includes('sequence')) return 'sequence';
   if (n.includes('oh heck')) return 'oh-heck';
+  if (n.includes('table tennis') || n.includes('ping')) return 'table-tennis';
   return null;
 }
 

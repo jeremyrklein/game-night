@@ -1,5 +1,423 @@
 [
   {
+    "id": "e2004-07-17",
+    "title": "Table Tennis Tournament - 2004-07-17",
+    "date": "2004-07-17",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Table Tennis: Jason Lackey won.",
+    "highlights": [
+      "Jason Lackey won the table tennis tournament."
+    ],
+    "games": [
+      {
+        "gameId": "table-tennis",
+        "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds.",
+        "results": [
+          {
+            "playerId": "p19",
+            "playerName": "Jason Lackey",
+            "sourceName": "Jason Lackey",
+            "position": 1
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake Klein"
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jeremy Klein"
+          },
+          {
+            "playerId": "p17",
+            "playerName": "Dan Klein",
+            "sourceName": "Dan Klein"
+          },
+          {
+            "playerId": "p05",
+            "playerName": "Jon Hicks",
+            "sourceName": "Jon Hicks"
+          },
+          {
+            "playerId": "p03",
+            "playerName": "Clark Close",
+            "sourceName": "Clark Close"
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p19"
+      }
+    ]
+  },
+  {
+    "id": "e2004-07-24",
+    "title": "Table Tennis Tournament - 2004-07-24",
+    "date": "2004-07-24",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Table Tennis: Clark Close won.",
+    "highlights": [
+      "Clark Close won the table tennis tournament."
+    ],
+    "games": [
+      {
+        "gameId": "table-tennis",
+        "notes": "Bracket. Only the winner's placement was recorded; remaining players eliminated in early rounds.",
+        "results": [
+          {
+            "playerId": "p03",
+            "playerName": "Clark Close",
+            "sourceName": "Clark Close",
+            "position": 1
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake Klein"
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jeremy Klein"
+          },
+          {
+            "playerId": "p17",
+            "playerName": "Dan Klein",
+            "sourceName": "Dan Klein"
+          },
+          {
+            "playerId": "p05",
+            "playerName": "Jon Hicks",
+            "sourceName": "Jon Hicks"
+          },
+          {
+            "playerId": "p19",
+            "playerName": "Jason Lackey",
+            "sourceName": "Jason Lackey"
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p03"
+      }
+    ]
+  },
+  {
+    "id": "e2006-07-22",
+    "title": "Table Tennis Tournament - 2006-07-22",
+    "date": "2006-07-22",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Table Tennis: Clark Close won.",
+    "highlights": [
+      "Clark Close won the table tennis tournament."
+    ],
+    "games": [
+      {
+        "gameId": "table-tennis",
+        "notes": "Round-robin (5 players).",
+        "results": [
+          {
+            "playerId": "p03",
+            "playerName": "Clark Close",
+            "sourceName": "Clark Close",
+            "position": 1,
+            "gamesWon": 10,
+            "gamesLost": 2,
+            "pointDiff": -1,
+            "points": 29
+          },
+          {
+            "playerId": "p04",
+            "playerName": "Mitch Stuard",
+            "sourceName": "Mitch Stuard",
+            "position": 2,
+            "gamesWon": 8,
+            "gamesLost": 4,
+            "pointDiff": 18,
+            "points": 45
+          },
+          {
+            "playerId": "p16",
+            "playerName": "Dave Coleman",
+            "sourceName": "Dave Coleman",
+            "position": 3,
+            "gamesWon": 2,
+            "gamesLost": 6,
+            "pointDiff": 7,
+            "points": 34
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake Klein",
+            "position": 4,
+            "gamesWon": 3,
+            "gamesLost": 7,
+            "pointDiff": -14,
+            "points": 30
+          },
+          {
+            "playerId": "p17",
+            "playerName": "Dan Klein",
+            "sourceName": "Dan Klein",
+            "position": 5,
+            "gamesWon": 1,
+            "gamesLost": 7,
+            "pointDiff": -10,
+            "points": 29
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p03"
+      }
+    ]
+  },
+  {
+    "id": "e2007-03-10",
+    "title": "Table Tennis Tournament - 2007-03-10",
+    "date": "2007-03-10",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Table Tennis: Jon Hicks won.",
+    "highlights": [
+      "Jon Hicks won the table tennis tournament."
+    ],
+    "games": [
+      {
+        "gameId": "table-tennis",
+        "notes": "Single-elimination bracket. Finishes only.",
+        "results": [
+          {
+            "playerId": "p05",
+            "playerName": "Jon Hicks",
+            "sourceName": "Jon",
+            "position": 1
+          },
+          {
+            "playerId": "p13",
+            "playerName": "Tila Reynolds",
+            "sourceName": "Tila",
+            "position": 2
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jer",
+            "position": 3
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake",
+            "position": 4
+          },
+          {
+            "playerId": "p18",
+            "playerName": "Bryce",
+            "sourceName": "Bryce",
+            "position": 5
+          },
+          {
+            "playerId": "p14",
+            "playerName": "Geoff Brown",
+            "sourceName": "Geoff",
+            "position": 6
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p05"
+      }
+    ]
+  },
+  {
+    "id": "e2007-04-07",
+    "title": "Table Tennis Tournament - 2007-04-07",
+    "date": "2007-04-07",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Table Tennis: Jon Hicks won.",
+    "highlights": [
+      "Jon Hicks won the table tennis tournament."
+    ],
+    "games": [
+      {
+        "gameId": "table-tennis",
+        "notes": "Round-robin + single-elimination bracket. Totals from both phases.",
+        "results": [
+          {
+            "playerId": "p05",
+            "playerName": "Jon Hicks",
+            "sourceName": "Jon Hicks",
+            "position": 1,
+            "gamesWon": 15,
+            "gamesLost": 4,
+            "pointDiff": 33,
+            "points": 87
+          },
+          {
+            "playerId": "p04",
+            "playerName": "Mitch Stuard",
+            "sourceName": "Mitch Stuard",
+            "position": 2,
+            "gamesWon": 13,
+            "gamesLost": 8,
+            "pointDiff": 21,
+            "points": 79
+          },
+          {
+            "playerId": "p03",
+            "playerName": "Clark Close",
+            "sourceName": "Clark Close",
+            "position": 3,
+            "gamesWon": 10,
+            "gamesLost": 4,
+            "pointDiff": 21,
+            "points": 77
+          },
+          {
+            "playerId": "p15",
+            "playerName": "Adam Close",
+            "sourceName": "Adam Close",
+            "position": 4,
+            "gamesWon": 9,
+            "gamesLost": 8,
+            "pointDiff": 6,
+            "points": 72
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake Klein",
+            "position": 5,
+            "gamesWon": 8,
+            "gamesLost": 9,
+            "pointDiff": -17,
+            "points": 64
+          },
+          {
+            "playerId": "p16",
+            "playerName": "Dave Coleman",
+            "sourceName": "Dave Coleman",
+            "position": 6,
+            "gamesWon": 8,
+            "gamesLost": 9,
+            "pointDiff": 19,
+            "points": 77
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jer Klein",
+            "position": 7,
+            "gamesWon": 4,
+            "gamesLost": 8,
+            "pointDiff": -5,
+            "points": 75
+          },
+          {
+            "playerId": "p17",
+            "playerName": "Dan Klein",
+            "sourceName": "Dan Klein",
+            "position": 7,
+            "gamesWon": 3,
+            "gamesLost": 9,
+            "pointDiff": -8,
+            "points": 67
+          },
+          {
+            "playerId": "p14",
+            "playerName": "Geoff Brown",
+            "sourceName": "Geoff Brown",
+            "position": 7,
+            "gamesWon": 0,
+            "gamesLost": 12,
+            "pointDiff": -71,
+            "points": 17
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p05"
+      }
+    ]
+  },
+  {
+    "id": "e2007-04-21",
+    "title": "Table Tennis Tournament - 2007-04-21",
+    "date": "2007-04-21",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Table Tennis: Mitch Stuard won.",
+    "highlights": [
+      "Mitch Stuard won the table tennis tournament."
+    ],
+    "games": [
+      {
+        "gameId": "table-tennis",
+        "notes": "Round-robin (6 players). W-L records as recorded.",
+        "results": [
+          {
+            "playerId": "p04",
+            "playerName": "Mitch Stuard",
+            "sourceName": "Mitch",
+            "position": 1,
+            "gamesWon": 6,
+            "gamesLost": 0
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jeremy",
+            "position": 2,
+            "gamesWon": 6,
+            "gamesLost": 4
+          },
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake",
+            "position": 3,
+            "gamesWon": 4,
+            "gamesLost": 5
+          },
+          {
+            "playerId": "p12",
+            "playerName": "Mick Tatcher",
+            "sourceName": "Mick Tatcher",
+            "position": 4,
+            "gamesWon": 3,
+            "gamesLost": 4
+          },
+          {
+            "playerId": "p13",
+            "playerName": "Tila Reynolds",
+            "sourceName": "Tila Reynolds",
+            "position": 5,
+            "gamesWon": 2,
+            "gamesLost": 4
+          },
+          {
+            "playerId": "p14",
+            "playerName": "Geoff Brown",
+            "sourceName": "Geoff Brown",
+            "position": 6,
+            "gamesWon": 0,
+            "gamesLost": 4
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p04"
+      }
+    ]
+  },
+  {
     "id": "e2018-02-24",
     "title": "Game Night - Feb 24, 2018",
     "date": "2018-02-24",
