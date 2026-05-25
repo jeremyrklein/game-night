@@ -195,6 +195,27 @@
           }
         ],
         "rounds": [],
+        "bracket": {
+          "format": "double-elimination",
+          "image": "./assets/tt-bracket-7-22-2006.png",
+          "seeds": [
+            { "seed": 1, "playerId": "p04" },
+            { "seed": 2, "playerId": "p16" },
+            { "seed": 3, "playerId": "p03" },
+            { "seed": 4, "playerId": "p01" },
+            { "seed": 5, "playerId": "p17" }
+          ],
+          "matches": [
+            { "id": "Gm1", "bracket": "W", "round": 1, "p1": "p03", "p2": "p01", "p1Score": 2, "p2Score": 0, "winner": "p03" },
+            { "id": "Gm2", "bracket": "W", "round": 1, "p1": "p16", "p2": "p17", "p1Score": 2, "p2Score": 0, "winner": "p16" },
+            { "id": "Gm3", "bracket": "W", "round": 2, "p1": "p04", "p2": "p03", "p1Score": 0, "p2Score": 2, "winner": "p03" },
+            { "id": "Gm4", "bracket": "L", "round": 1, "p1": "p01", "p2": "p17", "p1Score": 2, "p2Score": 0, "winner": "p01" },
+            { "id": "Gm5", "bracket": "L", "round": 2, "p1": "p01", "p2": "p04", "p1Score": 0, "p2Score": 2, "winner": "p04" },
+            { "id": "Gm6", "bracket": "W", "round": 3, "p1": "p03", "p2": "p16", "p1Score": 2, "p2Score": 0, "winner": "p03" },
+            { "id": "Gm7", "bracket": "L", "round": 3, "p1": "p04", "p2": "p16", "p1Score": 2, "p2Score": 0, "winner": "p04" },
+            { "id": "Gm8", "bracket": "F", "round": 1, "p1": "p03", "p2": "p04", "p1Score": 2, "p2Score": 0, "winner": "p03" }
+          ]
+        },
         "winnerId": "p03"
       }
     ]
