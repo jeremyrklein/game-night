@@ -833,9 +833,13 @@ img.avatar-large {
 
 .chart-legend-swatch {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 0 2px var(--swatch-color, #94a3b8);
+  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {

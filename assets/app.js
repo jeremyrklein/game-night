@@ -1349,11 +1349,16 @@ function renderLineChartDates(series, opts = {}) {
     </g>`;
   }).join('');
 
-  const legend = series.map((s, idx) => `
+  const legend = series.map((s, idx) => {
+    const swatch = s.avatar
+      ? `<span class="chart-legend-swatch" style="--swatch-color:${s.color};background-image:url('${escapeHtml(s.avatar)}')"></span>`
+      : `<span class="chart-legend-swatch" style="--swatch-color:${s.color};background-color:${s.color}"></span>`;
+    return `
     <button type="button" class="chart-legend-item" data-action="chart-select-series" data-series-id="s${idx}">
-      <span class="chart-legend-swatch" style="background:${s.color}"></span>${escapeHtml(s.label)}
+      ${swatch}${escapeHtml(s.label)}
     </button>
-  `).join('');
+  `;
+  }).join('');
 
   return `
     <div class="chart-line-wrap" data-chart-wrap>
@@ -1417,13 +1422,8 @@ function renderLineChart(series, dates) {
 
   const lines = series.map((s, idx) => {
     const d = s.points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${x(i)} ${y(p.value)}`).join(' ');
-    const dots = s.points.map((p, i) => s.avatar
-      ? `<circle cx="${x(i)}" cy="${y(p.value)}" r="6" fill="url(#av-${chartUid}-${idx})" stroke="${s.color}" stroke-width="1.5"><title>${escapeHtml(s.label)} · ${escapeHtml(dates[i] || '')} · ${p.value}</title></circle>`
-      : `<circle cx="${x(i)}" cy="${y(p.value)}" r="3" fill="${s.color}"><title>${escapeHtml(s.label)} · ${escapeHtml(dates[i] || '')} · ${p.value}</title></circle>`
-    ).join('');
-    return `<g>
+    return `<g class="chart-series" data-series-id="s${idx}">
       <path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
-      ${dots}
     </g>`;
   }).join('');
 
@@ -1436,12 +1436,19 @@ function renderLineChart(series, dates) {
     <text x="${x(l.i)}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#94a3b8">${escapeHtml(l.text)}</text>
   `).join('');
 
-  const legend = series.map((s) => `
-    <span class="chart-legend-item"><span class="chart-legend-swatch" style="background:${s.color}"></span>${escapeHtml(s.label)}</span>
-  `).join('');
+  const legend = series.map((s, idx) => {
+    const swatch = s.avatar
+      ? `<span class="chart-legend-swatch" style="--swatch-color:${s.color};background-image:url('${escapeHtml(s.avatar)}')"></span>`
+      : `<span class="chart-legend-swatch" style="--swatch-color:${s.color};background-color:${s.color}"></span>`;
+    return `
+    <button type="button" class="chart-legend-item" data-action="chart-select-series" data-series-id="s${idx}">
+      ${swatch}${escapeHtml(s.label)}
+    </button>
+  `;
+  }).join('');
 
   return `
-    <div class="chart-line-wrap">
+    <div class="chart-line-wrap" data-chart-wrap>
       <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cumulative wins line chart">
         <defs>${defs}</defs>
         ${grid}
