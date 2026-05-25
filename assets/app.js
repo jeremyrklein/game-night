@@ -995,26 +995,30 @@ function renderInsights() {
 
   const filterLabel = filter === 'all' ? 'All games' : (computed.gameTypesById[filter]?.name || filter);
 
-  // Average finish per player (from event results' positions). Respects filter and 3-game minimum.
-  const placesByPlayer = {};
+  // Average finish per player. Participation (NA included) counts toward the
+  // games column and the minimum threshold; the average itself uses only
+  // events with a recorded numeric position.
+  const finishByPlayer = {};
   data.events.forEach((ev) => {
     (ev.games || []).forEach((eg) => {
       if (filter !== 'all' && eg.gameId !== filter) return;
       (eg.results || []).forEach((r) => {
         const pid = r.playerId;
-        const pos = r.position;
-        if (!pid || typeof pos !== 'number') return;
-        (placesByPlayer[pid] = placesByPlayer[pid] || []).push(pos);
+        if (!pid) return;
+        const row = finishByPlayer[pid] || (finishByPlayer[pid] = { played: 0, places: [] });
+        row.played += 1;
+        if (typeof r.position === 'number') row.places.push(r.position);
       });
     });
   });
-  const avgFinishRows = Object.entries(placesByPlayer)
-    .filter(([, places]) => places.length >= 3)
-    .map(([pid, places]) => ({
+  const avgFinishRows = Object.entries(finishByPlayer)
+    .filter(([, r]) => r.played >= 3 && r.places.length >= 1)
+    .map(([pid, r]) => ({
       pid,
       name: computed.playersById[pid]?.name || pid,
-      avg: places.reduce((a, b) => a + b, 0) / places.length,
-      n: places.length,
+      avg: r.places.reduce((a, b) => a + b, 0) / r.places.length,
+      n: r.played,
+      placed: r.places.length,
     }))
     .sort((a, b) => a.avg - b.avg);
 
@@ -1056,7 +1060,7 @@ function renderInsights() {
 
         ${avgFinishRows.length ? `
           <article class="glass-card insights-wide">
-            <h3>Average finish <span class="muted small">(${escapeHtml(filterLabel)}, minimum 3 games) — lower is better</span></h3>
+            <h3>Average finish <span class="muted small">(${escapeHtml(filterLabel)}, minimum 3 events played) — lower is better</span></h3>
             <div class="table-wrap">
               <table class="stats-table">
                 <thead>
@@ -1064,18 +1068,23 @@ function renderInsights() {
                     <th>Rank</th>
                     <th>Player</th>
                     <th class="num">Avg finish</th>
-                    <th class="num">Games</th>
+                    <th class="num" title="Total events played. Includes events with no recorded placement (NA).">Games</th>
                   </tr>
                 </thead>
                 <tbody>
-                  ${avgFinishRows.map((r, i) => `
+                  ${avgFinishRows.map((r, i) => {
+                    const naCount = r.n - r.placed;
+                    const cellTitle = naCount > 0
+                      ? `${r.placed} placed + ${naCount} NA`
+                      : `${r.placed} placed`;
+                    return `
                     <tr>
                       <td class="num">${i + 1}</td>
                       <td>${escapeHtml(r.name)}</td>
-                      <td class="num">${r.avg.toFixed(2)}</td>
-                      <td class="num">${r.n}</td>
+                      <td class="num" title="Average uses ${r.placed} event${r.placed === 1 ? '' : 's'} with a recorded placement">${r.avg.toFixed(2)}</td>
+                      <td class="num" title="${cellTitle}">${r.n}</td>
                     </tr>
-                  `).join('')}
+                  `;}).join('')}
                 </tbody>
               </table>
             </div>
