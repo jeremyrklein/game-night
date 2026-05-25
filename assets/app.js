@@ -1202,7 +1202,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
               <td class="num">${r.played}</td>
               <td class="num">${r.wins}</td>
               <td class="num">${r.winPct.toFixed(0)}%</td>
-              ${hasAvgFinish ? `<td class="num" title="${r.placesCount} event${r.placesCount === 1 ? '' : 's'} with a recorded placement">${fmt(r.avgFinish)}</td>` : ''}
+              ${hasAvgFinish ? `<td class="num" title="${r.placesCount} event${r.placesCount === 1 ? '' : 's'} with a recorded placement">${r.avgFinish == null ? '—' : r.avgFinish.toFixed(2)}</td>` : ''}
               ${hasScores ? `
                 <td class="num">${fmt(r.avg)}</td>
                 <td class="num">${fmt(r.best)}</td>
