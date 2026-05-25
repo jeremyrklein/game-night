@@ -121,25 +121,25 @@
   },
   {
     "id": "a013",
-    "name": "Best average table-tennis finish",
+    "name": "Best average Table Tennis finish",
     "holder": "p03",
     "holders": [
       "p03",
       "p04"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Tied for best average table-tennis finish at 1.67 (minimum 3 table-tennis games)."
+    "reason": "Tied for best average Table Tennis finish at 1.67 (minimum 3 Table Tennis games)."
   },
   {
     "id": "a014",
-    "name": "Worst average table-tennis finish",
+    "name": "Worst average Table Tennis finish",
     "holder": "p01",
     "holders": [
       "p01",
       "p02"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Tied for worst average table-tennis finish at 4.00 (minimum 3 table-tennis games)."
+    "reason": "Tied for worst average Table Tennis finish at 4.00 (minimum 3 Table Tennis games)."
   },
   {
     "id": "a015",
@@ -175,14 +175,14 @@
   },
   {
     "id": "a018",
-    "name": "Most table-tennis wins",
+    "name": "Most Table Tennis wins",
     "holder": "p03",
     "holders": [
       "p03",
       "p05"
     ],
     "dateAwarded": "2026-05-16",
-    "reason": "Tied atop the table-tennis win column with 2 wins."
+    "reason": "Tied atop the Table Tennis win column with 2 wins."
   },
   {
     "id": "a019",
@@ -217,14 +217,14 @@
   },
   {
     "id": "a022",
-    "name": "Longest table-tennis streak",
+    "name": "Longest Table Tennis streak",
     "holder": "p03",
     "holders": [
       "p03",
       "p05"
     ],
     "dateAwarded": "2007-04-07",
-    "reason": "Tied for the longest table-tennis streak at 2 straight sessions."
+    "reason": "Tied for the longest Table Tennis streak at 2 straight sessions."
   },
   {
     "id": "a023",

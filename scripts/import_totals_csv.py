@@ -27,6 +27,7 @@ GAME_NAMES = {
     "sequence": "Sequence",
     "canadian-salad": "Canadian Salad",
     "oh-heck": "Oh Heck",
+    "table-tennis": "Table Tennis",
 }
 BASE_PLAYERS = [
     {

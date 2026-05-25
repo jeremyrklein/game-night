@@ -1090,6 +1090,9 @@ function renderInsights() {
 
 /* Score direction per game type. lower-is-better => penalty scoring (hearts). */
 const SCORE_LOWER_IS_BETTER = new Set(['hearts', 'canadian-salad']);
+// Game types whose per-result "score" is recorded for posterity but isn't
+// comparable across events — suppress aggregate Avg/Best/Worst columns.
+const SCORE_HIDDEN_AGGREGATE = new Set(['table-tennis']);
 
 function gameTypeHasScores(games) {
   return games.some((g) => Object.values(g.scores || {}).some((v) => v !== 0));
@@ -1099,7 +1102,11 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
   const { computed } = state;
   const typeName = computed.gameTypesById[gameTypeId]?.name || gameTypeId;
   const lowerBetter = SCORE_LOWER_IS_BETTER.has(gameTypeId);
-  const hasScores = gameTypeHasScores(filteredGames);
+  // Some game types (e.g. table tennis) have per-event scores that aren't
+  // comparable across events — keep them in event detail views but hide
+  // aggregate score columns and single-game extremes here.
+  const hideAggregateScores = SCORE_HIDDEN_AGGREGATE.has(gameTypeId);
+  const hasScores = !hideAggregateScores && gameTypeHasScores(filteredGames);
 
   // Per-player aggregate stats for this game type.
   const perPlayer = {};
