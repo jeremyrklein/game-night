@@ -976,5 +976,24 @@
       "p01": 6
     },
     "notes": ""
+  },
+  {
+    "id": "e2026-08-22-sequence-1",
+    "eventId": "e2026-08-22",
+    "gameType": "sequence",
+    "players": [
+      "p01",
+      "p03",
+      "p04",
+      "p02"
+    ],
+    "winner": "p01",
+    "scores": {
+      "p01": 6,
+      "p04": 4,
+      "p02": 3,
+      "p03": 3
+    },
+    "notes": "Series results are recorded as games won: Jake 2:1, 2:0, 2:1; Jeremy 1:2, 0:2, 2:1; Clark 2:1, 0:2, 1:2; Mitch 1:2, 2:0, 1:2."
   }
 ]

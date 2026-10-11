@@ -7886,5 +7886,59 @@
         "winnerId": "p01"
       }
     ]
+  },
+  {
+    "id": "e2026-08-22",
+    "title": "Game Night - August 22, 2026",
+    "date": "2026-08-22",
+    "location": "Jake's house",
+    "host": "p01",
+    "photo": "",
+    "recap": "Sequence: Jake Klein won with 3 series wins.",
+    "highlights": [
+      "Jake Klein won Sequence with 3 series wins."
+    ],
+    "games": [
+      {
+        "gameId": "sequence",
+        "notes": "Series results are recorded as games won: Jake 2:1, 2:0, 2:1; Jeremy 1:2, 0:2, 2:1; Clark 2:1, 0:2, 1:2; Mitch 1:2, 2:0, 1:2.",
+        "results": [
+          {
+            "playerId": "p01",
+            "playerName": "Jake Klein",
+            "sourceName": "Jake",
+            "gamesWon": 6,
+            "seriesWon": 3,
+            "position": 1
+          },
+          {
+            "playerId": "p04",
+            "playerName": "Mitch Stuard",
+            "sourceName": "Mitch",
+            "gamesWon": 4,
+            "seriesWon": 1,
+            "position": 2
+          },
+          {
+            "playerId": "p02",
+            "playerName": "Jeremy Klein",
+            "sourceName": "Jeremy",
+            "gamesWon": 3,
+            "seriesWon": 1,
+            "position": 4
+          },
+          {
+            "playerId": "p03",
+            "playerName": "Clark Close",
+            "sourceName": "Clark",
+            "gamesWon": 3,
+            "seriesWon": 1,
+            "position": 4
+          }
+        ],
+        "rounds": [],
+        "winnerId": "p01"
+      }
+    ]
   }
 ]
