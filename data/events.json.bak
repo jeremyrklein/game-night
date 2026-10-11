@@ -1,0 +1,210 @@
+[
+  {
+    "id": "e2023-09",
+    "title": "Game Night - Sep 23, 2023",
+    "date": "2023-09-23",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Sequence: Jeremy 5 games and 3 series. Clark, Mitch, and Jake each had 4 games and 1 series. Poker: Jeremy won, Clark took second.",
+    "highlights": [
+      "Jeremy won 5 games and 3 series in Sequence.",
+      "Clark, Mitch, and Jake tied for 2nd place in Sequence with 4 games and 1 series each.",
+      "Jeremy won Poker, with Clark taking 2nd place."
+    ],
+    "games": [
+      {
+        "gameId": "sequence",
+        "results": [
+          { "playerId": "jeremy", "gamesWon": 5, "seriesWon": 3 },
+          { "playerId": "clark", "gamesWon": 4, "seriesWon": 1 },
+          { "playerId": "mitch", "gamesWon": 4, "seriesWon": 1 },
+          { "playerId": "jake", "gamesWon": 4, "seriesWon": 1 }
+        ]
+      },
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jeremy", "position": 1 },
+          { "playerId": "clark", "position": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e2026-05",
+    "title": "Game Night - May 2, 2026",
+    "date": "2026-05-02",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Poker: Jake won the last three hands after being down most of the game. Final order: Jake, Clark, John, Aaron/Jeremy tie, Mitch.",
+    "highlights": [
+      "Jake won the last three hands to secure victory.",
+      "Clark came in second place.",
+      "John finished third.",
+      "Aaron and Jeremy tied for fourth place."
+    ],
+    "games": [
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jake", "position": 1 },
+          { "playerId": "clark", "position": 2 },
+          { "playerId": "john", "position": 3 },
+          { "playerId": "aaron", "position": 4 },
+          { "playerId": "jeremy", "position": 4 },
+          { "playerId": "mitch", "position": 5 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e2024-07",
+    "title": "Game Night - Jul 20, 2024",
+    "date": "2024-07-20",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Poker: Aaron was out first then bought back in. Jeremy went out, then Clark and Aaron. Brandon won three all-in hands in a row, then lost to Jake for fourth. Mitch took third, Ben second, Jake won. Canadian Salad order: Aaron, Clark, Brandon, Jeremy, Jake, Ben, Mitch.",
+    "highlights": [
+      "Aaron was out first in Poker but bought back in.",
+      "Brandon won three all-in hands in a row before losing to Jake.",
+      "Jake won Poker, with Ben coming in second and Mitch third.",
+      "Aaron dominated Canadian Salad, with Clark and Brandon following."
+    ],
+    "games": [
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jake", "position": 1 },
+          { "playerId": "ben", "position": 2 },
+          { "playerId": "mitch", "position": 3 },
+          { "playerId": "brandon", "position": 4 },
+          { "playerId": "clark", "position": 5 },
+          { "playerId": "aaron", "position": 5 }
+        ]
+      },
+      {
+        "gameId": "canadian-salad",
+        "results": [
+          { "playerId": "aaron", "position": 1 },
+          { "playerId": "clark", "position": 2 },
+          { "playerId": "brandon", "position": 3 },
+          { "playerId": "jeremy", "position": 4 },
+          { "playerId": "jake", "position": 5 },
+          { "playerId": "ben", "position": 6 },
+          { "playerId": "mitch", "position": 7 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e2023-06",
+    "title": "Game Night - June 10, 2023",
+    "date": "2023-06-10",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Sequence placements: Mitch first, Jake and Jeremy tied for second, Clark third.",
+    "highlights": [
+      "Mitch took first place in Sequence.",
+      "Jake and Jeremy tied for second place.",
+      "Clark finished third."
+    ],
+    "games": [
+      {
+        "gameId": "sequence",
+        "results": [
+          { "playerId": "mitch", "position": 1 },
+          { "playerId": "jake", "position": 2 },
+          { "playerId": "jeremy", "position": 2 },
+          { "playerId": "clark", "position": 3 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e2023-02",
+    "title": "Game Night - Feb 4, 2023",
+    "date": "2023-02-04",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Canadian Salad: Jake finished with 335 points, and Brandon won with 30. Poker: Aaron out first, then Mitch, then Brandon. Clark was knocked out by Jake. Jeremy out, then Jake out, and John won $60 on the river. Hearts: Mitch won $60 while John stayed at 98 for four hands.",
+    "highlights": [
+      "Brandon won Canadian Salad with just 30 points.",
+      "John won Poker with $60 on the river.",
+      "Mitch won $60 in Hearts, while John stayed at 98 for 4 hands."
+    ],
+    "games": [
+      {
+        "gameId": "canadian-salad",
+        "results": [
+          { "playerId": "brandon", "position": 1, "points": 30 },
+          { "playerId": "aaron", "position": 2 },
+          { "playerId": "mitch", "position": 3 },
+          { "playerId": "john", "position": 4 },
+          { "playerId": "jeremy", "position": 5 },
+          { "playerId": "clark", "position": 6 },
+          { "playerId": "jake", "position": 7, "points": 335 }
+        ]
+      },
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "john", "position": 1, "winnings": 60 },
+          { "playerId": "jake", "position": 2 },
+          { "playerId": "jeremy", "position": 3 },
+          { "playerId": "clark", "position": 4 },
+          { "playerId": "brandon", "position": 5 },
+          { "playerId": "mitch", "position": 6 },
+          { "playerId": "aaron", "position": 7 }
+        ]
+      },
+      {
+        "gameId": "hearts",
+        "results": [
+          { "playerId": "mitch", "position": 1, "winnings": 60 },
+          { "playerId": "john", "position": 2, "points": 98 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e2022-05",
+    "title": "Game Night - May 21, 2022",
+    "date": "2022-05-21",
+    "location": "",
+    "host": "",
+    "photo": "",
+    "recap": "Canadian Salad: Mitch and Jake tied and drew for high card, with Jake winning on an ace of hearts. Poker: Jeremy out first, Hicks out next, Mitch became all-time dealer after busting, Clark was knocked out by Jake, John knocked out Brandon, blinds reached 32, then Jake knocked out John and won $70.",
+    "highlights": [
+      "Jake won Canadian Salad by drawing an Ace of Hearts in a tie-breaker with Mitch.",
+      "Jake won Poker, knocking out John and winning $70.",
+      "Clark's game went downhill after a music change to 'You're the Best Around'."
+    ],
+    "games": [
+      {
+        "gameId": "canadian-salad",
+        "results": [
+          { "playerId": "jake", "position": 1 },
+          { "playerId": "mitch", "position": 2 },
+          { "playerId": "clark", "position": 3 }
+        ]
+      },
+      {
+        "gameId": "poker",
+        "results": [
+          { "playerId": "jake", "position": 1, "winnings": 70 },
+          { "playerId": "john", "position": 2 },
+          { "playerId": "brandon", "position": 3 },
+          { "playerId": "clark", "position": 4 },
+          { "playerId": "mitch", "position": 5 },
+          { "playerId": "hicks", "position": 6 },
+          { "playerId": "jeremy", "position": 7 }
+        ]
+      }
+    ]
+  }
+]

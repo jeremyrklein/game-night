@@ -1,0 +1,249 @@
+[
+  {
+    "id": "p01",
+    "name": "Jake Klein",
+    "nickname": "Jake",
+    "bio": "Core game-night player.",
+    "specialty": "Making dirty jokes and turning every word into an innuendo.",
+    "joinedYear": 2018,
+    "avatar": "./photos/players/jake.png",
+    "active": true,
+    "card": "./assets/cards/jake-card.png"
+  },
+  {
+    "id": "p02",
+    "name": "Jeremy Klein",
+    "nickname": "Jeremy",
+    "bio": "Core game-night player.",
+    "specialty": "Rolling eyes at stupid dirty jokes.",
+    "joinedYear": 2018,
+    "avatar": "./photos/players/jeremy.png",
+    "active": true,
+    "card": "./assets/cards/jeremy-card.png"
+  },
+  {
+    "id": "p03",
+    "name": "Clark Close",
+    "nickname": "Clark",
+    "bio": "Core game-night player.",
+    "specialty": "Having a poker face for every game.",
+    "joinedYear": 2018,
+    "avatar": "./photos/players/clark.png",
+    "active": true,
+    "card": "./assets/cards/clark-card.png"
+  },
+  {
+    "id": "p04",
+    "name": "Mitch Stuard",
+    "nickname": "Mitch",
+    "bio": "Core game-night player.",
+    "specialty": "Writing on paper.",
+    "joinedYear": 2018,
+    "avatar": "./photos/players/mitch.png",
+    "active": true,
+    "card": "./assets/cards/mitch-card.png"
+  },
+  {
+    "id": "p05",
+    "name": "Jon Hicks",
+    "nickname": "Jon",
+    "bio": "Core game-night player.",
+    "specialty": "Volleyball, clearly not cards.",
+    "joinedYear": 2018,
+    "avatar": "./photos/players/jon.png",
+    "active": true,
+    "card": "./assets/cards/jon-card.png"
+  },
+  {
+    "id": "p06",
+    "name": "John Sargent",
+    "nickname": "John",
+    "bio": "Core game-night player.",
+    "specialty": "Breaking chairs.",
+    "joinedYear": 2018,
+    "avatar": "./photos/players/john.png",
+    "active": true,
+    "card": "./assets/cards/john-card.png"
+  },
+  {
+    "id": "p07",
+    "name": "Aaron Grefsrud",
+    "nickname": "Aaron",
+    "bio": "Core game-night player.",
+    "specialty": "Role-playing games.",
+    "joinedYear": 2023,
+    "avatar": "./photos/players/aaron.png",
+    "active": true,
+    "card": "./assets/cards/aaron-card.png"
+  },
+  {
+    "id": "p08",
+    "name": "Jessica Grefsrud",
+    "nickname": "Jessica",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2026,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p09",
+    "name": "Ben Feely",
+    "nickname": "Ben",
+    "bio": "Core game-night player.",
+    "specialty": "Being left handed.",
+    "joinedYear": 2023,
+    "avatar": "./photos/players/ben.png",
+    "active": true
+  },
+  {
+    "id": "p10",
+    "name": "Brandon Ford",
+    "nickname": "Brandon",
+    "bio": "Core game-night player.",
+    "specialty": "Wanting to drop way more money on poker than anyone is comfortable with.",
+    "joinedYear": 2018,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p11",
+    "name": "Mike Chan",
+    "nickname": "Mike",
+    "bio": "Core game-night player.",
+    "specialty": "TBD",
+    "joinedYear": 2023,
+    "avatar": "",
+    "active": true
+  },
+  {
+    "id": "p12",
+    "name": "Mick Tacher",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2007,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p13",
+    "name": "Tila Reynolds",
+    "nickname": "Tila",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2007,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p14",
+    "name": "Geoff Brown",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2007,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p15",
+    "name": "Adam Close",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2007,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p16",
+    "name": "Dave Coleman",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2006,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p17",
+    "name": "Dan Klein",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2006,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p18",
+    "name": "Bryce Jolley",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2007,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p19",
+    "name": "Jason Lackey",
+    "nickname": "",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2004,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p20",
+    "name": "Sam Linford",
+    "nickname": "Sam",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2004,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p21",
+    "name": "James Mancino",
+    "nickname": "James",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2009,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p22",
+    "name": "Blake Kinghorn",
+    "nickname": "Blake",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2009,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p23",
+    "name": "Jime Christianson",
+    "nickname": "Jime",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2009,
+    "avatar": "",
+    "active": false
+  },
+  {
+    "id": "p24",
+    "name": "Simi Reynolds",
+    "nickname": "Simi",
+    "bio": "",
+    "specialty": "",
+    "joinedYear": 2009,
+    "avatar": "",
+    "active": false
+  }
+]

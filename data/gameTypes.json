@@ -1,0 +1,44 @@
+[
+  {
+    "id": "poker",
+    "name": "Texas Hold'em Poker",
+    "rules": "No-limit Texas hold'em.",
+    "scoring": "Points by finish or chips won (house rules)."
+  },
+  {
+    "id": "hearts",
+    "name": "Hearts",
+    "rules": "Standard Hearts.",
+    "scoring": "Based on house scoring variant."
+  },
+  {
+    "id": "sequence",
+    "name": "Sequence",
+    "rules": "Standard Sequence rules.",
+    "scoring": "By match/round wins."
+  },
+  {
+    "id": "canadian-salad",
+    "name": "Canadian Salad",
+    "rules": "Progressive trick-taking rounds.",
+    "scoring": "Cumulative round points."
+  },
+  {
+    "id": "blackjack",
+    "name": "Blackjack",
+    "rules": "Standard blackjack with house rules.",
+    "scoring": "Net chips or wins by round."
+  },
+  {
+    "id": "oh-heck",
+    "name": "Oh Heck",
+    "rules": "Trick-taking bidding game. Each round, players bid the exact number of tricks they will take.",
+    "scoring": "Score 10 + tricks for hitting your bid exactly; otherwise 0. Highest total wins."
+  },
+  {
+    "id": "table-tennis",
+    "name": "Table Tennis",
+    "rules": "Ping-pong tournament. Round-robin, single-elimination, or hybrid.",
+    "scoring": "By tournament finish. W-L and point differential recorded where available."
+  }
+]
