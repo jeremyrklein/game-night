@@ -995,5 +995,63 @@
       "p03": 3
     },
     "notes": "Series results are recorded as games won: Jake 2:1, 2:0, 2:1; Jeremy 1:2, 0:2, 2:1; Clark 2:1, 0:2, 1:2; Mitch 1:2, 2:0, 1:2."
+  },
+  {
+    "id": "e2026-10-10-sequence-1",
+    "eventId": "e2026-10-10",
+    "gameType": "sequence",
+    "players": [
+      "p02",
+      "p04",
+      "p01",
+      "p03"
+    ],
+    "winner": "p02",
+    "scores": {
+      "p02": 6,
+      "p04": 4,
+      "p01": 3,
+      "p03": 3
+    },
+    "notes": ""
+  },
+  {
+    "id": "e2026-10-10-hearts-2",
+    "eventId": "e2026-10-10",
+    "gameType": "hearts",
+    "players": [
+      "p03",
+      "p02",
+      "p05",
+      "p01",
+      "p06",
+      "p04"
+    ],
+    "winner": "p02",
+    "scores": {
+      "p03": 94,
+      "p02": 57,
+      "p05": 76,
+      "p01": 64,
+      "p06": 115,
+      "p04": 88
+    },
+    "notes": "Mitch shot the moon in round 7; Jake shot the moon in round 9."
+  },
+  {
+    "id": "e2026-10-10-poker-3",
+    "eventId": "e2026-10-10",
+    "gameType": "poker",
+    "players": [
+      "p01",
+      "p03",
+      "p05",
+      "p02",
+      "p06",
+      "p04"
+    ],
+    "winner": "p01",
+    "scores": {},
+    "notes": "Mitch was knocked out first when Clark went all in; Jeremy folded. Jeremy then went all in, and Jake and John called. Jake won on the river with the same hand as Jeremy, but his two-pair high card was one rank higher; Jeremy's hand beat John's. Hicks went all in and was knocked out by Jake. Jake went all in on the second-to-last hand, and Clark folded, losing only the small blind. Jake went all in again on the last hand. Clark called and lost; he would have won by folding, but wanted to keep things interesting to the end."
   }
 ]

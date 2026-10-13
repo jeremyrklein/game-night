@@ -54,23 +54,46 @@ export function getGameDetails(game, { playersById, playerAliasMap = {}, gameTyp
   const hasPoints = results.some((result) => Number.isFinite(Number(result.points)))
   const hasWinnings = results.some((result) => Number.isFinite(Number(result.winnings)))
 
-  const fallbackWinner = [...results].sort((a, b) => {
+  const compareNumbers = (a, b, direction = 'ascending') => {
+    const aNumber = Number(a)
+    const bNumber = Number(b)
+    const aIsNumber = Number.isFinite(aNumber)
+    const bIsNumber = Number.isFinite(bNumber)
+
+    if (aIsNumber !== bIsNumber) {
+      return aIsNumber ? -1 : 1
+    }
+    if (!aIsNumber) {
+      return 0
+    }
+
+    return direction === 'ascending' ? aNumber - bNumber : bNumber - aNumber
+  }
+
+  const sortedResults = [...results].sort((a, b) => {
+    if (game.winnerId) {
+      const winnerDiff = Number(b.playerId === game.winnerId) - Number(a.playerId === game.winnerId)
+      if (winnerDiff !== 0) {
+        return winnerDiff
+      }
+    }
+
     if (hasPosition) {
-      const positionDiff = Number(a.position) - Number(b.position)
+      const positionDiff = compareNumbers(a.position, b.position)
       if (positionDiff !== 0) {
         return positionDiff
       }
     }
 
     if (hasSeriesWon) {
-      const seriesDiff = Number(b.seriesWon || 0) - Number(a.seriesWon || 0)
+      const seriesDiff = compareNumbers(a.seriesWon, b.seriesWon, 'descending')
       if (seriesDiff !== 0) {
         return seriesDiff
       }
     }
 
     if (hasGamesWon) {
-      const gamesDiff = Number(b.gamesWon || 0) - Number(a.gamesWon || 0)
+      const gamesDiff = compareNumbers(a.gamesWon, b.gamesWon, 'descending')
       if (gamesDiff !== 0) {
         return gamesDiff
       }
@@ -78,30 +101,29 @@ export function getGameDetails(game, { playersById, playerAliasMap = {}, gameTyp
 
     if (hasPoints) {
       const lowerIsBetter = gameType === 'hearts' || gameType === 'canadian-salad'
-      const pointsDiff = lowerIsBetter
-        ? Number(a.points || 0) - Number(b.points || 0)
-        : Number(b.points || 0) - Number(a.points || 0)
+      const pointsDiff = compareNumbers(a.points, b.points, lowerIsBetter ? 'ascending' : 'descending')
       if (pointsDiff !== 0) {
         return pointsDiff
       }
     }
 
     if (hasWinnings) {
-      const winningsDiff = Number(b.winnings || 0) - Number(a.winnings || 0)
+      const winningsDiff = compareNumbers(a.winnings, b.winnings, 'descending')
       if (winningsDiff !== 0) {
         return winningsDiff
       }
     }
 
     return String(a.playerName || '').localeCompare(String(b.playerName || ''))
-  })[0]
+  })
 
-  const explicitWinner = results.find((result) => result.playerId === game.winnerId)
+  const explicitWinner = sortedResults.find((result) => result.playerId === game.winnerId)
+  const fallbackWinner = sortedResults[0]
 
   return {
     gameName,
     gameType,
-    results,
+    results: sortedResults,
     rounds: Array.isArray(game.rounds) ? game.rounds : [],
     notes: String(game.notes || '').trim(),
     winner: explicitWinner || fallbackWinner,

@@ -318,7 +318,7 @@ def build_games_from_events(events: list[dict]) -> list[dict]:
     return games
 
 
-def build_achievements(
+def build_records_as_achievements_legacy(
     players: list[dict],
     events: list[dict],
     games: list[dict],
@@ -395,6 +395,129 @@ def build_achievements(
                 latest_event_date,
                 f"{'Tied at' if len(holders) > 1 else 'Most Hearts moon shots with'} {max_moon_shots} Hearts moon shots.",
             )
+
+        for milestone in (5, 10, 20):
+            milestone_holders = sorted(
+                player_id for player_id, total in moon_shots.items() if total >= milestone
+            )
+            add_achievement(
+                f"Moon Shooter: {milestone}",
+                milestone_holders,
+                latest_event_date,
+                f"Recorded at least {milestone} Hearts moon shots.",
+            )
+
+    ordered_events = sorted(events, key=lambda event: str(event.get("date", "")))
+    win_types_by_player: dict[str, set[str]] = defaultdict(set)
+    triple_threat_dates: dict[str, str] = {}
+    podiums_by_player: dict[str, int] = defaultdict(int)
+    podium_dates: dict[str, str] = {}
+    poker_top_twos: dict[str, int] = defaultdict(int)
+    poker_wins: dict[str, int] = defaultdict(int)
+    sequence_sweeps: dict[str, int] = defaultdict(int)
+    sequence_sweep_dates: dict[str, str] = {}
+    hearts_survivals: dict[str, int] = defaultdict(int)
+    hearts_survival_dates: dict[str, str] = {}
+
+    for event in ordered_events:
+        event_date = str(event.get("date", ""))
+        for event_game in event.get("games", []):
+            game_type = str(event_game.get("gameId", ""))
+            winner_id = str(event_game.get("winnerId", ""))
+            results = event_game.get("results", [])
+
+            if winner_id and game_type:
+                win_types_by_player[winner_id].add(game_type)
+                if len(win_types_by_player[winner_id]) >= 3:
+                    triple_threat_dates.setdefault(winner_id, event_date)
+
+            for result in results:
+                player_id = str(result.get("playerId", ""))
+                position = result.get("position")
+                if player_id and isinstance(position, int) and position <= 3:
+                    podiums_by_player[player_id] += 1
+                    if podiums_by_player[player_id] >= 10:
+                        podium_dates.setdefault(player_id, event_date)
+
+                if game_type == "poker" and player_id and isinstance(position, int) and position <= 2:
+                    poker_top_twos[player_id] += 1
+                    if player_id == winner_id:
+                        poker_wins[player_id] += 1
+
+            if game_type == "sequence" and winner_id:
+                total_series = sum(int(result.get("seriesWon", 0) or 0) for result in results)
+                winner_result = next(
+                    (result for result in results if str(result.get("playerId", "")) == winner_id),
+                    {},
+                )
+                winner_series = int(winner_result.get("seriesWon", 0) or 0)
+                if total_series >= 2 and winner_series == total_series:
+                    sequence_sweeps[winner_id] += 1
+                    sequence_sweep_dates[winner_id] = event_date
+
+            if game_type == "hearts" and winner_id:
+                opponent_shot_moon = any(
+                    str(result.get("playerId", "")) != winner_id
+                    and int(result.get("moonShots", 0) or 0) > 0
+                    for result in results
+                )
+                if opponent_shot_moon:
+                    hearts_survivals[winner_id] += 1
+                    hearts_survival_dates[winner_id] = event_date
+
+    triple_threat_holders = sorted(triple_threat_dates)
+    add_achievement(
+        "Triple Threat",
+        triple_threat_holders,
+        max(triple_threat_dates.values(), default=""),
+        "Won at least one tracked event in three different game types.",
+    )
+
+    podium_holders = sorted(podium_dates)
+    add_achievement(
+        "Podium Machine",
+        podium_holders,
+        max(podium_dates.values(), default=""),
+        "Recorded at least 10 top-three finishes across tracked games.",
+    )
+
+    poker_conversion = {
+        player_id: poker_wins[player_id] / top_twos
+        for player_id, top_twos in poker_top_twos.items()
+        if top_twos >= 3
+    }
+    if poker_conversion:
+        best_conversion = max(poker_conversion.values())
+        holders = sorted(
+            player_id
+            for player_id, conversion in poker_conversion.items()
+            if abs(conversion - best_conversion) < 1e-9
+        )
+        samples = ", ".join(
+            f"{poker_wins[player_id]}/{poker_top_twos[player_id]}" for player_id in holders
+        )
+        add_achievement(
+            "Poker Closer",
+            holders,
+            latest_event_date,
+            f"Best Poker win conversion from top-two finishes at {best_conversion:.0%} ({samples}).",
+        )
+
+    sequence_sweep_holders = sorted(sequence_sweeps)
+    add_achievement(
+        "Sequence Sweep",
+        sequence_sweep_holders,
+        max(sequence_sweep_dates.values(), default=""),
+        "Won every recorded series in a single Sequence session.",
+    )
+
+    hearts_survival_holders = sorted(hearts_survivals)
+    add_achievement(
+        "Hearts Survivor",
+        hearts_survival_holders,
+        max(hearts_survival_dates.values(), default=""),
+        "Won a Hearts game despite another player shooting the moon.",
+    )
 
     qualified_average_finish: dict[str, float] = {}
     for player_id in advanced_stats.keys():
@@ -571,6 +694,221 @@ def build_achievements(
             holders,
             latest_sequence_date,
             f"{'Tied for most Sequence events with' if len(holders) > 1 else 'Most Sequence events with'} {best_events} event wins and {best_games} games as the tiebreaker.",
+        )
+
+    return achievements
+
+
+def build_achievements(
+    players: list[dict],
+    events: list[dict],
+    games: list[dict],
+    advanced_stats: dict[str, dict],
+    moon_shots: dict[str, int],
+    places_by_player: dict[str, dict[str, list[int]]],
+) -> list[dict]:
+    del players, games, advanced_stats, moon_shots, places_by_player
+
+    awards: dict[str, dict] = {}
+
+    def earn(name: str, group: str, player_id: str, date: str, reason: str) -> None:
+        if not player_id or not date:
+            return
+        award = awards.setdefault(
+            name,
+            {"name": name, "group": group, "reason": reason, "holderDates": {}},
+        )
+        award["holderDates"].setdefault(player_id, date)
+
+    overall_win_names = {
+        1: "First Victory",
+        3: "Hat Trick",
+        5: "High Five",
+        10: "Double Digits",
+        15: "Elite Company",
+        25: "Quarter Century",
+    }
+    attendance_names = {
+        1: "Welcome to Game Night",
+        5: "Regular",
+        10: "Veteran",
+        25: "Mainstay",
+        50: "Iron Seat",
+    }
+    podium_names = {
+        1: "On the Board",
+        5: "Podium Regular",
+        10: "Podium Machine",
+        25: "Podium Royalty",
+    }
+    game_win_names = {
+        1: "First {game} Win",
+        3: "{game} Regular",
+        5: "{game} Specialist",
+        10: "{game} Master",
+    }
+    moon_names = {
+        1: "First Moon Shot",
+        5: "Moon Shooter: 5",
+        10: "Moon Shooter: 10",
+        20: "Moon Shooter: 20",
+    }
+
+    ordered_events = sorted(events, key=lambda event: str(event.get("date", "")))
+    tracked_game_types = {
+        str(event_game.get("gameId", ""))
+        for event in ordered_events
+        for event_game in event.get("games", [])
+        if str(event_game.get("gameId", ""))
+    }
+
+    overall_wins: dict[str, int] = defaultdict(int)
+    wins_by_game: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    attendance: dict[str, int] = defaultdict(int)
+    podiums: dict[str, int] = defaultdict(int)
+    moon_totals: dict[str, int] = defaultdict(int)
+    sequence_games: dict[str, int] = defaultdict(int)
+    sequence_series: dict[str, int] = defaultdict(int)
+    poker_top_twos: dict[str, int] = defaultdict(int)
+    played_types: dict[str, set[str]] = defaultdict(set)
+    won_types: dict[str, set[str]] = defaultdict(set)
+    streak_winner: dict[str, str] = defaultdict(str)
+    streak_length: dict[str, int] = defaultdict(int)
+
+    for event in ordered_events:
+        event_date = str(event.get("date", ""))
+        event_participants: set[str] = set()
+        event_wins: dict[str, int] = defaultdict(int)
+
+        for event_game in event.get("games", []):
+            game_type = str(event_game.get("gameId", ""))
+            game_name = GAME_NAMES.get(game_type, game_type.replace("-", " ").title())
+            winner_id = str(event_game.get("winnerId", ""))
+            results = event_game.get("results", [])
+
+            for result in results:
+                player_id = str(result.get("playerId", ""))
+                if not player_id:
+                    continue
+                event_participants.add(player_id)
+                played_types[player_id].add(game_type)
+                if tracked_game_types and played_types[player_id] >= tracked_game_types:
+                    earn(
+                        "Played Them All",
+                        "Versatility",
+                        player_id,
+                        event_date,
+                        "Participated in every tracked game type.",
+                    )
+
+                position = result.get("position")
+                if isinstance(position, int) and position <= 3:
+                    podiums[player_id] += 1
+                    for threshold, name in podium_names.items():
+                        if podiums[player_id] >= threshold:
+                            earn(name, "Podiums", player_id, event_date, f"Recorded at least {threshold} top-three finish{'es' if threshold != 1 else ''}.")
+
+                if game_type == "hearts":
+                    moon_count = int(result.get("moonShots", 0) or 0)
+                    if moon_count:
+                        moon_totals[player_id] += moon_count
+                        for threshold, name in moon_names.items():
+                            if moon_totals[player_id] >= threshold:
+                                earn(name, "Hearts", player_id, event_date, f"Recorded at least {threshold} Hearts moon shot{'s' if threshold != 1 else ''}.")
+
+                if game_type == "sequence":
+                    sequence_games[player_id] += int(result.get("gamesWon", 0) or 0)
+                    sequence_series[player_id] += int(result.get("seriesWon", 0) or 0)
+                    if sequence_games[player_id] >= 25:
+                        earn("Sequence Builder", "Sequence", player_id, event_date, "Won at least 25 individual Sequence games.")
+                    if sequence_games[player_id] >= 50:
+                        earn("Sequence Machine", "Sequence", player_id, event_date, "Won at least 50 individual Sequence games.")
+                    if sequence_series[player_id] >= 10:
+                        earn("Series Winner", "Sequence", player_id, event_date, "Won at least 10 Sequence series.")
+                    if sequence_series[player_id] >= 25:
+                        earn("Series Veteran", "Sequence", player_id, event_date, "Won at least 25 Sequence series.")
+
+                if game_type == "poker" and isinstance(position, int) and position <= 2:
+                    poker_top_twos[player_id] += 1
+                    if poker_top_twos[player_id] >= 5:
+                        earn("Final Table Regular", "Poker", player_id, event_date, "Recorded at least 5 top-two Poker finishes.")
+                    if poker_top_twos[player_id] >= 10:
+                        earn("Heads-Up Veteran", "Poker", player_id, event_date, "Recorded at least 10 top-two Poker finishes.")
+
+            if winner_id:
+                event_wins[winner_id] += 1
+                overall_wins[winner_id] += 1
+                wins_by_game[game_type][winner_id] += 1
+                won_types[winner_id].add(game_type)
+
+                for threshold, name in overall_win_names.items():
+                    if overall_wins[winner_id] >= threshold:
+                        earn(name, "Overall Wins", winner_id, event_date, f"Won at least {threshold} tracked game{'s' if threshold != 1 else ''}.")
+
+                for threshold, template in game_win_names.items():
+                    if wins_by_game[game_type][winner_id] >= threshold:
+                        name = template.format(game=game_name)
+                        earn(name, "Game Mastery", winner_id, event_date, f"Won at least {threshold} {game_name} game{'s' if threshold != 1 else ''}.")
+
+                if len(won_types[winner_id]) >= 2:
+                    earn("Two-Game Threat", "Versatility", winner_id, event_date, "Won at least one event in two different game types.")
+                if len(won_types[winner_id]) >= 3:
+                    earn("Triple Threat", "Versatility", winner_id, event_date, "Won at least one event in three different game types.")
+                if len(won_types[winner_id]) >= 5:
+                    earn("Utility Player", "Versatility", winner_id, event_date, "Won at least one event in five different game types.")
+
+                if streak_winner[game_type] == winner_id:
+                    streak_length[game_type] += 1
+                else:
+                    streak_winner[game_type] = winner_id
+                    streak_length[game_type] = 1
+                if streak_length[game_type] >= 2:
+                    earn("Back-to-Back", "Winning Streaks", winner_id, event_date, "Won consecutive sessions of the same game.")
+                if streak_length[game_type] >= 3:
+                    earn("Three-Peat", "Winning Streaks", winner_id, event_date, "Won three consecutive sessions of the same game.")
+
+            if game_type == "hearts" and winner_id:
+                if any(
+                    str(result.get("playerId", "")) != winner_id
+                    and int(result.get("moonShots", 0) or 0) > 0
+                    for result in results
+                ):
+                    earn("Hearts Survivor", "Hearts", winner_id, event_date, "Won a Hearts game despite another player shooting the moon.")
+
+            if game_type == "sequence" and winner_id:
+                total_series = sum(int(result.get("seriesWon", 0) or 0) for result in results)
+                winner_series = next(
+                    (int(result.get("seriesWon", 0) or 0) for result in results if str(result.get("playerId", "")) == winner_id),
+                    0,
+                )
+                if total_series >= 2 and winner_series == total_series:
+                    earn("Sequence Sweep", "Sequence", winner_id, event_date, "Won every recorded series in one Sequence session.")
+
+        for player_id in event_participants:
+            attendance[player_id] += 1
+            for threshold, name in attendance_names.items():
+                if attendance[player_id] >= threshold:
+                    earn(name, "Participation", player_id, event_date, f"Participated in at least {threshold} recorded event{'s' if threshold != 1 else ''}.")
+
+        for player_id, win_count in event_wins.items():
+            if win_count >= 3:
+                earn("Hot Hand", "Winning Streaks", player_id, event_date, "Won at least three games during one game night.")
+
+    achievements: list[dict] = []
+    for index, award in enumerate(awards.values(), start=1):
+        holder_dates = award["holderDates"]
+        holders = sorted(holder_dates)
+        achievements.append(
+            {
+                "id": f"a{index:03d}",
+                "name": award["name"],
+                "group": award["group"],
+                "holder": holders[0],
+                "holders": holders,
+                "holderDates": holder_dates,
+                "dateAwarded": min(holder_dates.values()),
+                "reason": award["reason"],
+            }
         )
 
     return achievements

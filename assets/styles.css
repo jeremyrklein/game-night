@@ -681,6 +681,14 @@ img.avatar-large {
   gap: 0.8rem;
 }
 
+.achievement-group {
+  margin-top: 1.4rem;
+}
+
+.achievement-group > h3 {
+  margin-bottom: 0.65rem;
+}
+
 .achievement-card {
   display: grid;
   gap: 0.5rem;
@@ -737,11 +745,69 @@ img.avatar-large {
   margin-top: 0;
 }
 
+.storyline-section {
+  margin-top: 1rem;
+}
+
+.records-section {
+  margin-top: 1.4rem;
+}
+
+.storyline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.7rem;
+}
+
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.7rem;
+}
+
+.storyline-card {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+}
+
+.record-card {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+}
+
+.storyline-icon {
+  color: #334155;
+}
+
+.record-icon {
+  color: #334155;
+}
+
+.storyline-value {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.record-value {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
 .insights-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+.insights-grid > * {
+  min-width: 0;
 }
 
 .insights-grid .insights-wide {
@@ -1216,6 +1282,8 @@ img.avatar-inline {
   .event-grid,
   .players-grid,
   .achievement-grid,
+  .storyline-grid,
+  .record-grid,
   .admin-grid,
   .admin-form-grid,
   .game-leader-grid,

@@ -1,257 +1,846 @@
 [
   {
     "id": "a001",
-    "name": "Most last-place finishes",
-    "holder": "p04",
+    "name": "On the Board",
+    "group": "Podiums",
+    "holder": "p01",
     "holders": [
-      "p04"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p09",
+      "p10",
+      "p11",
+      "p13",
+      "p16",
+      "p19"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Most last-place finishes with 11 last-place finishes across all tracked games."
+    "holderDates": {
+      "p19": "2004-07-17",
+      "p16": "2004-07-17",
+      "p04": "2004-07-17",
+      "p03": "2004-07-24",
+      "p05": "2004-07-24",
+      "p13": "2007-03-20",
+      "p02": "2007-03-20",
+      "p01": "2007-04-21",
+      "p10": "2018-02-24",
+      "p06": "2018-10-17",
+      "p07": "2023-02-04",
+      "p11": "2023-12-09",
+      "p09": "2024-07-20"
+    },
+    "dateAwarded": "2004-07-17",
+    "reason": "Recorded at least 1 top-three finish."
   },
   {
     "id": "a002",
-    "name": "Most moon shots",
-    "holder": "p06",
+    "name": "First Victory",
+    "group": "Overall Wins",
+    "holder": "p01",
     "holders": [
-      "p06"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p09",
+      "p10",
+      "p11",
+      "p19"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Most Hearts moon shots with 3 Hearts moon shots."
+    "holderDates": {
+      "p19": "2004-07-17",
+      "p03": "2004-07-24",
+      "p05": "2007-03-20",
+      "p04": "2007-04-21",
+      "p01": "2018-02-24",
+      "p10": "2018-02-24",
+      "p06": "2018-10-17",
+      "p02": "2021-10-16",
+      "p11": "2023-12-09",
+      "p09": "2024-07-20",
+      "p07": "2024-07-20"
+    },
+    "dateAwarded": "2004-07-17",
+    "reason": "Won at least 1 tracked game."
   },
   {
     "id": "a003",
-    "name": "Best average finish",
-    "holder": "p05",
+    "name": "First Table Tennis Win",
+    "group": "Game Mastery",
+    "holder": "p03",
     "holders": [
-      "p05"
+      "p03",
+      "p04",
+      "p05",
+      "p19"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Best average finish at 2.79 across qualified players (minimum 5 events)."
+    "holderDates": {
+      "p19": "2004-07-17",
+      "p03": "2004-07-24",
+      "p05": "2007-03-20",
+      "p04": "2007-04-21"
+    },
+    "dateAwarded": "2004-07-17",
+    "reason": "Won at least 1 Table Tennis game."
   },
   {
     "id": "a004",
-    "name": "Worst average finish",
-    "holder": "p06",
+    "name": "Welcome to Game Night",
+    "group": "Participation",
+    "holder": "p01",
     "holders": [
-      "p06"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p09",
+      "p10",
+      "p11",
+      "p12",
+      "p13",
+      "p14",
+      "p15",
+      "p16",
+      "p17",
+      "p18",
+      "p19",
+      "p20",
+      "p21",
+      "p22",
+      "p23",
+      "p24"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Worst average finish at 4.43 across qualified players (minimum 5 events)."
+    "holderDates": {
+      "p16": "2004-07-17",
+      "p05": "2004-07-17",
+      "p19": "2004-07-17",
+      "p17": "2004-07-17",
+      "p04": "2004-07-17",
+      "p01": "2004-07-17",
+      "p03": "2004-07-24",
+      "p02": "2004-07-24",
+      "p20": "2004-07-24",
+      "p13": "2007-03-20",
+      "p18": "2007-03-20",
+      "p14": "2007-03-20",
+      "p15": "2007-04-07",
+      "p12": "2007-04-21",
+      "p24": "2009-03-28",
+      "p21": "2009-03-28",
+      "p23": "2009-03-28",
+      "p22": "2009-03-28",
+      "p10": "2018-02-24",
+      "p06": "2018-02-24",
+      "p07": "2023-02-04",
+      "p09": "2023-09-23",
+      "p11": "2023-12-09"
+    },
+    "dateAwarded": "2004-07-17",
+    "reason": "Participated in at least 1 recorded event."
   },
   {
     "id": "a005",
-    "name": "Best average Canadian Salad finish",
-    "holder": "p07",
+    "name": "Back-to-Back",
+    "group": "Winning Streaks",
+    "holder": "p01",
     "holders": [
-      "p07"
+      "p01",
+      "p03",
+      "p04",
+      "p05"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Best average Canadian Salad finish at 2.67 (minimum 3 Canadian Salad games)."
+    "holderDates": {
+      "p03": "2006-07-22",
+      "p05": "2007-04-07",
+      "p01": "2022-05-21",
+      "p04": "2023-02-04"
+    },
+    "dateAwarded": "2006-07-22",
+    "reason": "Won consecutive sessions of the same game."
   },
   {
     "id": "a006",
-    "name": "Worst average Canadian Salad finish",
-    "holder": "p06",
+    "name": "Regular",
+    "group": "Participation",
+    "holder": "p01",
     "holders": [
-      "p06"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p07",
+      "p10"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Worst average Canadian Salad finish at 4.75 (minimum 3 Canadian Salad games)."
+    "holderDates": {
+      "p01": "2007-04-07",
+      "p04": "2007-04-21",
+      "p05": "2018-02-24",
+      "p02": "2018-02-24",
+      "p03": "2018-10-17",
+      "p06": "2021-10-16",
+      "p10": "2021-12-04",
+      "p07": "2026-05-02"
+    },
+    "dateAwarded": "2007-04-07",
+    "reason": "Participated in at least 5 recorded events."
   },
   {
     "id": "a007",
-    "name": "Best average Hearts finish",
-    "holder": "p05",
+    "name": "Podium Regular",
+    "group": "Podiums",
+    "holder": "p01",
     "holders": [
-      "p05"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p10"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Best average Hearts finish at 2.40 (minimum 3 Hearts games)."
+    "holderDates": {
+      "p04": "2007-04-21",
+      "p03": "2018-02-24",
+      "p10": "2019-01-19",
+      "p05": "2019-01-19",
+      "p02": "2019-10-19",
+      "p01": "2019-10-19",
+      "p06": "2022-05-21"
+    },
+    "dateAwarded": "2007-04-21",
+    "reason": "Recorded at least 5 top-three finishes."
   },
   {
     "id": "a008",
-    "name": "Worst average Hearts finish",
-    "holder": "p02",
+    "name": "First Blackjack Win",
+    "group": "Game Mastery",
+    "holder": "p01",
     "holders": [
-      "p02"
+      "p01",
+      "p06"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Worst average Hearts finish at 5.00 (minimum 3 Hearts games)."
+    "holderDates": {
+      "p01": "2018-02-24",
+      "p06": "2018-10-17"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Won at least 1 Blackjack game."
   },
   {
     "id": "a009",
-    "name": "Best average Poker finish",
+    "name": "First Poker Win",
+    "group": "Game Mastery",
     "holder": "p01",
     "holders": [
-      "p01"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p06",
+      "p10"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Best average Poker finish at 2.55 (minimum 3 Poker games)."
+    "holderDates": {
+      "p10": "2018-02-24",
+      "p04": "2018-10-17",
+      "p01": "2019-10-19",
+      "p03": "2021-10-16",
+      "p06": "2023-02-04",
+      "p02": "2023-09-23"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Won at least 1 Poker game."
   },
   {
     "id": "a010",
-    "name": "Worst average Poker finish",
-    "holder": "p07",
+    "name": "First Moon Shot",
+    "group": "Hearts",
+    "holder": "p01",
     "holders": [
-      "p07"
+      "p01",
+      "p02",
+      "p04",
+      "p06"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Worst average Poker finish at 5.00 (minimum 3 Poker games)."
+    "holderDates": {
+      "p04": "2018-02-24",
+      "p02": "2018-02-24",
+      "p06": "2018-02-24",
+      "p01": "2026-10-10"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Recorded at least 1 Hearts moon shot."
   },
   {
     "id": "a011",
-    "name": "Best average Sequence finish",
+    "name": "Hat Trick",
+    "group": "Overall Wins",
     "holder": "p01",
     "holders": [
-      "p01"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p10"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Best average Sequence finish at 1.80 (minimum 3 Sequence games)."
+    "holderDates": {
+      "p03": "2018-02-24",
+      "p10": "2019-01-19",
+      "p01": "2019-10-19",
+      "p04": "2021-12-04",
+      "p02": "2023-09-23",
+      "p06": "2025-11-09",
+      "p05": "2025-11-09"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Won at least 3 tracked games."
   },
   {
     "id": "a012",
-    "name": "Worst average Sequence finish",
-    "holder": "p03",
+    "name": "First Hearts Win",
+    "group": "Game Mastery",
+    "holder": "p01",
     "holders": [
-      "p03"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p06",
+      "p09",
+      "p10",
+      "p11"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Worst average Sequence finish at 2.90 (minimum 3 Sequence games)."
+    "holderDates": {
+      "p03": "2018-02-24",
+      "p01": "2018-10-17",
+      "p10": "2019-01-19",
+      "p04": "2021-12-04",
+      "p11": "2023-12-09",
+      "p09": "2024-07-20",
+      "p06": "2025-11-09",
+      "p02": "2026-10-10"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Won at least 1 Hearts game."
   },
   {
     "id": "a013",
-    "name": "Best average Table Tennis finish",
-    "holder": "p03",
+    "name": "Two-Game Threat",
+    "group": "Versatility",
+    "holder": "p01",
     "holders": [
-      "p03"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05",
+      "p06",
+      "p10"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Best average Table Tennis finish at 1.67 (minimum 3 Table Tennis games)."
+    "holderDates": {
+      "p03": "2018-02-24",
+      "p01": "2018-10-17",
+      "p04": "2018-10-17",
+      "p10": "2019-01-19",
+      "p06": "2023-02-04",
+      "p02": "2023-09-23",
+      "p05": "2025-11-09"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Won at least one event in two different game types."
   },
   {
     "id": "a014",
-    "name": "Worst average Table Tennis finish",
+    "name": "Hearts Survivor",
+    "group": "Hearts",
     "holder": "p01",
     "holders": [
-      "p01"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p06",
+      "p09",
+      "p10",
+      "p11"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Worst average Table Tennis finish at 4.50 (minimum 3 Table Tennis games)."
+    "holderDates": {
+      "p03": "2018-02-24",
+      "p01": "2018-10-17",
+      "p10": "2019-01-19",
+      "p04": "2021-12-04",
+      "p11": "2023-12-09",
+      "p09": "2024-07-20",
+      "p06": "2025-11-09",
+      "p02": "2026-10-10"
+    },
+    "dateAwarded": "2018-02-24",
+    "reason": "Won a Hearts game despite another player shooting the moon."
   },
   {
     "id": "a015",
-    "name": "Most Hearts wins",
-    "holder": "p01",
+    "name": "Moon Shooter: 5",
+    "group": "Hearts",
+    "holder": "p02",
     "holders": [
-      "p01",
-      "p03",
-      "p04"
+      "p02",
+      "p04",
+      "p06"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Tied atop the Hearts win column with 2 wins."
+    "holderDates": {
+      "p06": "2018-10-17",
+      "p04": "2019-01-19",
+      "p02": "2021-10-16"
+    },
+    "dateAwarded": "2018-10-17",
+    "reason": "Recorded at least 5 Hearts moon shots."
   },
   {
     "id": "a016",
-    "name": "Most Oh Heck wins",
-    "holder": "p01",
+    "name": "Moon Shooter: 10",
+    "group": "Hearts",
+    "holder": "p04",
     "holders": [
-      "p01"
+      "p04",
+      "p06"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Leads the Oh Heck win column with 1 wins."
+    "holderDates": {
+      "p06": "2019-10-19",
+      "p04": "2021-10-16"
+    },
+    "dateAwarded": "2019-10-19",
+    "reason": "Recorded at least 10 Hearts moon shots."
   },
   {
     "id": "a017",
-    "name": "Most Poker wins",
+    "name": "Triple Threat",
+    "group": "Versatility",
     "holder": "p01",
     "holders": [
-      "p01"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p06",
+      "p10"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Leads the Poker win column with 5 wins."
+    "holderDates": {
+      "p01": "2019-10-19",
+      "p03": "2020-01-11",
+      "p04": "2021-12-04",
+      "p10": "2023-02-04",
+      "p02": "2023-09-23",
+      "p06": "2025-11-09"
+    },
+    "dateAwarded": "2019-10-19",
+    "reason": "Won at least one event in three different game types."
   },
   {
     "id": "a018",
-    "name": "Most Table Tennis wins",
-    "holder": "p03",
+    "name": "Veteran",
+    "group": "Participation",
+    "holder": "p01",
     "holders": [
+      "p01",
+      "p02",
       "p03",
-      "p05"
+      "p04",
+      "p05",
+      "p06"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Tied atop the Table Tennis win column with 2 wins."
+    "holderDates": {
+      "p01": "2019-10-19",
+      "p04": "2020-01-11",
+      "p02": "2020-03-07",
+      "p03": "2021-10-16",
+      "p05": "2023-09-23",
+      "p06": "2023-12-09"
+    },
+    "dateAwarded": "2019-10-19",
+    "reason": "Participated in at least 10 recorded events."
   },
   {
     "id": "a019",
-    "name": "Longest Hearts streak",
-    "holder": "p04",
+    "name": "Podium Machine",
+    "group": "Podiums",
+    "holder": "p01",
     "holders": [
-      "p04"
+      "p01",
+      "p02",
+      "p03",
+      "p04",
+      "p05"
     ],
-    "dateAwarded": "2023-02-04",
-    "reason": "Longest Hearts streak at 2 straight sessions."
+    "holderDates": {
+      "p04": "2020-01-11",
+      "p03": "2020-01-11",
+      "p05": "2021-12-04",
+      "p01": "2022-05-21",
+      "p02": "2022-09-24"
+    },
+    "dateAwarded": "2020-01-11",
+    "reason": "Recorded at least 10 top-three finishes."
   },
   {
     "id": "a020",
-    "name": "Longest Poker streak",
+    "name": "High Five",
+    "group": "Overall Wins",
     "holder": "p01",
     "holders": [
-      "p01"
+      "p01",
+      "p02",
+      "p03",
+      "p04"
     ],
-    "dateAwarded": "2022-05-21",
-    "reason": "Longest Poker streak at 2 straight sessions."
+    "holderDates": {
+      "p03": "2020-01-11",
+      "p01": "2021-10-16",
+      "p04": "2022-09-24",
+      "p02": "2026-10-10"
+    },
+    "dateAwarded": "2020-01-11",
+    "reason": "Won at least 5 tracked games."
   },
   {
     "id": "a021",
-    "name": "Longest Sequence event streak",
+    "name": "First Sequence Win",
+    "group": "Game Mastery",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p03": "2020-01-11",
+      "p01": "2020-03-07",
+      "p04": "2022-09-24",
+      "p02": "2023-09-23"
+    },
+    "dateAwarded": "2020-01-11",
+    "reason": "Won at least 1 Sequence game."
+  },
+  {
+    "id": "a022",
+    "name": "First Canadian Salad Win",
+    "group": "Game Mastery",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p04",
+      "p05",
+      "p07",
+      "p10"
+    ],
+    "holderDates": {
+      "p02": "2021-10-16",
+      "p04": "2021-12-04",
+      "p01": "2022-05-21",
+      "p10": "2023-02-04",
+      "p07": "2024-07-20",
+      "p05": "2025-11-09"
+    },
+    "dateAwarded": "2021-10-16",
+    "reason": "Won at least 1 Canadian Salad game."
+  },
+  {
+    "id": "a023",
+    "name": "Utility Player",
+    "group": "Versatility",
     "holder": "p01",
     "holders": [
       "p01",
       "p04"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Tied for the longest Sequence event streak at 2 straight sessions."
-  },
-  {
-    "id": "a022",
-    "name": "Longest Table Tennis streak",
-    "holder": "p03",
-    "holders": [
-      "p03",
-      "p05"
-    ],
-    "dateAwarded": "2007-04-07",
-    "reason": "Tied for the longest Table Tennis streak at 2 straight sessions."
-  },
-  {
-    "id": "a023",
-    "name": "Most Sequence games",
-    "holder": "p01",
-    "holders": [
-      "p01"
-    ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Most Sequence games with 78 game wins."
+    "holderDates": {
+      "p01": "2022-05-21",
+      "p04": "2022-09-24"
+    },
+    "dateAwarded": "2022-05-21",
+    "reason": "Won at least one event in five different game types."
   },
   {
     "id": "a024",
-    "name": "Most Sequence series",
+    "name": "Poker Regular",
+    "group": "Game Mastery",
     "holder": "p01",
     "holders": [
       "p01"
     ],
-    "dateAwarded": "2026-08-22",
-    "reason": "Most Sequence series with 30 series wins."
+    "holderDates": {
+      "p01": "2022-05-21"
+    },
+    "dateAwarded": "2022-05-21",
+    "reason": "Won at least 3 Poker games."
   },
   {
     "id": "a025",
-    "name": "Most Sequence events",
+    "name": "Sequence Builder",
+    "group": "Sequence",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p02": "2022-09-24",
+      "p01": "2022-09-24",
+      "p03": "2022-09-24",
+      "p04": "2022-09-24"
+    },
+    "dateAwarded": "2022-09-24",
+    "reason": "Won at least 25 individual Sequence games."
+  },
+  {
+    "id": "a026",
+    "name": "Series Winner",
+    "group": "Sequence",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p02": "2022-09-24",
+      "p01": "2022-09-24",
+      "p03": "2022-09-24",
+      "p04": "2022-09-24"
+    },
+    "dateAwarded": "2022-09-24",
+    "reason": "Won at least 10 Sequence series."
+  },
+  {
+    "id": "a027",
+    "name": "Moon Shooter: 20",
+    "group": "Hearts",
+    "holder": "p04",
+    "holders": [
+      "p04",
+      "p06"
+    ],
+    "holderDates": {
+      "p06": "2023-02-04",
+      "p04": "2025-11-09"
+    },
+    "dateAwarded": "2023-02-04",
+    "reason": "Recorded at least 20 Hearts moon shots."
+  },
+  {
+    "id": "a028",
+    "name": "Final Table Regular",
+    "group": "Poker",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p03"
+    ],
+    "holderDates": {
+      "p01": "2023-02-04",
+      "p03": "2023-09-23"
+    },
+    "dateAwarded": "2023-02-04",
+    "reason": "Recorded at least 5 top-two Poker finishes."
+  },
+  {
+    "id": "a029",
+    "name": "Sequence Machine",
+    "group": "Sequence",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p02": "2025-01-18",
+      "p04": "2025-01-18",
+      "p01": "2025-01-18",
+      "p03": "2026-05-02"
+    },
+    "dateAwarded": "2025-01-18",
+    "reason": "Won at least 50 individual Sequence games."
+  },
+  {
+    "id": "a030",
+    "name": "Double Digits",
+    "group": "Overall Wins",
     "holder": "p01",
     "holders": [
       "p01"
     ],
+    "holderDates": {
+      "p01": "2025-01-18"
+    },
+    "dateAwarded": "2025-01-18",
+    "reason": "Won at least 10 tracked games."
+  },
+  {
+    "id": "a031",
+    "name": "Sequence Regular",
+    "group": "Game Mastery",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02"
+    ],
+    "holderDates": {
+      "p01": "2025-05-31",
+      "p02": "2026-10-10"
+    },
+    "dateAwarded": "2025-05-31",
+    "reason": "Won at least 3 Sequence games."
+  },
+  {
+    "id": "a032",
+    "name": "Mainstay",
+    "group": "Participation",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p01": "2025-11-22",
+      "p04": "2026-05-02",
+      "p02": "2026-08-22",
+      "p03": "2026-08-22"
+    },
+    "dateAwarded": "2025-11-22",
+    "reason": "Participated in at least 25 recorded events."
+  },
+  {
+    "id": "a033",
+    "name": "Poker Specialist",
+    "group": "Game Mastery",
+    "holder": "p01",
+    "holders": [
+      "p01"
+    ],
+    "holderDates": {
+      "p01": "2026-05-02"
+    },
+    "dateAwarded": "2026-05-02",
+    "reason": "Won at least 5 Poker games."
+  },
+  {
+    "id": "a034",
+    "name": "Played Them All",
+    "group": "Versatility",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p01": "2026-05-16",
+      "p02": "2026-05-16",
+      "p03": "2026-05-16",
+      "p04": "2026-05-16"
+    },
+    "dateAwarded": "2026-05-16",
+    "reason": "Participated in every tracked game type."
+  },
+  {
+    "id": "a035",
+    "name": "Podium Royalty",
+    "group": "Podiums",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p03",
+      "p04"
+    ],
+    "holderDates": {
+      "p01": "2026-05-16",
+      "p04": "2026-05-16",
+      "p03": "2026-10-10"
+    },
+    "dateAwarded": "2026-05-16",
+    "reason": "Recorded at least 25 top-three finishes."
+  },
+  {
+    "id": "a036",
+    "name": "First Oh Heck Win",
+    "group": "Game Mastery",
+    "holder": "p01",
+    "holders": [
+      "p01"
+    ],
+    "holderDates": {
+      "p01": "2026-05-16"
+    },
+    "dateAwarded": "2026-05-16",
+    "reason": "Won at least 1 Oh Heck game."
+  },
+  {
+    "id": "a037",
+    "name": "Series Veteran",
+    "group": "Sequence",
+    "holder": "p01",
+    "holders": [
+      "p01",
+      "p02",
+      "p04"
+    ],
+    "holderDates": {
+      "p04": "2026-05-16",
+      "p02": "2026-05-16",
+      "p01": "2026-05-16"
+    },
+    "dateAwarded": "2026-05-16",
+    "reason": "Won at least 25 Sequence series."
+  },
+  {
+    "id": "a038",
+    "name": "Elite Company",
+    "group": "Overall Wins",
+    "holder": "p01",
+    "holders": [
+      "p01"
+    ],
+    "holderDates": {
+      "p01": "2026-08-22"
+    },
     "dateAwarded": "2026-08-22",
-    "reason": "Most Sequence events with 5 event wins and 44 games as the tiebreaker."
+    "reason": "Won at least 15 tracked games."
+  },
+  {
+    "id": "a039",
+    "name": "Sequence Specialist",
+    "group": "Game Mastery",
+    "holder": "p01",
+    "holders": [
+      "p01"
+    ],
+    "holderDates": {
+      "p01": "2026-08-22"
+    },
+    "dateAwarded": "2026-08-22",
+    "reason": "Won at least 5 Sequence games."
   }
 ]

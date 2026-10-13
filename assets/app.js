@@ -266,21 +266,34 @@ function getGameDetails(eventGame, ctx) {
   const hasPoints    = results.some((r) => Number.isFinite(Number(r.points)));
   const hasWinnings  = results.some((r) => Number.isFinite(Number(r.winnings)));
 
+  const compareNumbers = (a, b, direction = 'ascending') => {
+    const aNumber = Number(a);
+    const bNumber = Number(b);
+    const aIsNumber = Number.isFinite(aNumber);
+    const bIsNumber = Number.isFinite(bNumber);
+    if (aIsNumber !== bIsNumber) return aIsNumber ? -1 : 1;
+    if (!aIsNumber) return 0;
+    return direction === 'ascending' ? aNumber - bNumber : bNumber - aNumber;
+  };
+
   const lowerBetter = gameType === 'hearts' || gameType === 'canadian-salad';
-  const fallback = [...results].sort((a, b) => {
-    if (hasPosition) { const d = Number(a.position) - Number(b.position); if (d) return d; }
-    if (hasSeriesWon) { const d = Number(b.seriesWon || 0) - Number(a.seriesWon || 0); if (d) return d; }
-    if (hasGamesWon)  { const d = Number(b.gamesWon || 0)  - Number(a.gamesWon || 0);  if (d) return d; }
-    if (hasPoints)    { const d = lowerBetter
-      ? Number(a.points || 0) - Number(b.points || 0)
-      : Number(b.points || 0) - Number(a.points || 0); if (d) return d; }
-    if (hasWinnings)  { const d = Number(b.winnings || 0) - Number(a.winnings || 0); if (d) return d; }
+  const sortedResults = [...results].sort((a, b) => {
+    if (eventGame.winnerId) {
+      const d = Number(b.playerId === eventGame.winnerId) - Number(a.playerId === eventGame.winnerId);
+      if (d) return d;
+    }
+    if (hasPosition) { const d = compareNumbers(a.position, b.position); if (d) return d; }
+    if (hasSeriesWon) { const d = compareNumbers(a.seriesWon, b.seriesWon, 'descending'); if (d) return d; }
+    if (hasGamesWon)  { const d = compareNumbers(a.gamesWon, b.gamesWon, 'descending'); if (d) return d; }
+    if (hasPoints)    { const d = compareNumbers(a.points, b.points, lowerBetter ? 'ascending' : 'descending'); if (d) return d; }
+    if (hasWinnings)  { const d = compareNumbers(a.winnings, b.winnings, 'descending'); if (d) return d; }
     return String(a.playerName || '').localeCompare(String(b.playerName || ''));
-  })[0];
-  const explicit = results.find((r) => r.playerId === eventGame.winnerId);
+  });
+  const explicit = sortedResults.find((r) => r.playerId === eventGame.winnerId);
+  const fallback = sortedResults[0];
 
   return {
-    gameName, gameType, results,
+    gameName, gameType, results: sortedResults,
     rounds: Array.isArray(eventGame.rounds) ? eventGame.rounds : [],
     notes: String(eventGame.notes || '').trim(),
     winner: explicit || fallback,
@@ -624,10 +637,12 @@ function buildRandomFacts(data, computed) {
 
 function renderDashboard() {
   const { data, computed, isUnlocked, unlockError } = state;
+  const achievementsEarned = data.achievements.reduce((total, achievement) =>
+    total + (Array.isArray(achievement.holders) ? achievement.holders.length : 1), 0);
   const summary = {
     eventCount: data.events.length,
     activePlayers: data.players.filter((p) => p.active).length,
-    trophies: data.achievements.length,
+    trophies: achievementsEarned,
     gameTypes: data.gameTypes.length,
   };
   const miniLeaders = computed.leaderboard.slice(0, 4);
@@ -676,7 +691,7 @@ function renderDashboard() {
       <section class="stats-grid">
         ${statCard('Recorded events', String(summary.eventCount), 'Archived across all sessions', ICON.calendar, 'Events')}
         ${statCard('Active players', String(summary.activePlayers), 'Current core roster', ICON.users, 'Players')}
-        ${statCard('Trophies awarded', String(summary.trophies), 'Virtual and seasonal', ICON.trophy, 'Achievements')}
+        ${statCard('Achievements earned', String(summary.trophies), `${data.achievements.length} milestone types`, ICON.trophy, 'Achievements')}
         ${statCard('Games tracked', String(summary.gameTypes), 'Expandable rulesets', ICON.table, 'Events')}
       </section>
 
@@ -920,24 +935,29 @@ function renderAchievements() {
     `;
   }
 
-  const sorted = [...data.achievements].sort((a, b) =>
-    String(b.dateAwarded || '').localeCompare(String(a.dateAwarded || '')));
+  const groupOrder = ['Overall Wins', 'Game Mastery', 'Participation', 'Podiums', 'Versatility', 'Winning Streaks', 'Hearts', 'Sequence', 'Poker'];
+  const grouped = Object.groupBy(data.achievements, (achievement) => achievement.group || 'Other');
+  const groups = [...groupOrder, ...Object.keys(grouped).filter((group) => !groupOrder.includes(group))]
+    .filter((group) => grouped[group]?.length);
 
   return `
     <section>
       <h2 class="section-title">Achievements</h2>
-      <p class="muted">Data-backed records only.</p>
-      <div class="achievement-grid">
-        ${sorted.map((a) => {
+      <p class="muted">Permanent milestones that every player can earn.</p>
+      ${groups.map((group) => `
+        <section class="achievement-group">
+          <h3>${escapeHtml(group)}</h3>
+          <div class="achievement-grid">
+          ${grouped[group].map((a) => {
           const holders = (Array.isArray(a.holders) && a.holders.length ? a.holders : [a.holder])
             .filter(Boolean)
             .map((id) => computed.playersById[id]?.name || id);
-          const achieved = computeAchievedDate(a, data.events) || a.dateAwarded || '';
+          const achieved = a.dateAwarded || '';
           return `
             <article class="glass-card achievement-card">
               <div class="row between">
                 <div class="achievement-icon">${iconForAchievement(a.name)}</div>
-                <span class="muted tiny">${achieved ? `Achieved: ${escapeHtml(formatDate(achieved))}` : ''}</span>
+                <span class="muted tiny">${achieved ? `First earned: ${escapeHtml(formatDate(achieved))}` : ''}</span>
               </div>
               <h3>${escapeHtml(a.name || '')}</h3>
               <div class="holder-list-wrap">
@@ -948,13 +968,277 @@ function renderAchievements() {
               <p class="muted small">${escapeHtml(a.reason || '')}</p>
             </article>
           `;
-        }).join('')}
-      </div>
+          }).join('')}
+          </div>
+        </section>
+      `).join('')}
     </section>
   `;
 }
 
 /* ---------- insights (charts) ---------- */
+function buildStorylineInsights(data, computed, filter) {
+  const playerName = (id) => computed.playersById[id]?.name || id;
+  const gameName = (id) => computed.gameTypesById[id]?.name || id;
+  const dateByEvent = Object.fromEntries(data.events.map((event) => [event.id, event.date]));
+  const games = (filter === 'all' ? data.games : data.games.filter((game) => game.gameType === filter))
+    .map((game) => ({ ...game, date: dateByEvent[game.eventId] || '' }))
+    .sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.id).localeCompare(String(b.id)));
+  const unavailable = (title, icon, body) => ({ title, icon, value: 'Not enough data', body });
+
+  const scoredFinishes = games.flatMap((game) => {
+    if (SCORE_HIDDEN_AGGREGATE.has(game.gameType)) return [];
+    const lowerBetter = SCORE_LOWER_IS_BETTER.has(game.gameType);
+    const scores = Object.entries(game.scores || {})
+      .filter(([, score]) => typeof score === 'number')
+      .sort((a, b) => lowerBetter ? a[1] - b[1] : b[1] - a[1]);
+    if (scores.length < 2) return [];
+    return [{
+      game,
+      winner: scores[0][0],
+      runnerUp: scores[1][0],
+      gap: Math.abs(scores[0][1] - scores[1][1]),
+    }];
+  });
+
+  const closest = [...scoredFinishes].sort((a, b) => a.gap - b.gap || String(b.game.date).localeCompare(String(a.game.date)))[0];
+  const largest = [...scoredFinishes].sort((a, b) => b.gap - a.gap || String(b.game.date).localeCompare(String(a.game.date)))[0];
+
+  const appearancesByPlayer = {};
+  games.forEach((game) => {
+    (game.players || []).forEach((playerId) => {
+      (appearancesByPlayer[playerId] = appearancesByPlayer[playerId] || []).push(game);
+    });
+  });
+
+  let longestDrought = null;
+  Object.entries(appearancesByPlayer).forEach(([playerId, appearances]) => {
+    let lossesSinceWin = null;
+    appearances.forEach((game) => {
+      if (game.winner === playerId) {
+        if (lossesSinceWin !== null && (!longestDrought || lossesSinceWin > longestDrought.games)) {
+          longestDrought = { playerId, games: lossesSinceWin };
+        }
+        lossesSinceWin = 0;
+      } else if (lossesSinceWin !== null) {
+        lossesSinceWin += 1;
+      }
+    });
+  });
+
+  const overallByPlayer = {};
+  games.forEach((game) => {
+    (game.players || []).forEach((playerId) => {
+      const row = overallByPlayer[playerId] || (overallByPlayer[playerId] = { played: 0, wins: 0 });
+      row.played += 1;
+      if (game.winner === playerId) row.wins += 1;
+    });
+  });
+
+  const hostByPlayer = {};
+  data.events.forEach((event) => {
+    const host = event.host;
+    if (!host) return;
+    games.filter((game) => game.eventId === event.id && (game.players || []).includes(host)).forEach((game) => {
+      const row = hostByPlayer[host] || (hostByPlayer[host] = { played: 0, wins: 0 });
+      row.played += 1;
+      if (game.winner === host) row.wins += 1;
+    });
+  });
+  const hostAdvantage = Object.entries(hostByPlayer)
+    .filter(([playerId, row]) => row.played >= 2 && overallByPlayer[playerId]?.played > row.played)
+    .map(([playerId, row]) => ({
+      playerId,
+      hosted: row,
+      hostedRate: row.wins / row.played,
+      overallRate: overallByPlayer[playerId].wins / overallByPlayer[playerId].played,
+    }))
+    .sort((a, b) => (b.hostedRate - b.overallRate) - (a.hostedRate - a.overallRate))[0];
+
+  const bestWinRate = Object.entries(overallByPlayer)
+    .filter(([, row]) => row.played >= 5)
+    .map(([playerId, row]) => ({ playerId, ...row, rate: row.wins / row.played }))
+    .sort((a, b) => b.rate - a.rate || b.wins - a.wins)[0];
+
+  const rivalCounts = {};
+  games.forEach((game) => {
+    const players = [...new Set(game.players || [])].sort();
+    for (let left = 0; left < players.length; left += 1) {
+      for (let right = left + 1; right < players.length; right += 1) {
+        const key = `${players[left]}|${players[right]}`;
+        rivalCounts[key] = (rivalCounts[key] || 0) + 1;
+      }
+    }
+  });
+  const frequentRivals = Object.entries(rivalCounts).sort((a, b) => b[1] - a[1])[0];
+
+  const recentForm = Object.entries(appearancesByPlayer)
+    .filter(([, appearances]) => appearances.length >= 5)
+    .map(([playerId, appearances]) => {
+      const recent = appearances.slice(-5);
+      return { playerId, wins: recent.filter((game) => game.winner === playerId).length };
+    })
+    .sort((a, b) => b.wins - a.wins || playerName(a.playerId).localeCompare(playerName(b.playerId)))[0];
+
+  return [
+    closest ? {
+      title: 'Closest finish', icon: ICON.trend, value: `${closest.gap} point${closest.gap === 1 ? '' : 's'}`,
+      body: closest.gap === 0
+        ? `${playerName(closest.winner)} won a score-level tie with ${playerName(closest.runnerUp)} in ${gameName(closest.game.gameType)} on ${closest.game.date}.`
+        : `${playerName(closest.winner)} edged ${playerName(closest.runnerUp)} in ${gameName(closest.game.gameType)} on ${closest.game.date}.`,
+    } : unavailable('Closest finish', ICON.trend, 'No comparable first- and second-place scores are recorded.'),
+    largest ? {
+      title: 'Largest margin', icon: ICON.flame, value: `${largest.gap} points`,
+      body: `${playerName(largest.winner)} posted the largest first-to-second gap in ${gameName(largest.game.gameType)} on ${largest.game.date}.`,
+    } : unavailable('Largest margin', ICON.flame, 'No comparable first- and second-place scores are recorded.'),
+    longestDrought ? {
+      title: 'Longest win drought', icon: ICON.calendar, value: `${longestDrought.games} appearances`,
+      body: `${playerName(longestDrought.playerId)} went ${longestDrought.games} appearances between wins.`,
+    } : unavailable('Longest win drought', ICON.calendar, 'At least two wins by one player are needed.'),
+    hostAdvantage ? {
+      title: 'Host advantage', icon: ICON.users,
+      value: `${Math.round((hostAdvantage.hostedRate - hostAdvantage.overallRate) * 100)} point lift`,
+      body: `${playerName(hostAdvantage.playerId)} wins ${Math.round(hostAdvantage.hostedRate * 100)}% when hosting versus ${Math.round(hostAdvantage.overallRate * 100)}% overall.`,
+    } : unavailable('Host advantage', ICON.users, 'More games with a recorded host are needed.'),
+    bestWinRate ? {
+      title: 'Best win rate', icon: ICON.trophy, value: `${Math.round(bestWinRate.rate * 100)}%`,
+      body: `${playerName(bestWinRate.playerId)} has ${bestWinRate.wins} wins in ${bestWinRate.played} appearances (minimum 5).`,
+    } : unavailable('Best win rate', ICON.trophy, 'No player has five appearances in this view.'),
+    frequentRivals ? {
+      title: 'Most frequent rivals', icon: ICON.users, value: `${frequentRivals[1]} meetings`,
+      body: frequentRivals[0].split('|').map(playerName).join(' and ') + ' have shared the table most often.',
+    } : unavailable('Most frequent rivals', ICON.users, 'No repeated player pairing is recorded.'),
+    recentForm ? {
+      title: 'Recent form', icon: ICON.flame, value: `${recentForm.wins} wins in 5`,
+      body: `${playerName(recentForm.playerId)} has the most wins across each player's last five appearances.`,
+    } : unavailable('Recent form', ICON.flame, 'Five appearances per player are needed.'),
+  ];
+}
+
+function buildAllTimeRecords(data, computed, filter) {
+  const playerName = (id) => computed.playersById[id]?.name || id;
+  const gameName = (id) => computed.gameTypesById[id]?.name || id;
+  const dateByEvent = Object.fromEntries(data.events.map((event) => [event.id, event.date]));
+  const games = (filter === 'all' ? data.games : data.games.filter((game) => game.gameType === filter))
+    .map((game) => ({ ...game, date: dateByEvent[game.eventId] || '' }))
+    .sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.id).localeCompare(String(b.id)));
+  const stats = {};
+  const rowFor = (playerId) => stats[playerId] || (stats[playerId] = {
+    playerId, played: 0, wins: 0, podiums: 0, places: [], eventIds: new Set(),
+    typesWon: new Set(), lastPlaces: 0, moonShots: 0, sequenceGames: 0,
+    sequenceSeries: 0, sequenceEvents: 0, pokerTopTwos: 0, matchWins: 0, matchLosses: 0,
+  });
+
+  games.forEach((game) => {
+    (game.players || []).forEach((playerId) => {
+      const row = rowFor(playerId);
+      row.played += 1;
+      row.eventIds.add(game.eventId);
+      if (game.winner === playerId) {
+        row.wins += 1;
+        row.typesWon.add(game.gameType);
+      }
+    });
+  });
+
+  data.events.forEach((event) => {
+    (event.games || []).forEach((game) => {
+      if (filter !== 'all' && game.gameId !== filter) return;
+      const positioned = (game.results || []).filter((result) => Number.isFinite(Number(result.position)));
+      const lastPlace = positioned.length ? Math.max(...positioned.map((result) => Number(result.position))) : null;
+      (game.results || []).forEach((result) => {
+        const playerId = result.playerId;
+        if (!playerId) return;
+        const row = rowFor(playerId);
+        const position = Number(result.position);
+        if (Number.isFinite(position)) {
+          row.places.push(position);
+          if (position <= 3) row.podiums += 1;
+          if (position === lastPlace) row.lastPlaces += 1;
+          if (game.gameId === 'poker' && position <= 2) row.pokerTopTwos += 1;
+        }
+        row.moonShots += Number(result.moonShots || 0);
+        row.sequenceGames += Number(result.gamesWon || 0);
+        row.sequenceSeries += Number(result.seriesWon || 0);
+        row.matchWins += Number(result.gamesWon || 0);
+        row.matchLosses += Number(result.gamesLost || 0);
+        if (game.gameId === 'sequence' && game.winnerId === playerId) row.sequenceEvents += 1;
+      });
+    });
+  });
+
+  const records = [];
+  const addLeaders = (title, rows, metric, format, body, { lower = false, icon = ICON.trophy } = {}) => {
+    const eligible = rows.filter((row) => Number.isFinite(metric(row)));
+    if (!eligible.length) return;
+    const best = eligible.reduce((value, row) => lower ? Math.min(value, metric(row)) : Math.max(value, metric(row)), lower ? Infinity : -Infinity);
+    const holders = eligible.filter((row) => Math.abs(metric(row) - best) < 1e-9).map((row) => row.playerId).sort();
+    records.push({ title, holders, value: format(best), body, icon });
+  };
+
+  const rows = Object.values(stats);
+  addLeaders('Most wins', rows, (row) => row.wins, (value) => String(value), 'All-time wins leader.', { icon: ICON.trophy });
+  addLeaders('Best win rate', rows.filter((row) => row.played >= (filter === 'all' ? 10 : 5)), (row) => row.wins / row.played, (value) => `${Math.round(value * 100)}%`, `Minimum ${filter === 'all' ? 10 : 5} appearances.`, { icon: ICON.trend });
+  addLeaders('Most appearances', rows, (row) => row.played, (value) => String(value), 'Games played in this view.', { icon: ICON.users });
+  addLeaders('Most podiums', rows, (row) => row.podiums, (value) => String(value), 'Top-three finishes.', { icon: ICON.trophy });
+  addLeaders('Best average finish', rows.filter((row) => row.places.length >= (filter === 'all' ? 10 : 3)), (row) => row.places.reduce((sum, place) => sum + place, 0) / row.places.length, (value) => value.toFixed(2), `Minimum ${filter === 'all' ? 10 : 3} recorded placements; lower is better.`, { lower: true, icon: ICON.trend });
+
+  if (filter === 'all') {
+    addLeaders('Most events attended', rows, (row) => row.eventIds.size, (value) => String(value), 'Unique recorded game nights.', { icon: ICON.calendar });
+    addLeaders('Most game types won', rows, (row) => row.typesWon.size, (value) => String(value), 'Different games with at least one win.', { icon: ICON.dice });
+    addLeaders('Most last-place finishes', rows, (row) => row.lastPlaces, (value) => String(value), 'Recorded finishes at the bottom of the field.', { icon: ICON.table });
+  } else {
+    addLeaders('Worst average finish', rows.filter((row) => row.places.length >= 3), (row) => row.places.reduce((sum, place) => sum + place, 0) / row.places.length, (value) => value.toFixed(2), 'Minimum 3 recorded placements.', { icon: ICON.table });
+  }
+
+  const streakBest = {};
+  const currentWinner = {};
+  const currentLength = {};
+  games.forEach((game) => {
+    const key = game.gameType;
+    if (currentWinner[key] === game.winner) currentLength[key] += 1;
+    else { currentWinner[key] = game.winner; currentLength[key] = 1; }
+    if (game.winner) streakBest[game.winner] = Math.max(streakBest[game.winner] || 0, currentLength[key]);
+  });
+  addLeaders('Longest winning streak', Object.entries(streakBest).map(([playerId, streak]) => ({ playerId, streak })), (row) => row.streak, (value) => String(value), 'Consecutive wins in the same game.', { icon: ICON.flame });
+
+  const lowerBetter = filter !== 'all' && SCORE_LOWER_IS_BETTER.has(filter);
+  const comparableScores = filter !== 'all' && !SCORE_HIDDEN_AGGREGATE.has(filter);
+  if (comparableScores) {
+    const scores = games.flatMap((game) => Object.entries(game.scores || {}).map(([playerId, value]) => ({ playerId, value, game })) ).filter((entry) => typeof entry.value === 'number');
+    addLeaders('Best single-game score', scores, (row) => row.value, (value) => String(value), `${lowerBetter ? 'Lowest' : 'Highest'} recorded score.`, { lower: lowerBetter, icon: ICON.trend });
+    addLeaders('Worst single-game score', scores, (row) => row.value, (value) => String(value), `${lowerBetter ? 'Highest' : 'Lowest'} recorded score.`, { lower: !lowerBetter, icon: ICON.table });
+  }
+
+  if (filter === 'hearts') {
+    addLeaders('Most moon shots', rows, (row) => row.moonShots, (value) => String(value), 'Recorded Hearts moon shots.', { icon: ICON.heart });
+    const scoreRows = rows.map((row) => {
+      const values = games.map((game) => game.scores?.[row.playerId]).filter((value) => typeof value === 'number');
+      return { ...row, scoreCount: values.length, scoreAverage: values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : NaN };
+    }).filter((row) => row.scoreCount >= 3);
+    addLeaders('Lowest average score', scoreRows, (row) => row.scoreAverage, (value) => value.toFixed(1), 'Minimum 3 scored Hearts games.', { lower: true, icon: ICON.heart });
+  }
+  if (filter === 'sequence') {
+    addLeaders('Most individual games', rows, (row) => row.sequenceGames, (value) => String(value), 'Sequence game wins.', { icon: ICON.sequence });
+    addLeaders('Most series', rows, (row) => row.sequenceSeries, (value) => String(value), 'Sequence series wins.', { icon: ICON.sequence });
+    addLeaders('Most event wins', rows, (row) => row.sequenceEvents, (value) => String(value), 'Sequence session victories.', { icon: ICON.sequence });
+  }
+  if (filter === 'poker') {
+    addLeaders('Most top-two finishes', rows, (row) => row.pokerTopTwos, (value) => String(value), 'Recorded first- or second-place Poker finishes.', { icon: ICON.poker });
+    addLeaders('Best closing rate', rows.filter((row) => row.pokerTopTwos >= 3), (row) => row.wins / row.pokerTopTwos, (value) => `${Math.round(value * 100)}%`, 'Wins per top-two finish; minimum 3.', { icon: ICON.poker });
+  }
+  if (filter === 'table-tennis') {
+    addLeaders('Most match wins', rows, (row) => row.matchWins, (value) => String(value), 'Individual recorded match wins.', { icon: ICON.tableTennis });
+    addLeaders('Best match win rate', rows.filter((row) => row.matchWins + row.matchLosses >= 5), (row) => row.matchWins / (row.matchWins + row.matchLosses), (value) => `${Math.round(value * 100)}%`, 'Minimum 5 recorded matches.', { icon: ICON.tableTennis });
+  }
+
+  return records.map((record) => ({
+    ...record,
+    holderNames: record.holders.map(playerName),
+    gameLabel: filter === 'all' ? 'All games' : gameName(filter),
+  }));
+}
+
 function renderInsights() {
   const { data, computed, insightGameType } = state;
   const filter = insightGameType || 'all';
@@ -1023,6 +1307,8 @@ function renderInsights() {
       placed: r.places.length,
     }))
     .sort((a, b) => a.avg - b.avg);
+  const storylines = buildStorylineInsights(data, computed, filter);
+  const records = buildAllTimeRecords(data, computed, filter);
 
   return `
     <section>
@@ -1035,6 +1321,43 @@ function renderInsights() {
           <select data-action="insights-filter" aria-label="Filter by game">${filterOptions}</select>
         </div>
       </div>
+
+      <section class="storyline-section">
+        <div>
+          <h3>Storylines</h3>
+          <p class="muted small">Dynamic records for ${escapeHtml(filterLabel)}.</p>
+        </div>
+        <div class="storyline-grid">
+          ${storylines.map((story) => `
+            <article class="glass-card storyline-card">
+              <div class="storyline-icon">${story.icon}</div>
+              <p class="muted tiny upcase">${escapeHtml(story.title)}</p>
+              <p class="storyline-value">${escapeHtml(story.value)}</p>
+              <p class="muted small">${escapeHtml(story.body)}</p>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+
+      <section class="records-section">
+        <div>
+          <h3>All-Time Records</h3>
+          <p class="muted small">Current leaders for ${escapeHtml(filterLabel)}. Records can change as new results are added.</p>
+        </div>
+        <div class="record-grid">
+          ${records.map((record) => `
+            <article class="glass-card record-card">
+              <div class="record-icon">${record.icon}</div>
+              <p class="muted tiny upcase">${escapeHtml(record.title)}</p>
+              <p class="record-value">${escapeHtml(record.value)}</p>
+              <div class="holder-list">
+                ${record.holderNames.map((name) => `<span class="holder-pill">${escapeHtml(name)}</span>`).join('')}
+              </div>
+              <p class="muted small">${escapeHtml(record.body)}</p>
+            </article>
+          `).join('')}
+        </div>
+      </section>
 
       <div class="insights-grid">
         <article class="glass-card">
@@ -1259,6 +1582,7 @@ function renderGameDeepStats(gameTypeId, filteredGames, sortedGames) {
         <article class="glass-card insights-wide">
           <h3>${escapeHtml(typeName)} finish per event <span class="muted small">(lower is better; ${series.length} player${series.length === 1 ? '' : 's'}, click a name to isolate)</span></h3>
           ${renderLineChartDates(series, { invertY: true, integerTicks: true })}
+          <p class="muted tiny">Only recorded placements are plotted. Participants with an unknown placement appear as a gap for that event.</p>
         </article>
       `;
     }
@@ -1340,7 +1664,7 @@ function renderLineChartDates(series, opts = {}) {
   const labelY = H - PAD_B + 14;
   const dateLabels = xPositions.map(({ date, x: cx }) => `
     <text x="${cx}" y="${labelY}" text-anchor="end" font-size="9" fill="#64748b"
-          transform="rotate(-45 ${cx} ${labelY})">${escapeHtml(date.slice(5))}</text>
+      transform="rotate(-45 ${cx} ${labelY})">${escapeHtml(date)}</text>
   `).join('');
 
   const defs = series.map((s, idx) => s.avatar

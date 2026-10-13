@@ -1,6 +1,6 @@
 """Strip placeholder 'tied for last' positions from events where only the top
 two finishers are actually known. Targets:
-- 2018-02-24 (blackjack/poker/hearts)
+- 2018-02-24 (blackjack/poker)
 - 2023-09-23 (poker)
 """
 from __future__ import annotations
@@ -10,7 +10,7 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 TARGETS = {
-    "e2018-02-24": {"blackjack", "poker", "hearts"},
+    "e2018-02-24": {"blackjack", "poker"},
     "e2023-09-23": {"poker"},
 }
 
